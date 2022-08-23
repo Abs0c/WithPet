@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val list = listOf(mapView(), myPet(), Diet(), myPage())
+        val list = listOf(mapView(), myPet(), Diary(), myPage())
         val pagerAdapter = FragmentPagerAdapter(list, this)
         binding.viewPager.adapter = pagerAdapter
         val titles = listOf("산책", "마이 펫", "일기", "마이페이지")
