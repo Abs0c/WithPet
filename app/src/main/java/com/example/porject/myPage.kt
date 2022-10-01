@@ -61,7 +61,6 @@ class myPage : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
-
     }
     private fun setOnClickListener(){
     }
