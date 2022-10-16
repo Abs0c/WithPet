@@ -1,7 +1,7 @@
 package com.example.porject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.adapter = pagerAdapter
         val titles = listOf("산책", "마이 펫", "일기", "마이페이지")
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position -> tab.text = titles.get(position)}.attach()
+        binding.viewPager.isUserInputEnabled = false
     }
+
 
 }
 
