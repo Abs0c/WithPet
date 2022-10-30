@@ -9,6 +9,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.porject.MyApplication.Companion.storage
+import javax.xml.transform.URIResolver
 
 class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>) :
     RecyclerView.Adapter<myListAdapter.MyViewHolder>() {
@@ -32,37 +35,17 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
         val nametxtView: TextView = view.findViewById(R.id.pet_Name_Text_View)
         val typetxtView: TextView = view.findViewById(R.id.pet_Type_Text_View)
         val imageView: ImageView = view.findViewById(R.id.pet_Image_View)
+        val storageReference = storage.reference
 
         fun bind(position: Int){
             nametxtView.text = myPetList[position].petName
             typetxtView.text = myPetList[position].petType
-            imageView.setImageURI(myPetList[position].petImageUri)
-        }
-    }
-
-    /*
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View = LayoutInflater.from(parent?.context).inflate(R.layout.pet_card_view, parent, false)
-        val petname = view.findViewById<TextView>(R.id.pet_Name_Text_View)
-        val pettype = view.findViewById<TextView>(R.id.pet_Type_Text_View)
-        val petimage = view.findViewById<ImageView>(R.id.pet_Image_View)
-
-        val imgRef=MyApplication.storage
-            .reference
-            .child("images/${petname}.jpg")
-        imgRef.downloadUrl.addOnCompleteListener{ task ->
-            if (task.isSuccessful){
-                 petimage.setImageURI(task.result)
+            val docuUri = storageReference.child("images/" + myPetList[position].petName + ".jpg").downloadUrl.addOnSuccessListener{
+                Uriesult ->
+                Glide.with(context).load(Uriesult).into(imageView)
             }
         }
-
-        val user = myPetList[position]
-        petname.text = user.PetName
-        pettype.text = user.PetType
-
-        return view
     }
-     */
 
     override fun getItemId(position: Int): Long {
         return 0

@@ -3,14 +3,16 @@ package com.example.porject
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,47 +39,40 @@ class myPet : Fragment() {
         }
     }
 
-    /*
-    private fun makeView(){
-        db.collection("pets")
-            .get()
-            .addOnSuccessListener(){ result ->
-                val itemList = mutableListOf<myPetType>()
-
-            }
-    }
-     */
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.onStart()
         binding = FragmentMyPetBinding.inflate(inflater, container, false)
-        db = FirebaseFirestore.getInstance()
-        val items = mutableListOf<myPetType>()
-        val adapter = context?.let { myListAdapter(it, items) }
+        if(!MyApplication.checkAuth()){
+            Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
+        }
+        else{
+            binding = FragmentMyPetBinding.inflate(inflater, container, false)
+            db = MyApplication.db
+            val items = mutableListOf<myPetType>()
+            val adapter = context?.let { myListAdapter(it, items) }
 
-        db.collection("pets")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result){
-                    val Uribuilder = Uri.Builder()
-                    Uribuilder.appendPath(document["petImageUri"] as String?)
-                    val item = myPetType(document["petName"] as String, document["petType"] as String, Uribuilder.build())
-                    items.add(item)
+            db.collection("pets")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result){
+                        val item = myPetType(document["petName"] as String, document["petType"] as String)
+                        items.add(item)
+
+                    }
+                    binding.listView.adapter = adapter
+                    binding.listView.layoutManager = LinearLayoutManager(context)
                 }
-                binding.listView.adapter = adapter
-                binding.listView.layoutManager = LinearLayoutManager(context)
-            }
-        binding.addPetButton.setOnClickListener{
-            activity?.let {
-                val intent = Intent(activity, AddpetActivity::class.java)
-                startActivity(intent)
+            binding.addPetButton.setOnClickListener{
+                activity?.let {
+                    val intent = Intent(activity, AddpetActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
-
         return binding.root
     }
 

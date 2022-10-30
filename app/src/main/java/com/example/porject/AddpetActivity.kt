@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
+import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.ActivityAddpetBinding
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,37 +28,6 @@ import java.net.URL
 
 class AddpetActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddpetBinding
-
-    //lateinit var myPetList: ArrayList<String>
-    /*
-    private fun myPetListCall(): ArrayList<String> {
-        val sharedPref = getSharedPreferences("myPetList", Context.MODE_PRIVATE)
-
-        var resultArr : ArrayList<String> = ArrayList()
-        var arrJson = JSONArray(sharedPref)
-
-        for(i in 0 until arrJson.length()){
-            resultArr.add(arrJson.optString(i))
-        }
-
-        return resultArr
-    }
-    private fun myPetListSave(addpetName: String, adddataType: String){
-        var arr : ArrayList<String> = myPetListCall()
-        var jsonArr = JSONArray()
-        for(i in myPetList) {
-            jsonArr.put(i)
-        }
-        val sharedPref = getSharedPreferences("myPetList", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString(addpetName+"Type", adddataType)
-        jsonArr.put(addpetName)
-        var result = jsonArr.toString()
-
-        editor.putString("myPetList", result)
-    }
-     */
-
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int{
         val options = BitmapFactory.Options()
@@ -81,18 +51,6 @@ class AddpetActivity : AppCompatActivity() {
         }
         return inSampleSize
     }
-
-    /*
-    @RequiresApi(Build.VERSION_CODES.O)
-    class BitmapConverter{
-        fun bitmapToString(bitmap: Bitmap): String {
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            val bytes = stream.toByteArray()
-            return Base64.getEncoder().encodeToString(bytes)
-        }
-    }
-     */
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceType")
@@ -150,9 +108,7 @@ class AddpetActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val colRef: CollectionReference = db.collection("pets")
         uploadImage(petname, imagedata)
-        val Uribuilder = Uri.Builder()
-        Uribuilder.appendPath("images/{$petname}.jpg")
-        var data = myPetType(petname, pettype, Uribuilder.build())
+        var data = myPetType(petname, pettype)
         colRef.add(data)
             .addOnSuccessListener{
                 Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT)
@@ -164,17 +120,17 @@ class AddpetActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(docId: String, data: ByteArray){
-        var storage = Firebase.storage
+        var storage = MyApplication.storage
         var storageRef: StorageReference = storage.reference
-        var imgRef: StorageReference = storageRef.child("images/{$docId}.jpg")
+        var imgRef: StorageReference = storageRef.child("images/"+docId+".jpg")
         var uploadTask = imgRef.putBytes(data)
         uploadTask.addOnFailureListener{
             Log.d("error", "upload fail")
-            Toast.makeText(this, "fail", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show()
         }
         uploadTask.addOnSuccessListener {
             Log.d("success!", "success!")
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
         }
 
     }
