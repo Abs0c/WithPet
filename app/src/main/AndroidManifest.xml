@@ -29,9 +29,13 @@
             android:name=".AddpetActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true"/>
+        <activity android:name=".EditText"
+            android:exported="true"
+            android:theme="@style/Theme.Design.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

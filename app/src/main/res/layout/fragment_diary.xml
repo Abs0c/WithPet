@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginEnd="8dp"
-
+        android:id="@+id/btnDial"
         android:layout_marginBottom="4dp"
         android:text="일기 추가"
         app:icon="@android:drawable/ic_input_add"

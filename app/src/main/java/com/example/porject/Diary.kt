@@ -2,6 +2,7 @@ package com.example.porject
 
 import android.R
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -106,6 +107,10 @@ class Diary : Fragment() {
                 show()
 
             }
+        }
+        binding.btnDial.setOnClickListener {
+            val intent = Intent(getActivity(), EditText::class.java)
+            startActivity(intent)
         }
 
         return binding.root

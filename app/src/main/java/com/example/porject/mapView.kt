@@ -1,14 +1,19 @@
 package com.example.porject
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.porject.databinding.FragmentMapViewBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,6 +31,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     lateinit var mView: MapView
     lateinit var mContext: Context
     lateinit var gMap : GoogleMap
+    var initTime = 0L
+    var pauseTime = 0L
     var mLocationManager: LocationManager? = null
     var mLocationListener: LocationListener? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -47,6 +54,48 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         mView = binding.root.findViewById(R.id.viewMap) as MapView
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
+        binding.appCompatButton.setOnClickListener{
+            Toast.makeText(context, "산책을 시작합니다!!!", Toast.LENGTH_SHORT).show()
+            binding.chronometer.visibility = View.VISIBLE
+            binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
+            binding.chronometer.start()
+        }
+        binding.btn.setOnClickListener{
+            Toast.makeText(context, "산책을 종료합니다!!!", Toast.LENGTH_SHORT).show()
+            pauseTime = binding.chronometer.base - SystemClock.elapsedRealtime()
+            binding.chronometer.stop()
+            val et = EditText(context)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setTitle("오늘 하루를 작성하세요!!!")
+            builder.setMessage("내용")
+            builder.setMessage("산책 시간: " + pauseTime)
+            builder.setView(et) //AlertDialog에 적용하기
+            builder.setPositiveButton(
+                "예"
+            ) { dialog, which ->
+                Toast.makeText(
+                    context,
+                    "" + et.getText().toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            builder.setNegativeButton(
+                "아니오"
+            ) { dialog, which -> dialog.cancel() }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+            pauseTime = 0L
+            binding.chronometer.base = SystemClock.elapsedRealtime()
+        }
+        binding.extendedFloatingActionButton.setOnClickListener {
+            /*val intent = Intent (this@mapView.context, Diet::class.java)
+            startActivity(intent)*/
+            activity?.let {
+                val intent = Intent(it, Diet::class.java)
+                it.startActivity(intent)
+            }
+        }
         return binding.root
     }
     override fun onCreate(savedInstanceState: Bundle?) {
