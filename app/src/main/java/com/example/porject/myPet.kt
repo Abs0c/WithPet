@@ -54,14 +54,14 @@ class myPet : Fragment() {
             db = MyApplication.db
             val items = mutableListOf<myPetType>()
             val adapter = context?.let { myListAdapter(it, items) }
+            val useruid = MyApplication.auth.currentUser?.uid
 
             db.collection("pets")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result){
-                        val item = myPetType(document["petName"] as String, document["petType"] as String)
+                        val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
                         items.add(item)
-
                     }
                     binding.listView.adapter = adapter
                     binding.listView.layoutManager = LinearLayoutManager(context)

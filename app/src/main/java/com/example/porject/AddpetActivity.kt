@@ -87,14 +87,20 @@ class AddpetActivity : AppCompatActivity() {
         }
 
         binding.addInputPetDataButton.setOnClickListener() {
-            if (binding.addPetImageView.drawToBitmap() != null) {
+            if (binding.addPetImageView.drawToBitmap() == null) {
+                Toast.makeText(this,"사진을 골라주세요.",Toast.LENGTH_SHORT).show()
+            }
+            else if (binding.addPetNameEdittext.text.toString() == null){
+                Toast.makeText(this,"동물의 이름을 적어주세요.",Toast.LENGTH_SHORT).show()
+            }
+            else if (binding.addPetTypeEdittext.text.toString() == null){
+                Toast.makeText(this,"동물의 품종을 적어주세요.",Toast.LENGTH_SHORT).show()
+            }
+            else {
                 val petimage = getBitmapFromView(binding.addPetImageView)
                 val petname = binding.addPetNameEdittext.text.toString()
                 val pettype = binding.addPetTypeEdittext.text.toString()
                 saveStore(petimage, petname, pettype)
-            }
-            else {
-                Toast.makeText(this,"사진을 골라주세요.",Toast.LENGTH_SHORT).show()
             }
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -102,13 +108,14 @@ class AddpetActivity : AppCompatActivity() {
     }
 
     private fun saveStore(petimage: Bitmap, petname: String, pettype: String){
+        val useruid = MyApplication.auth.currentUser?.uid
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
         val db = FirebaseFirestore.getInstance()
-        val colRef: CollectionReference = db.collection("pets")
+        val colRef = db.collection("pets")
         uploadImage(petname, imagedata)
-        var data = myPetType(petname, pettype)
+        var data = myPetType(petname, pettype, useruid.toString())
         colRef.add(data)
             .addOnSuccessListener{
                 Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT)
@@ -122,7 +129,8 @@ class AddpetActivity : AppCompatActivity() {
     private fun uploadImage(docId: String, data: ByteArray){
         var storage = MyApplication.storage
         var storageRef: StorageReference = storage.reference
-        var imgRef: StorageReference = storageRef.child("images/"+docId+".jpg")
+        val useruid = MyApplication.auth.currentUser?.uid
+        var imgRef: StorageReference = storageRef.child("images/"+useruid+"/"+docId+".jpg")
         var uploadTask = imgRef.putBytes(data)
         uploadTask.addOnFailureListener{
             Log.d("error", "upload fail")
