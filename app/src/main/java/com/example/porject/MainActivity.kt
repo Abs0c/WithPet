@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("반려동뭉 관리어플")
+        setTitle("반려동물 관리어플")
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val list = listOf(mapView(), myPet(), Diary(), myPage())
