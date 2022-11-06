@@ -92,21 +92,12 @@ class Diary : Fragment() {
 
         val auth1 = Firebase.auth.currentUser
         binding.readBtn.setOnClickListener() {
-            var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-            AlertDialog.Builder(requireContext()).run {
-                setTitle("펫목록")
-                setIcon(R.drawable.ic_dialog_info)
-                setItems(items, object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        Log.d("kkang", "선택강아지:${items[p1]}")
 
-                    }
-                })
-                setPositiveButton("닫기", null)
-                show()
+            //다이어리부분으로 넘어가는 창구현
+            val pet_list = Intent(getActivity(),DiaryPet::class.java)
+            startActivity(pet_list)
 
-            }
         }
         binding.btnDial.setOnClickListener {
             val intent = Intent(getActivity(), EditText::class.java)
