@@ -1,34 +1,61 @@
 package com.example.porject
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.porject.MyApplication.Companion.db
+import com.example.porject.databinding.ActivityDiaryPetBinding
+import com.example.porject.databinding.FragmentMyPetBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DiaryPet: AppCompatActivity() {
-
-
+    lateinit var binding: ActivityDiaryPetBinding
+    lateinit var db: FirebaseFirestore
+    var adapter: myListAdapter? = null
+    var items = mutableListOf<myPetType>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle("펫 리스트")
-        setContentView(R.layout.activity_diary_pet)
+        binding = ActivityDiaryPetBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val toolbar = findViewById<Toolbar>(R.id.pet_list_tool)
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+
 // 펫리스트 구현부분
 // 레이아웃에 activity_diary_pet에 list_pet이라는 리스트뷰 아이디 설정
         //list_pet에 펫 이름만이라도 데이터베이스에서 가져오려고함
+        if(!MyApplication.checkAuth()){
+            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
+        }
+        else {
+            db = MyApplication.db
+            adapter = myListAdapter(this, items)
+            val useruid = MyApplication.auth.currentUser?.uid
 
-
-
-
-
+            db.collection("pets")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        if (document["userUID"] as String? == useruid) {
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            items.add(item)
+                        }
+                    }
+                    binding.listPet.adapter = adapter
+                    binding.listPet.layoutManager = LinearLayoutManager(this)
+                }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

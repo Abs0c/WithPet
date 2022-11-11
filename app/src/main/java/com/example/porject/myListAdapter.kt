@@ -36,11 +36,8 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
         val typetxtView: TextView = view.findViewById(R.id.pet_Type_Text_View)
         val imageView: ImageView = view.findViewById(R.id.pet_Image_View)
         val storageReference = storage.reference
-        val useruid = MyApplication.auth.currentUser?.uid
 
         fun bind(position: Int){
-            if (myPetList[position].userUID != useruid)
-                return
             nametxtView.text = myPetList[position].petName
             typetxtView.text = myPetList[position].petType
             val docuUri = storageReference.child("images/" + myPetList[position].userUID + "/" + myPetList[position].petName + ".jpg").downloadUrl.addOnSuccessListener{

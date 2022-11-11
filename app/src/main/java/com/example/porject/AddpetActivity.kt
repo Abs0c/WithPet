@@ -28,6 +28,7 @@ import java.net.URL
 
 class AddpetActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddpetBinding
+    var imagepicked = false
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int{
         val options = BitmapFactory.Options()
@@ -71,6 +72,7 @@ class AddpetActivity : AppCompatActivity() {
                 //bitmap에 이미지 저장완료
                 bitmap?. let{
                     binding.addPetImageView.setImageBitmap(bitmap)
+                    imagepicked = true
                 } ?: let{
                     Log.d("error", "bitmap null")
                 }
@@ -87,13 +89,13 @@ class AddpetActivity : AppCompatActivity() {
         }
 
         binding.addInputPetDataButton.setOnClickListener() {
-            if (binding.addPetImageView.drawToBitmap() == null) {
+            if (!imagepicked) {
                 Toast.makeText(this,"사진을 골라주세요.",Toast.LENGTH_SHORT).show()
             }
-            else if (binding.addPetNameEdittext.text.toString() == null){
+            else if (binding.addPetNameEdittext.text.toString() == ""){
                 Toast.makeText(this,"동물의 이름을 적어주세요.",Toast.LENGTH_SHORT).show()
             }
-            else if (binding.addPetTypeEdittext.text.toString() == null){
+            else if (binding.addPetTypeEdittext.text.toString() == ""){
                 Toast.makeText(this,"동물의 품종을 적어주세요.",Toast.LENGTH_SHORT).show()
             }
             else {
@@ -101,9 +103,10 @@ class AddpetActivity : AppCompatActivity() {
                 val petname = binding.addPetNameEdittext.text.toString()
                 val pettype = binding.addPetTypeEdittext.text.toString()
                 saveStore(petimage, petname, pettype)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                this.finish()
             }
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
         }
     }
 

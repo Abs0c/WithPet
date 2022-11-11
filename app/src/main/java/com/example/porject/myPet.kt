@@ -3,13 +3,19 @@ package com.example.porject
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.porject.MyApplication.Companion.db
 import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,6 +36,15 @@ class myPet : Fragment() {
     private var param2: String? = null
     lateinit var binding: FragmentMyPetBinding
     lateinit var db: FirebaseFirestore
+    var data = mutableListOf<myPetType>()
+    var items = mutableListOf<myPetType>()
+    var adapter: myListAdapter? = null
+
+    fun refresh(fragment: Fragment, fragmentManager: FragmentManager){
+        var ft: FragmentTransaction = fragmentManager.beginTransaction()
+        ft.detach(fragment).attach(fragment).commitAllowingStateLoss()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +67,17 @@ class myPet : Fragment() {
         else{
             binding = FragmentMyPetBinding.inflate(inflater, container, false)
             db = MyApplication.db
-            val items = mutableListOf<myPetType>()
-            val adapter = context?.let { myListAdapter(it, items) }
+            adapter = context?.let { myListAdapter(it, items) }
             val useruid = MyApplication.auth.currentUser?.uid
 
             db.collection("pets")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result){
-                        val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
-                        items.add(item)
+                        if (document["userUID"] as String? == useruid){
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            items.add(item)
+                        }
                     }
                     binding.listView.adapter = adapter
                     binding.listView.layoutManager = LinearLayoutManager(context)
@@ -75,7 +91,6 @@ class myPet : Fragment() {
         }
         return binding.root
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

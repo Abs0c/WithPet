@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.porject.databinding.ActivityMainBinding
+import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.isUserInputEnabled = false
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        myPet().refresh(myPet(), supportFragmentManager)
+    }
 
 }
 
