@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_shade_1"
+    tools:context=".AddEitNoteActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/idEdtNoteTitle"
+        android:hint="제목을 입력하세요."
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/idEdtNoteDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/idBtnAddUpdate"
+        android:layout_below="@id/idEdtNoteTitle"
+        android:gravity="start|top"
+        android:hint="내용을 입력하세요. "
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <ImageButton
+        android:id="@+id/imBtn2"
+        android:layout_width="296dp"
+        android:layout_height="189dp"
+        android:layout_below="@id/idEdtNoteDescription"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="-210dp"
+        android:backgroundTint="@color/teal_200"
+        android:scaleType="fitXY"
+        android:src="@drawable/img1" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/idBtnAddUpdate"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:text="Button"
+        android:background="@drawable/custom_button_back"
+        android:textAllCaps="false"/>
+
+
+</RelativeLayout>

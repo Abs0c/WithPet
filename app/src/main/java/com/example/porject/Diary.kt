@@ -1,24 +1,17 @@
 package com.example.porject
 
-import android.R
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.ListView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.example.porject.databinding.FragmentDiaryBinding
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
@@ -71,7 +64,7 @@ class Diary : Fragment() {
         readBtn = binding.readBtn
         diaryContent = binding.diaryContent
         title = binding.title
-        title.text = "달력 일기장"
+
 
 
 
@@ -95,12 +88,12 @@ class Diary : Fragment() {
 
 
             //다이어리부분으로 넘어가는 창구현
-            val pet_list = Intent(getActivity(),DiaryPet::class.java)
+            val pet_list = Intent(getActivity(),TestActivity::class.java)
             startActivity(pet_list)
 
         }
         binding.btnDial.setOnClickListener {
-            val intent = Intent(getActivity(), EditText::class.java)
+            val intent = Intent(getActivity(), AddEitNoteActivity::class.java)
             startActivity(intent)
         }
 

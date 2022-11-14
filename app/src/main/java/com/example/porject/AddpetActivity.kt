@@ -10,11 +10,13 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.drawToBitmap
 import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.ActivityAddpetBinding
@@ -59,7 +61,10 @@ class AddpetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddpetBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setTitle("강아지 등록")
+        val toolbar3 = findViewById<Toolbar>(R.id.toolbar3)
+        setSupportActionBar(toolbar3)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
                 val calRatio = calculateInSampleSize(it!!.data!!.data!!, 16,16)
@@ -151,5 +156,11 @@ class AddpetActivity : AppCompatActivity() {
         var canvas = Canvas(bitmap)
         view.draw(canvas)
         return bitmap
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

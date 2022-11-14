@@ -2,10 +2,12 @@ package com.example.porject
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.porject.databinding.ActivityDietBinding
 
 
@@ -35,7 +37,11 @@ class   Diet : AppCompatActivity() {
         binding = ActivityDietBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setTitle("")
 
+        val toolbar2 = findViewById<Toolbar>(R.id.toolbar2)
+        setSupportActionBar(toolbar2)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val spinner = findViewById<Spinner>(R.id.dog_situation)
 
@@ -148,5 +154,10 @@ class   Diet : AppCompatActivity() {
 
 
     }
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

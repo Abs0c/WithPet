@@ -193,7 +193,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 startLocationUpdates()
 
             }
-            Toast.makeText(context, "산책을 시작합니다!!!!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "현재 위치를 잡고 있습니다!", Toast.LENGTH_SHORT).show()
             binding.chronometer.visibility = View.VISIBLE
             binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
             binding.chronometer.start()
@@ -225,6 +225,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             val dialog: AlertDialog = builder.create()
             dialog.show()
             pauseTime = 0L
+            binding.chronometer.visibility = View.INVISIBLE
             binding.chronometer.base = SystemClock.elapsedRealtime()
             val marker = com.google.android.gms.maps.model.LatLng(mLastLocation.latitude, mLastLocation.longitude)
             gMap.addMarker(MarkerOptions().position(marker).title("종료 지점"))

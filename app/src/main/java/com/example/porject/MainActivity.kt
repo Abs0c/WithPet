@@ -24,7 +24,9 @@ class MainActivity : AppCompatActivity() {
         val titles = listOf("산책", "마이 펫", "일기", "마이페이지")
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position -> tab.text = titles.get(position)}.attach()
         binding.viewPager.isUserInputEnabled = false
+
     }
+
 
     override fun onRestart() {
         super.onRestart()

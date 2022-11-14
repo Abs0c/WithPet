@@ -2,57 +2,72 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.porject">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <application
-        android:requestLegacyExternalStorage="true"
         android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Porject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCVFzhytBXe-EkxM2tedvOY5DNalrHSMqA"/>
-        <meta-data android:name="com.google.android.gms.vision" android:value="@integer/google_play_services_version"/>
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCVFzhytBXe-EkxM2tedvOY5DNalrHSMqA" />
+        <meta-data
+            android:name="com.google.android.gms.vision"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name=".AddEitNoteActivity"
+            android:exported="true" />
+        <activity android:name=".TestActivity"
+            android:exported="true"/>
         <activity
             android:name=".Diet"
             android:exported="true" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
             android:name=".AddpetActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="true"/>
-        <activity android:name=".EditText"
             android:exported="true"
-            android:theme="@style/Theme.Design.NoActionBar"/>
-
-        <activity android:name=".DiaryPet"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".EditText1"
+            android:exported="true"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".DiaryPet"
             android:exported="true" />
-        
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -60,9 +75,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_path"/>
+                android:resource="@xml/provider_path" />
         </provider>
     </application>
-
 
 </manifest>
