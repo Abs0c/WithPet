@@ -24,7 +24,7 @@
             android:background="@drawable/start"
 
 
-            app:layout_constraintBottom_toBottomOf="@id/btn_Stop"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.254"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,11 +33,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_Stop"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
+            android:background="@drawable/stop"
 
-            android:background="@drawable/button_background"
-            android:text="산책 종료"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.768"
             app:layout_constraintStart_toStartOf="parent" />
@@ -60,7 +60,8 @@
             android:layout_marginTop="100dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/txtLat"
@@ -69,7 +70,8 @@
             android:layout_marginTop="30dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTime" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTime"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/txtLong"
@@ -78,7 +80,8 @@
             android:layout_marginTop="30dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLat" />
+            app:layout_constraintTop_toBottomOf="@+id/txtLat"
+            android:visibility="invisible"/>
 
         <Chronometer
             android:id="@+id/chronometer"
