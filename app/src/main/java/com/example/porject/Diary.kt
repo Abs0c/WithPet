@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.porject.databinding.FragmentDiaryBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -86,14 +87,20 @@ class Diary : Fragment() {
         val auth1 = Firebase.auth.currentUser
         binding.readBtn.setOnClickListener() {
 
-
+            if (diaryTextView.text != ""){
+                val pet_list = Intent(activity,TestActivity::class.java)
+                pet_list.putExtra("date", diaryTextView.text)
+                startActivity(pet_list)
+            }
+            else{
+                Toast.makeText(activity, "날짜를 선택해주세요", Toast.LENGTH_SHORT).show()
+            }
             //다이어리부분으로 넘어가는 창구현
-            val pet_list = Intent(getActivity(),TestActivity::class.java)
-            startActivity(pet_list)
+
 
         }
         binding.btnDial.setOnClickListener {
-            val intent = Intent(getActivity(), AddEitNoteActivity::class.java)
+            val intent = Intent(activity, AddEitNoteActivity::class.java)
             startActivity(intent)
         }
 

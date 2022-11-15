@@ -16,8 +16,14 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     lateinit var notesRV:RecyclerView
     lateinit var addFAB: FloatingActionButton
     lateinit var viewModel: NoteViewModel
+    lateinit var dateText: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intent = intent
+        dateText = intent.getStringExtra("date").toString()
+        Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
+
         setContentView(R.layout.activity_test)
         setTitle("기록 확인")
         val toolbar2 = findViewById<Toolbar>(R.id.toolbar2)
