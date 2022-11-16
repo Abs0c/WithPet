@@ -140,10 +140,12 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     }
     // 위치 업데이터를 제거 하는 메서드
     private fun stoplocationUpdates() {
-        Log.d(ContentValues.TAG, "stoplocationUpdates()")
-        // 지정된 위치 결과 리스너에 대한 모든 위치 업데이트를 제거
-        mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
-        startCheck = false
+        if(startCheck){
+            Log.d(ContentValues.TAG, "stoplocationUpdates()")
+            // 지정된 위치 결과 리스너에 대한 모든 위치 업데이트를 제거
+            mFusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
+            startCheck = false
+        }
     }
     ///////////
 
@@ -184,6 +186,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         googleMap.addMarker(MarkerOptions().position(marker).title("test"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+        
     }
     override fun onStart() {
         super.onStart()
@@ -191,44 +194,49 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         binding.btnStart.setOnClickListener{
             if (checkPermissionForLocation(requireActivity())){
                 startLocationUpdates()
-
             }
-            Toast.makeText(context, "현재 위치를 잡고 있습니다!", Toast.LENGTH_SHORT).show()
             binding.chronometer.visibility = View.VISIBLE
             binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
             binding.chronometer.start()
+            binding.btnStart.visibility = View.INVISIBLE
+            binding.btnStop.visibility = View.VISIBLE
         }
         binding.btnStop.setOnClickListener{
-            Toast.makeText(context, "산책을 종료합니다!!!", Toast.LENGTH_SHORT).show()
-            pauseTime = binding.chronometer.base - SystemClock.elapsedRealtime()
-            stoplocationUpdates()
-            binding.chronometer.stop()
-            val et = EditText(context)
-            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-            builder.setTitle("오늘 하루를 작성하세요!!!")
-            builder.setMessage("내용")
-            builder.setMessage("산책 시간: " + pauseTime)
-            builder.setView(et) //AlertDialog에 적용하기
-            builder.setPositiveButton(
-                "예"
-            ) { dialog, which ->
-                Toast.makeText(
-                    context,
-                    "" + et.getText().toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            builder.setNegativeButton(
-                "아니오"
-            ) { dialog, which -> dialog.cancel() }
+            if(startCheck){
+                Toast.makeText(context, "산책을 종료합니다!!!", Toast.LENGTH_SHORT).show()
+                pauseTime = SystemClock.elapsedRealtime() - binding.chronometer.base
+                stoplocationUpdates()
+                binding.chronometer.stop()
+                val et = EditText(context)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder.setTitle("오늘 하루를 작성하세요!!!")
+                builder.setMessage("내용")
+                builder.setMessage("산책 시간: " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초")
+                builder.setView(et) //AlertDialog에 적용하기
+                builder.setPositiveButton(
+                    "예"
+                ) { dialog, which ->
+                    Toast.makeText(
+                        context,
+                        "" + et.getText().toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                builder.setNegativeButton(
+                    "아니오"
+                ) { dialog, which -> dialog.cancel() }
 
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-            pauseTime = 0L
-            binding.chronometer.visibility = View.INVISIBLE
-            binding.chronometer.base = SystemClock.elapsedRealtime()
-            val marker = com.google.android.gms.maps.model.LatLng(mLastLocation.latitude, mLastLocation.longitude)
-            gMap.addMarker(MarkerOptions().position(marker).title("종료 지점"))
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+                pauseTime = 0L
+                binding.chronometer.visibility = View.INVISIBLE
+                binding.chronometer.base = SystemClock.elapsedRealtime()
+                val marker = com.google.android.gms.maps.model.LatLng(mLastLocation.latitude, mLastLocation.longitude)
+                gMap.addMarker(MarkerOptions().position(marker).title("종료 지점"))
+                binding.btnStart.visibility = View.VISIBLE
+                binding.btnStop.visibility = View.INVISIBLE
+            }
+
 
         }
         binding.extendedFloatingActionButton.setOnClickListener {
