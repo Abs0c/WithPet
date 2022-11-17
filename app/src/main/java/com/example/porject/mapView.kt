@@ -184,7 +184,6 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         gMap = googleMap
         val myLocation = com.google.android.gms.maps.model.LatLng(37.554648, 126.972559)
         val marker = com.google.android.gms.maps.model.LatLng(37.554648, 126.972559)
-        googleMap.addMarker(MarkerOptions().position(marker).title("test"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
         
@@ -226,7 +225,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                         "" + et.getText().toString(),
                         Toast.LENGTH_SHORT
                     ).show()
-                    val intent = Intent(context, walkingWrite::class.java)
+                    val intent = Intent(context, AddEitNoteActivity::class.java)
                     startActivity(intent)
                 }
                 builder.setNegativeButton(
