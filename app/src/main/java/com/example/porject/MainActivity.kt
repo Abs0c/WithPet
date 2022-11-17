@@ -1,7 +1,10 @@
 package com.example.porject
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         setTitle("반려동물 관리어플")
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val intent = Intent(this, LoadingActivity::class.java)
+        startActivity(intent)
         val list = listOf(mapView(), myPet(), Diary(), myPage())
         val pagerAdapter = FragmentPagerAdapter(list, this)
         binding.viewPager.adapter = pagerAdapter
@@ -31,6 +36,18 @@ class MainActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         myPet().refresh(myPet(), supportFragmentManager)
+    }
+    var time : Long = 0
+    override fun onBackPressed() {
+
+        if(System.currentTimeMillis() - time < 2000){
+            finish()
+            return
+        }
+        else {
+            Toast.makeText(this, "한 번 더 누르면 종료합니다.", Toast.LENGTH_SHORT).show()
+            time = System.currentTimeMillis()
+        }
     }
 
 }
