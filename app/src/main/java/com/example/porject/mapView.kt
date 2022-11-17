@@ -24,6 +24,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.example.porject.databinding.FragmentMapViewBinding
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -162,7 +163,6 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         mView = binding.root.findViewById(R.id.viewMap) as MapView
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
-
         return binding.root
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,6 +173,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY // 정확성
             maxWaitTime= 2000 // 위치 갱신 요청 최대 대기 시간 (밀리초)
         }
+
     }
 
     override fun onClick(v: View?) {
@@ -200,6 +201,9 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             binding.chronometer.start()
             binding.btnStart.visibility = View.INVISIBLE
             binding.btnStop.visibility = View.VISIBLE
+            binding.onStop.visibility = View.INVISIBLE
+            binding.onGoing.visibility = View.VISIBLE
+            binding.onGoing.playAnimation()
         }
         binding.btnStop.setOnClickListener{
             if(startCheck){
@@ -225,7 +229,6 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 builder.setNegativeButton(
                     "아니오"
                 ) { dialog, which -> dialog.cancel() }
-
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
                 pauseTime = 0L
@@ -235,6 +238,9 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 gMap.addMarker(MarkerOptions().position(marker).title("종료 지점"))
                 binding.btnStart.visibility = View.VISIBLE
                 binding.btnStop.visibility = View.INVISIBLE
+                binding.onGoing.visibility = View.INVISIBLE
+                binding.onStop.visibility = View.VISIBLE
+                binding.onStop.playAnimation()
             }
 
 
