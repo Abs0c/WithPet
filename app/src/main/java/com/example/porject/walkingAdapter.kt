@@ -1,92 +1,61 @@
 package com.example.porject
 
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+
 import kotlinx.android.synthetic.main.walking_list.view.*
 
-class NoteRVAdapter(val context: Context,
-                    val noteClickInterface: NoteClickInterface,
-                    val noteCLickDeleteInterface: NoteCLickDeleteInterface
-                    ) : RecyclerView.Adapter<NoteRVAdapter.ViewHolder>(){
+/*class walkingAdapter(private val items: ArrayList<walkingData>) :
+    RecyclerView.Adapter<walkingAdapter.ViewHolder>(), OnNoteItemClickListener{
 
-    private val items = ArrayList<Note>()
+    lateinit var listener : OnNoteItemClickListener
+
     private var layoutType = 0
     // 내용 중심인지 사진 중심인지 판단하기 위한 변수
 
     override fun getItemCount() = items.size
 
-    fun getItem(position: Int): Note? {
+    fun getItem(position: Int): walkingData? {
         return items[position]
     } // 아이템 반환
 
-    fun addItem(item: Note?) {
+    fun addItem(item: walkingData?) {
         if (item != null) {
             items.add(item)
         }
     } // 아이템 추가
-    fun onNoteClick(note: Note){
-        Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show()
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
             .inflate(R.layout.walking_list,parent,false)
-        return ViewHolder(inflatedView, layoutType)
+        return ViewHolder(inflatedView,this,layoutType)
     } // 새로 만들어준 뷰홀더 생성
-    override fun onBindViewHolder(holder: NoteRVAdapter.ViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: walkingAdapter.ViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
         holder.setLayoutType(layoutType)
-        holder.detail.setOnClickListener {
-            holder.setLayoutType(1)
-        }
-        holder.detail2.setOnClickListener {
-            holder.setLayoutType(0)
-        }
-        holder.deletIV.setOnClickListener{
-            noteCLickDeleteInterface.onDeleteIconClick(items.get(position))
-        }
-        holder.itemView.setOnClickListener{
-            noteClickInterface.onNoteClick(items.get(position))
-            Toast.makeText(context, "${items.get(position)}", Toast.LENGTH_SHORT)
-        }
     } // 데이터 뷰홀더에 바인딩
+
+    fun setOnItemClickListener(listener: OnNoteItemClickListener){
+        this.listener = listener
+    }
+
     fun switchLayout(position: Int){
         layoutType = position
     } // 내용,사진 레이아웃 변경 함수
-    fun updateList(newList: List<Note>){
-        items.clear()
-        items.addAll(newList)
-        notifyDataSetChanged()
-    }
-    class ViewHolder(itemView : View, layoutType : Int) : RecyclerView.ViewHolder(itemView){
-        init {
 
-            itemView.setOnClickListener {
+    class ViewHolder(itemView : View, listener: OnNoteItemClickListener, layoutType : Int) : RecyclerView.ViewHolder(itemView){
 
-            }
-            itemView.setOnClickListener(View.OnClickListener {
-                var position = adapterPosition
-                setLayoutType(layoutType)
-            })
-        }
-        val noteTV = itemView.findViewById<TextView>(R.id.idTVNoteTitle)
-        val timeTV = itemView.findViewById<TextView>(R.id.idTVTimeStamp)
-        val deletIV = itemView.findViewById<ImageView>(R.id.idIVDelete)
-        val detail = itemView.findViewById<ImageView>(R.id.idIVDetail)
-        val detail2 = itemView.findViewById<ImageView>(R.id.idIVDetail2)
-        fun bind(item: Note){
-            /*var mood = item.mood
+        fun bind(item: walkingData){
+            var mood = item.mood
             var moodIndex = Integer.parseInt(mood)
-            setMoodImage(moodIndex) // 기분 설정 */
+            setMoodImage(moodIndex) // 기분 설정
 
-            /*var picturePath = item.picture
+            var picturePath = item.picture
             if(picturePath != null && !picturePath.equals("")){
 
                 itemView.pictureExistsImageView.visibility = View.VISIBLE
@@ -97,18 +66,24 @@ class NoteRVAdapter(val context: Context,
                 itemView.pictureExistsImageView.visibility = View.GONE
                 itemView.mapImage.visibility = View.GONE
                 itemView.mapImage.setImageResource(R.drawable.noimagefound)
-            }*/
+            }
             // 사진 설정
 
-            /*var weather = item.weather
+            var weather = item.weather
             var weatherIndex = Integer.parseInt(weather)
-            setWeatherImage(weatherIndex) // 날씨 설정*/
-            itemView.contentsTextView.text = item.noteDescription
-            itemView.contentsTextView2.text = item.noteDescription
+            setWeatherImage(weatherIndex) // 날씨 설정
+
+            itemView.contentsTextView.text = item.contents
+            itemView.contentsTextView2.text = item.contents
             // 텍스트 설정
 
+            itemView.locationTextView.text = item.address
+            itemView.locationTextView2.text = item.address
+            // 주소 설정
 
-
+            itemView.dateTextView.text = item.createDataStr
+            itemView.dateTextView2.text = item.createDataStr
+            // 날짜 설정
         }
 
         fun setMoodImage( moodIndex : Int){
@@ -175,7 +150,8 @@ class NoteRVAdapter(val context: Context,
                     itemView.weatherImageView2.setImageResource(R.drawable.weather_icon_1)
                 }
             }
-        }
+        } // weatherIndex에 따른 날씨 이미지 출력
+
         fun setLayoutType(layoutType: Int){
             if( layoutType == 0){
                 itemView.layout1.visibility = View.VISIBLE
@@ -185,13 +161,7 @@ class NoteRVAdapter(val context: Context,
                 itemView.layout1.visibility = View.GONE
                 itemView.layout2.visibility = View.VISIBLE
             }
-        }
+        } // 레이아웃 타입에 따라 내용,사진 레이아웃 하나는 비활성화, 하나는 활성화
     }
-}
-interface NoteCLickDeleteInterface{
-    fun onDeleteIconClick(note: Note)
-}
 
-interface NoteClickInterface{
-    fun onNoteClick(note: Note)
-}
+}*/

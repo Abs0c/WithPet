@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -76,5 +77,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
     implementation "com.airbnb.android:lottie:3.6.1"
+    // 라디오 버튼
+    implementation 'com.github.channguyen:rsv:1.0.1'
+
 
 }

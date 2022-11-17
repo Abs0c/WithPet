@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 
@@ -22,6 +19,7 @@ class AddEitNoteActivity : AppCompatActivity() {
     lateinit var noteDescriptionEdt : EditText
     lateinit var addUpdateBtn : Button
     lateinit var viewModel: NoteViewModel
+    lateinit var cancleButton : Button
     private val GALLERY = 1
     var noteID = -1
 
@@ -32,12 +30,15 @@ class AddEitNoteActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        noteTitleEdt = findViewById<EditText>(R.id.idEdtNoteTitle)
         noteDescriptionEdt = findViewById<EditText>(R.id.idEdtNoteDescription)
-        addUpdateBtn = findViewById(R.id.idBtnAddUpdate)
+        addUpdateBtn = findViewById(R.id.idBtnAddupdate)
+        cancleButton = findViewById(R.id.closeButton)
+        cancleButton.setOnClickListener {
+            finish()
+        }
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
             .get(NoteViewModel::class.java)
-        val imgbtn = findViewById<ImageButton>(R.id.imBtn2)
+        val imgbtn = findViewById<ImageView>(R.id.imBtn2)
         imgbtn.setOnClickListener {
             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.setType("image/*")
@@ -56,7 +57,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         }
 
         addUpdateBtn.setOnClickListener {
-            val noteTitle = noteTitleEdt.text.toString()
+            val noteTitle = "test"
             val noteDescription = noteDescriptionEdt.text.toString()
 
             if(noteType.equals("Edit")){
@@ -82,6 +83,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         }
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
             startActivity(Intent(applicationContext, TestActivity::class.java))
@@ -91,7 +93,7 @@ class AddEitNoteActivity : AppCompatActivity() {
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val imBtn: ImageButton = findViewById(R.id.imBtn2)
+        val imBtn: ImageView = findViewById(R.id.imBtn2)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GALLERY) {
                 var ImnageData: Uri? = data?.data

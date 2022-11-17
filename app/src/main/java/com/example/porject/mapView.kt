@@ -195,15 +195,16 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         binding.btnStart.setOnClickListener{
             if (checkPermissionForLocation(requireActivity())){
                 startLocationUpdates()
+                binding.chronometer.visibility = View.VISIBLE
+                binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
+                binding.chronometer.start()
+                binding.btnStart.visibility = View.INVISIBLE
+                binding.btnStop.visibility = View.VISIBLE
+                binding.onStop.visibility = View.INVISIBLE
+                binding.onGoing.visibility = View.VISIBLE
+                binding.onGoing.playAnimation()
             }
-            binding.chronometer.visibility = View.VISIBLE
-            binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
-            binding.chronometer.start()
-            binding.btnStart.visibility = View.INVISIBLE
-            binding.btnStop.visibility = View.VISIBLE
-            binding.onStop.visibility = View.INVISIBLE
-            binding.onGoing.visibility = View.VISIBLE
-            binding.onGoing.playAnimation()
+            else Toast.makeText(context, "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
         }
         binding.btnStop.setOnClickListener{
             if(startCheck){
@@ -225,6 +226,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                         "" + et.getText().toString(),
                         Toast.LENGTH_SHORT
                     ).show()
+                    val intent = Intent(context, walkingWrite::class.java)
+                    startActivity(intent)
                 }
                 builder.setNegativeButton(
                     "아니오"
@@ -248,10 +251,12 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         binding.extendedFloatingActionButton.setOnClickListener {
             /*val intent = Intent (this@mapView.context, Diet::class.java)
             startActivity(intent)*/
-            activity?.let {
-                val intent = Intent(it, Diet::class.java)
+            //val intent = Intent(context, walking::class.java)
+            //startActivity(intent)
+            /*activity?.let {
+                val intent = Intent(it, walking::class.java)
                 it.startActivity(intent)
-            }
+            }*/
         }
     }
     override fun onStop() {

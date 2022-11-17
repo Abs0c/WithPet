@@ -21,15 +21,13 @@ class MainActivity : AppCompatActivity() {
         setTitle("반려동물 관리어플")
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val intent = Intent(this, LoadingActivity::class.java)
-        startActivity(intent)
+
         val list = listOf(mapView(), myPet(), Diary(), myPage())
         val pagerAdapter = FragmentPagerAdapter(list, this)
         binding.viewPager.adapter = pagerAdapter
         val titles = listOf("산책", "마이 펫", "일기", "마이페이지")
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position -> tab.text = titles.get(position)}.attach()
         binding.viewPager.isUserInputEnabled = false
-
 
     }
 
@@ -40,9 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
     var time : Long = 0
     override fun onBackPressed() {
-
         if(System.currentTimeMillis() - time < 2000){
-            finish()
+            finishAffinity()
             return
         }
         else {

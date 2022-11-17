@@ -26,4 +26,5 @@
         android:layout_margin="20dp"
         android:backgroundTint="@color/black_shade_2"
         android:layout_alignParentRight="true"/>
+
 </RelativeLayout>
