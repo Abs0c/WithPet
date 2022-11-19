@@ -1,19 +1,23 @@
 package com.example.porject
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CalendarView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.porject.databinding.FragmentDiaryBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import kotlinx.android.synthetic.main.fragment_diary.*
+import kotlinx.android.synthetic.main.fragment_diary.view.*
+import java.util.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,16 +37,15 @@ class Diary : Fragment() {
     var userID: String = "userID"
     lateinit var fname: String
     lateinit var str: String
-    lateinit var calendarView: CalendarView
+    //    lateinit var calendarView: CalendarView
     lateinit var readBtn: Button
     lateinit var diaryTextView: TextView
     lateinit var diaryContent: TextView
     lateinit var title: TextView
     lateinit var binding: FragmentDiaryBinding;
 
-    private lateinit var auth: FirebaseAuth
 
-
+    lateinit var calendar: MaterialCalendarView
 
 
 
@@ -58,33 +61,44 @@ class Diary : Fragment() {
     ): View? {
 
 
+
+
         // Inflate the layout for this fragment
         binding = FragmentDiaryBinding.inflate(layoutInflater)
-        calendarView = binding.calendarView
+        calendar = binding.calendarView
         diaryTextView = binding.diaryTextView
         readBtn = binding.readBtn
         diaryContent = binding.diaryContent
         title = binding.title
 
 
+        // 날짜 선택시 그 숫자 아래에 점을 추가한다
+        calendar.setOnDateChangedListener(object: OnDateSelectedListener {
+            override fun onDateSelected(widget: MaterialCalendarView, date: CalendarDay, selected: Boolean) {
+                calendar.addDecorator(EventDecorator(Collections.singleton(date)))
+            }
+        })
+
+       calendar.addDecorators(
+           //일요일에 색칠하기
+           SundayDecorator(),
+           //토요일에 색칠하기
+           SaturdayDecorator(),
+           //오늘 날짜에 색칠하기
+           Decorator(),
+        )
+
+//        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+//            diaryTextView.visibility = View.VISIBLE
+//            readBtn.visibility = View.VISIBLE
+//
+//            diaryContent.visibility = View.INVISIBLE
+//            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
+////
+//        }
 
 
 
-
-        //펫리스트 일단 예시
-        val items = arrayOf<String>("뽀삐", "퉁퉁이")
-
-
-        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            diaryTextView.visibility = View.VISIBLE
-            readBtn.visibility = View.VISIBLE
-
-            diaryContent.visibility = View.INVISIBLE
-            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
-
-        }
-
-        val auth1 = Firebase.auth.currentUser
         binding.readBtn.setOnClickListener() {
 
             if (diaryTextView.text != ""){
