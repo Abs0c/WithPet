@@ -19,6 +19,8 @@ import com.example.porject.MyApplication.Companion.db
 import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import kotlinx.android.synthetic.main.pet_card_view.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +90,7 @@ class myPet : Fragment() {
                     startActivity(intent)
                 }
             }
+
         }
         return binding.root
     }
