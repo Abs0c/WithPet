@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.drawToBitmap
+import com.bumptech.glide.Glide
 import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.ActivityAddpetBinding
 import com.google.firebase.firestore.CollectionReference
@@ -25,12 +26,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_loading.*
 import java.io.ByteArrayOutputStream
 import java.net.URL
 
 class AddpetActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddpetBinding
     var imagepicked = false
+    var gotextra = false
+    val useruid = MyApplication.auth.currentUser?.uid
+    val db = FirebaseFirestore.getInstance()
+    var storage = MyApplication.storage
+    var storageRef: StorageReference = storage.reference
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int{
         val options = BitmapFactory.Options()
@@ -39,7 +46,6 @@ class AddpetActivity : AppCompatActivity() {
             var inputStream = contentResolver.openInputStream(fileUri)
             BitmapFactory.decodeStream(inputStream, null, options)
             inputStream!!.close()
-            inputStream = null
         } catch (e: Exception){
             e.printStackTrace()
         }
@@ -65,6 +71,19 @@ class AddpetActivity : AppCompatActivity() {
         val toolbar3 = findViewById<Toolbar>(R.id.toolbar3)
         setSupportActionBar(toolbar3)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val getextrapetname= intent.getStringExtra("petname")
+        val getextrapettype= intent.getStringExtra("pettype")
+        val getdocuname= intent.getStringExtra("docuname")
+        if (getextrapetname != "" && getextrapettype != ""){
+            binding.addPetNameEdittext.setText(getextrapetname)
+            binding.addPetTypeEdittext.setText(getextrapettype)
+            storageRef.child("images/" + useruid + "/" + getextrapetname+ ".jpg").downloadUrl.addOnSuccessListener{
+                    Uriresult ->
+                Glide.with(this).load(Uriresult).into(binding.addPetImageView)
+                imagepicked = true
+            }
+            gotextra = true
+        }
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
                 val calRatio = calculateInSampleSize(it!!.data!!.data!!, 16,16)
@@ -107,7 +126,9 @@ class AddpetActivity : AppCompatActivity() {
                 val petimage = getBitmapFromView(binding.addPetImageView)
                 val petname = binding.addPetNameEdittext.text.toString()
                 val pettype = binding.addPetTypeEdittext.text.toString()
-                saveStore(petimage, petname, pettype)
+                if (getdocuname != null && getextrapetname != null) {
+                    saveStore(petimage, petname, pettype, getextrapetname, getdocuname)
+                }
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 this.finish()
@@ -115,28 +136,32 @@ class AddpetActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveStore(petimage: Bitmap, petname: String, pettype: String){
-        val useruid = MyApplication.auth.currentUser?.uid
+    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, getpetname:String, docuname: String){
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
-        val db = FirebaseFirestore.getInstance()
-        val colRef = db.collection("pets")
         uploadImage(petname, imagedata)
         var data = myPetType(petname, pettype, useruid.toString())
-        colRef.add(data)
-            .addOnSuccessListener{
-                Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT)
+        val colRef = db.collection("pets")
+        if (gotextra == false){
+            colRef.add(data)
+                .addOnSuccessListener{
+                    Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener() {
+                    Toast.makeText(this,"에러", Toast.LENGTH_SHORT).show()
+                }
+        }
+        else{
+            storage.reference.child("images/"+useruid+"/"+ getpetname+".jpg").delete()
+            db.document(docuname).update("petName", data.petName, "petType", data.petType, "userUID", useruid).
+            addOnSuccessListener {
+                Toast.makeText(this,"정보 갱신 완료", Toast.LENGTH_SHORT)
             }
-            .addOnFailureListener() {
-                Log.w("에러", it)
-                Toast.makeText(this,"에러", Toast.LENGTH_SHORT)
-            }
+        }
     }
 
     private fun uploadImage(docId: String, data: ByteArray){
-        var storage = MyApplication.storage
-        var storageRef: StorageReference = storage.reference
         val useruid = MyApplication.auth.currentUser?.uid
         var imgRef: StorageReference = storageRef.child("images/"+useruid+"/"+docId+".jpg")
         var uploadTask = imgRef.putBytes(data)

@@ -30,18 +30,37 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(position)
         val item = myPetList[position]
+        val getpetName = item.petName
+        val getpetType = item.petType
+        val getuserUid = item.userUID
+        var docu = ""
 
         holder.itemView.setOnClickListener{
-            Toast.makeText(context, item.petName + " " + item.petType + " " + item.userUID, Toast.LENGTH_SHORT).show()
+            db.collection("pets").get().addOnSuccessListener { result ->
+                for (document in result) {
+                    if ((document["petName"] as String) != getpetName) {
+                        continue
+                    }
+                    if ((document["petType"] as String) != getpetType) {
+                        continue
+                    }
+                    if ((document["userUID"] as String?) != getuserUid) {
+                        continue
+                    }
+                    docu = document.reference.path
+                    val intent = Intent(context, AddpetActivity::class.java)
+                    intent.putExtra("petname", getpetName)
+                    intent.putExtra("pettype", getpetType)
+                    intent.putExtra("docuname", docu)
+                    context.startActivity(intent)
+                    break
+                }
+            }
         }
 
         holder.petdelbtn.setOnClickListener{
-            var docu = ""
             db.collection("pets").get().addOnSuccessListener {result ->
                 for((i, document) in result.withIndex()){
-                    val getpetName = item.petName
-                    val getpetType = item.petType
-                    val getuserUid = item.userUID
                     if ((document["petName"] as String) != getpetName) {
                         continue
                     }
