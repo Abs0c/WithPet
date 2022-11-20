@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
@@ -40,6 +41,7 @@ import java.util.*
 
 val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 val PERMISSIONS_REQUEST_CODE = 100
+lateinit var bitmap : Bitmap
 class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationListener {
     lateinit var binding: FragmentMapViewBinding
     lateinit var mView: MapView
@@ -119,7 +121,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         }
     }
     // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
-    val polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
+    var polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
     var startCheck = false
     override fun onLocationChanged(location: Location) {
         Log.d(ContentValues.TAG, "onLocationChanged()")
@@ -133,6 +135,15 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         if(startCheck == false){
             val marker = com.google.android.gms.maps.model.LatLng(mLastLocation.latitude, mLastLocation.longitude)
             gMap.addMarker(MarkerOptions().position(marker).title("시작 지점"))
+            binding.locationLoading.visibility = View.INVISIBLE
+            binding.chronometer.visibility = View.VISIBLE
+            binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
+            binding.chronometer.start()
+            binding.btnStart.visibility = View.INVISIBLE
+            binding.btnStop.visibility = View.VISIBLE
+            binding.onStop.visibility = View.INVISIBLE
+            binding.onGoing.visibility = View.VISIBLE
+            binding.onGoing.playAnimation()
             startCheck = true
         }
         binding.txtTime.text = "Updated at : " + simpleDateFormat.format(date) // 갱신된 날짜
@@ -193,18 +204,23 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         mView.onStart()
         binding.btnStart.setOnClickListener{
             if (checkPermissionForLocation(requireActivity())){
+                polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
+                gMap.clear()
                 startLocationUpdates()
-                binding.chronometer.visibility = View.VISIBLE
+                binding.locationLoading.visibility = View.VISIBLE
+                binding.locationLoading.playAnimation()
+                /*binding.chronometer.visibility = View.VISIBLE
                 binding.chronometer.base = SystemClock.elapsedRealtime() + pauseTime
                 binding.chronometer.start()
                 binding.btnStart.visibility = View.INVISIBLE
                 binding.btnStop.visibility = View.VISIBLE
                 binding.onStop.visibility = View.INVISIBLE
                 binding.onGoing.visibility = View.VISIBLE
-                binding.onGoing.playAnimation()
+                binding.onGoing.playAnimation()*/
             }
             else Toast.makeText(context, "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
         }
+
         binding.btnStop.setOnClickListener{
             if(startCheck){
                 Toast.makeText(context, "산책을 종료합니다!!!", Toast.LENGTH_SHORT).show()
@@ -225,8 +241,14 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                         "" + et.getText().toString(),
                         Toast.LENGTH_SHORT
                     ).show()
-                    val intent = Intent(context, AddEitNoteActivity::class.java)
-                    startActivity(intent)
+                    gMap.snapshot {
+                        it?.let {
+                            var intent = Intent(context, AddEitNoteActivity::class.java)
+                            bitmap = it
+                            intent.putExtra("check", true)
+                            startActivity(intent)
+                        }
+                    }
                 }
                 builder.setNegativeButton(
                     "아니오"

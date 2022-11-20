@@ -85,6 +85,6 @@ dependencies {
     implementation "com.airbnb.android:lottie:3.6.1"
     // 라디오 버튼
     implementation 'com.github.channguyen:rsv:1.0.1'
-
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
 }

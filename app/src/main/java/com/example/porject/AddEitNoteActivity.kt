@@ -58,8 +58,6 @@ class AddEitNoteActivity : AppCompatActivity() {
             .get(NoteViewModel::class.java)
         val imgbtn = findViewById<ImageView>(R.id.imBtn2)
 
-
-
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
                 val calRatio = calculateInSampleSize(it!!.data!!.data!!, 64,64)
@@ -79,7 +77,11 @@ class AddEitNoteActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
+        var bitmapcheck = false
+        bitmapcheck = intent.getBooleanExtra("check", false)
+        if(bitmapcheck){
+            imgbtn.setImageBitmap(bitmap)
+        }
         imgbtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
