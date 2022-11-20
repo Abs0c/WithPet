@@ -6,12 +6,16 @@ import android.app.job.JobInfo
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.startActivity
@@ -53,24 +57,51 @@ class AddEitNoteActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
             .get(NoteViewModel::class.java)
         val imgbtn = findViewById<ImageView>(R.id.imBtn2)
-        imgbtn.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.setType("image/*")
-            startActivityForResult(intent, GALLERY)
+
+
+
+        val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            try{
+                val calRatio = calculateInSampleSize(it!!.data!!.data!!, 64,64)
+                val option = BitmapFactory.Options()
+                option.inSampleSize = calRatio
+
+                var inputStream = contentResolver.openInputStream(it!!.data!!.data!!)
+                var bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+                inputStream!!.close()
+                //bitmap에 이미지 저장완료
+                bitmap?. let{
+                    imgbtn.setImageBitmap(bitmap)
+                } ?: let{
+                    Log.d("error", "bitmap null")
+                }
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
         }
+
+        imgbtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.type = "image/*"
+            requestGalleryLauncher.launch(intent)
+        }
+
         val noteType = intent.getStringExtra("noteType")
         if(noteType.equals("Edit")){
             val noteTitle = intent.getStringExtra("noteTitle")
             val noteDesc = intent.getStringExtra("noteDescription")
-            //val noteImg = intent.getByteArrayExtra("noteImg")
+            val noteImg= intent.getByteArrayExtra("noteImage")
             noteID = intent.getIntExtra("noteID", -1)
             addUpdateBtn.setText("기록 변경")
             noteTitleEdt.setText(noteTitle)
             noteDescriptionEdt.setText(noteDesc)
-            /*if (noteImg != null) {
-                btmap = BitmapFactory.decodeByteArray(noteImg, 0, noteImg.size)
-            }
-            Img.setImageBitmap(btmap)*/
+            val option = BitmapFactory.Options()
+            var bitmap = noteImg?.let { BitmapFactory.decodeByteArray(noteImg, 0, it.size) }
+            imgbtn.setImageBitmap(bitmap)
+            //if (noteImg != null) {
+            //    btmap = BitmapFactory.decodeByteArray(noteImg, 0, noteImg.size)
+            //}
+            //Img.setImageBitmap(btmap)
         }else{
             addUpdateBtn.setText("기록 저장")
         }
@@ -79,12 +110,16 @@ class AddEitNoteActivity : AppCompatActivity() {
             val noteTitle = noteTitleEdt.text.toString()
             val noteDescription = noteDescriptionEdt.text.toString()
             //val byte1: ByteArray = imageToBitmap(imgbtn)
+            val bytebitmap: Bitmap = getBitmapFromView(imgbtn)
+            val baos = ByteArrayOutputStream()
+            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+            val bytearrayfrombitmap: ByteArray = baos.toByteArray()
 
             if(noteType.equals("Edit")){
                 if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty()){
                     val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
                     val currentDate:String = sdf.format(Date())
-                    val updateNote = Note(noteTitle, noteDescription, currentDate)//, byte1)
+                    val updateNote = Note(noteTitle, noteDescription, currentDate, bytearrayfrombitmap)//, byte1)
                     updateNote.id = noteID
                     viewModel.updateNote(updateNote)
                     Toast.makeText(this, "기록 업데이트중..", Toast.LENGTH_LONG).show()
@@ -94,7 +129,7 @@ class AddEitNoteActivity : AppCompatActivity() {
                 {
                     val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
                     val currentDate:String = sdf.format(Date())
-                    viewModel.addNote(Note(noteTitle,noteDescription, currentDate))//, byte1))
+                    viewModel.addNote(Note(noteTitle,noteDescription, currentDate, bytearrayfrombitmap))//, byte1))
                     Toast.makeText(this, "기록 추가중..", Toast.LENGTH_LONG).show()
                 }
             }
@@ -146,5 +181,34 @@ class AddEitNoteActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int{
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        try{
+            var inputStream = contentResolver.openInputStream(fileUri)
+            BitmapFactory.decodeStream(inputStream, null, options)
+            inputStream!!.close()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        val (height: Int, width: Int) = options.run {outHeight to outWidth}
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth){
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap{
+        var bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        var canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
     }
 }

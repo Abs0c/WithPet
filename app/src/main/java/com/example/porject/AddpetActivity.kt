@@ -20,7 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.drawToBitmap
 import com.bumptech.glide.Glide
 import com.example.porject.MyApplication.Companion.storage
-import com.example.porject.databinding.ActivityAddpetBinding
+import com.example.porject.databinding.ActivityAddPetBinding
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -31,7 +31,7 @@ import java.io.ByteArrayOutputStream
 import java.net.URL
 
 class AddpetActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAddpetBinding
+    lateinit var binding: ActivityAddPetBinding
     var imagepicked = false
     var gotextra = false
     val useruid = MyApplication.auth.currentUser?.uid
@@ -65,7 +65,7 @@ class AddpetActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddpetBinding.inflate(layoutInflater)
+        binding = ActivityAddPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("강아지 등록")
         val toolbar3 = findViewById<Toolbar>(R.id.toolbar3)
@@ -84,6 +84,7 @@ class AddpetActivity : AppCompatActivity() {
             }
             gotextra = true
         }
+
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
                 val calRatio = calculateInSampleSize(it!!.data!!.data!!, 64,64)

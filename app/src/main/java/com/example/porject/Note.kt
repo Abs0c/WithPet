@@ -12,7 +12,7 @@ class Note (
     @ColumnInfo(name = "title")val noteTitle:String,
     @ColumnInfo(name= "description")val noteDescription: String,
     @ColumnInfo(name = "timestamp")val timestamp: String,
-    //@ColumnInfo(name = "image")val noteImage: ByteArray
+    @ColumnInfo(name = "image")val noteImage: ByteArray
     ){
     @PrimaryKey(autoGenerate = true)
     var id = 0
