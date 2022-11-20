@@ -66,14 +66,12 @@
             android:id="@+id/locationLoading"
             android:layout_width="95dp"
             android:layout_height="87dp"
-            android:layout_marginBottom="40dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:lottie_loop="true"
-            android:visibility="invisible"
-            app:lottie_rawRes="@raw/locationloading">
-        </com.airbnb.lottie.LottieAnimationView>
+            app:lottie_rawRes="@raw/locationloading"></com.airbnb.lottie.LottieAnimationView>
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

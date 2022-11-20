@@ -211,6 +211,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
                 gMap.clear()
                 startLocationUpdates()
+                binding.btnStart.visibility = View. INVISIBLE
                 binding.locationLoading.visibility = View.VISIBLE
                 binding.locationLoading.playAnimation()
                 /*binding.chronometer.visibility = View.VISIBLE
