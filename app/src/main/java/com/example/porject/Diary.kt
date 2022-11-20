@@ -1,6 +1,5 @@
 package com.example.porject
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +13,6 @@ import com.example.porject.databinding.FragmentDiaryBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
-import kotlinx.android.synthetic.main.fragment_diary.*
-import kotlinx.android.synthetic.main.fragment_diary.view.*
 import java.util.*
 
 
@@ -42,7 +39,8 @@ class Diary : Fragment() {
     lateinit var diaryTextView: TextView
     lateinit var diaryContent: TextView
     lateinit var title: TextView
-    lateinit var binding: FragmentDiaryBinding;
+    lateinit var binding: FragmentDiaryBinding
+    //lateinit var allNotes: LiveData<List<Note>>
 
 
     lateinit var calendar: MaterialCalendarView
@@ -51,6 +49,7 @@ class Diary : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -60,7 +59,10 @@ class Diary : Fragment() {
 
     ): View? {
 
-
+        //allNotes = NoteRepository(Room.databaseBuilder(TestActivity().applicationContext, NoteDatabase::class.java, "note_database").build().getNotesDao()).allNotes
+        //val dao = NoteDatabase.getDatabase(TestActivity().apply { startActivity(Intent(this, TestActivity::class.java)) }.application).getNotesDao()
+        //allNotes = dao?.let { NoteRepository(it).allNotes }!!
+        //Toast.makeText(context, allNotes.value.toString(), Toast.LENGTH_SHORT).show()
 
 
         // Inflate the layout for this fragment

@@ -2,27 +2,24 @@ package com.example.porject
 
 
 import android.app.Activity
-import android.app.job.JobInfo
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.firestore.v1.Cursor
-import kotlinx.android.synthetic.main.activity_add_eit_note.*
-import kotlinx.android.synthetic.main.activity_loading.*
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -116,11 +113,12 @@ class AddEitNoteActivity : AppCompatActivity() {
             val baos = ByteArrayOutputStream()
             bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
             val bytearrayfrombitmap: ByteArray = baos.toByteArray()
+            val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
+            val currentDate:String = sdf.format(Date())
 
             if(noteType.equals("Edit")){
                 if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty()){
-                    val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
-                    val currentDate:String = sdf.format(Date())
+
                     val updateNote = Note(noteTitle, noteDescription, currentDate, bytearrayfrombitmap)//, byte1)
                     updateNote.id = noteID
                     viewModel.updateNote(updateNote)
@@ -129,12 +127,15 @@ class AddEitNoteActivity : AppCompatActivity() {
             }else{
                 if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty())
                 {
-                    val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
-                    val currentDate:String = sdf.format(Date())
                     viewModel.addNote(Note(noteTitle,noteDescription, currentDate, bytearrayfrombitmap))//, byte1))
                     Toast.makeText(this, "기록 추가중..", Toast.LENGTH_LONG).show()
                 }
             }
+            val arr = currentDate.split(" ")
+            val parsedyear = arr.get(2)
+            val parsedmonth = arr.get(1).split(",").get(0)
+            val parsedday = arr.get(0)
+            Toast.makeText(this, parsedyear + " " + parsedmonth + " " + parsedday, Toast.LENGTH_SHORT).show()
             startActivity(Intent(applicationContext, TestActivity::class.java))
             this.finish()
         }

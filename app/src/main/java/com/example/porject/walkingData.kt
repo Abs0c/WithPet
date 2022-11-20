@@ -1,7 +1,6 @@
 package com.example.porject
 
-import androidx.room.*
-import com.google.gson.Gson
+//import com.google.gson.Gson
 
 /*@Entity(tableName = "walkingTable")
 class walkingData (@PrimaryKey
