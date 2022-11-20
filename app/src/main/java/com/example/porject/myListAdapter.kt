@@ -53,6 +53,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     intent.putExtra("pettype", getpetType)
                     intent.putExtra("docuname", docu)
                     context.startActivity(intent)
+                    notifyDataSetChanged()
                     break
                 }
             }

@@ -86,7 +86,7 @@ class AddpetActivity : AppCompatActivity() {
         }
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
-                val calRatio = calculateInSampleSize(it!!.data!!.data!!, 16,16)
+                val calRatio = calculateInSampleSize(it!!.data!!.data!!, 64,64)
                 val option = BitmapFactory.Options()
                 option.inSampleSize = calRatio
 
@@ -173,7 +173,6 @@ class AddpetActivity : AppCompatActivity() {
             Log.d("success!", "success!")
             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun getBitmapFromView(view: View): Bitmap{

@@ -10,21 +10,6 @@
         android:layout_height="match_parent"
         tools:context=".User.MyPage">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_Diet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/button_rectangle"
-            android:textAlignment="center"
-            android:text="식단 관리"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/need_login" />
-
         <TextView
             android:id="@+id/MyPage"
             android:layout_width="101dp"
@@ -50,6 +35,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -70,7 +56,8 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Diet" />
+            app:layout_constraintTop_toBottomOf="@+id/need_login"
+            app:layout_constraintBottom_toTopOf="@id/mytool"/>
 
         <LinearLayout
             android:id="@+id/mytool"
@@ -80,7 +67,8 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintBottom_toTopOf="@id/infobar">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_info"
@@ -93,6 +81,16 @@
                 android:background="@drawable/button_rectangle"
                 android:gravity="left|center_vertical"
                 android:text="공지사항" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Diet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_rectangle"
+                android:textAlignment="center"
+                android:text="식단 관리"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_help"
@@ -130,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:text="반려견 산책 및 관리" />
+                android:text="펫과 함께 (반려동물 관리 어플)"/>
 
             <TextView
                 android:layout_width="match_parent"
