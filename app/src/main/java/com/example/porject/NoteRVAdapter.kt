@@ -15,7 +15,8 @@ import org.w3c.dom.Text
 
 class NoteRVAdapter(val context: Context,
                     val noteClickInterface: NoteClickInterface,
-                    val noteCLickDeleteInterface: NoteCLickDeleteInterface
+                    val noteCLickDeleteInterface: NoteCLickDeleteInterface,
+                    val ImageClickInterface: ImageClickInterface
                     ) : RecyclerView.Adapter<NoteRVAdapter.ViewHolder>(){
 
     private val items = ArrayList<Note>()
@@ -50,6 +51,12 @@ class NoteRVAdapter(val context: Context,
         holder.detail.setOnClickListener {
             holder.setLayoutType(1)
         }
+        holder.imag.setOnClickListener {
+            ImageClickInterface.ImageClick(items.get(position))
+        }
+        holder.imag2.setOnClickListener {
+            ImageClickInterface.ImageClick(items.get(position))
+        }
         holder.detail2.setOnClickListener {
             holder.setLayoutType(0)
         }
@@ -57,8 +64,8 @@ class NoteRVAdapter(val context: Context,
             noteCLickDeleteInterface.onDeleteIconClick(items.get(position))
         }
         holder.itemView.setOnClickListener{
-            noteClickInterface.onNoteClick(items.get(position))
             //Toast.makeText(context, "${items.get(position)}", Toast.LENGTH_SHORT)
+            noteClickInterface.onNoteClick(items.get(position))
         }
     } // 데이터 뷰홀더에 바인딩
     fun switchLayout(position: Int){
@@ -87,6 +94,10 @@ class NoteRVAdapter(val context: Context,
         val detail2 = itemView.findViewById<ImageView>(R.id.idIVDetail2)
         val date1 = itemView.findViewById<TextView>(R.id.dateText)
         val date2 = itemView.findViewById<TextView>(R.id.dateTextView2)
+
+        val imag = itemView.findViewById<ImageView>(R.id.moodImageView)
+        val imag2 = itemView.findViewById<ImageView>(R.id.mapImage)
+
 
 
         fun bind(item: Note){
@@ -206,4 +217,7 @@ interface NoteCLickDeleteInterface{
 
 interface NoteClickInterface{
     fun onNoteClick(note: Note)
+}
+interface ImageClickInterface{
+    fun ImageClick(note: Note)
 }

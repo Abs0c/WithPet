@@ -21,8 +21,5 @@ class walking : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWalkingBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_walking)
-
     }
-
-
 }

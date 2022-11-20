@@ -32,16 +32,17 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
+import java.lang.Math.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.pow
 
 val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 val PERMISSIONS_REQUEST_CODE = 100
 lateinit var bitmap : Bitmap
+private const val R = 6372.8 * 1000
 class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationListener {
     lateinit var binding: FragmentMapViewBinding
     lateinit var mView: MapView
@@ -123,6 +124,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     // 시스템으로 부터 받은 위치정보를 화면에 갱신해주는 메소드
     var polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
     var startCheck = false
+    var latLnglist = arrayListOf<LatLng>()
     override fun onLocationChanged(location: Location) {
         Log.d(ContentValues.TAG, "onLocationChanged()")
         mLastLocation = location
@@ -131,6 +133,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         val latLng = LatLng(mLastLocation.latitude, mLastLocation.longitude)
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
         polyLineOptions.add(latLng)
+        latLnglist.add(latLng)
         gMap.addPolyline(polyLineOptions)
         if(startCheck == false){
             val marker = com.google.android.gms.maps.model.LatLng(mLastLocation.latitude, mLastLocation.longitude)
@@ -171,7 +174,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMapViewBinding.inflate(inflater, container, false)
-        mView = binding.root.findViewById(R.id.viewMap) as MapView
+        //mView = binding.root.findViewById(R.id.viewMap) as MapView
+        mView = binding.viewMap
         mView.onCreate(savedInstanceState)
         mView.getMapAsync(this)
         return binding.root
@@ -226,12 +230,17 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 Toast.makeText(context, "산책을 종료합니다!!!", Toast.LENGTH_SHORT).show()
                 pauseTime = SystemClock.elapsedRealtime() - binding.chronometer.base
                 stoplocationUpdates()
+                var discance = 0
+                for(i in 0 until (latLnglist.size - 1)){
+                    discance += getDistance(latLnglist[i].latitude, latLnglist[i].longitude,latLnglist[i+1].latitude, latLnglist[i+1].longitude)
+                }
+                latLnglist.clear()
                 binding.chronometer.stop()
                 val et = EditText(context)
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("오늘 하루를 작성하세요!!!")
                 builder.setMessage("내용")
-                builder.setMessage("산책 시간: " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초")
+                builder.setMessage("산책 시간: " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초 \n이동거리 : $discance m")
                 builder.setView(et) //AlertDialog에 적용하기
                 builder.setPositiveButton(
                     "예"
@@ -299,6 +308,13 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     override fun onDestroy() {
         mView.onDestroy()
         super.onDestroy()
+    }
+    fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Int {
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
+        val c = 2 * asin(sqrt(a))
+        return (R * c).toInt()
     }
 }
 

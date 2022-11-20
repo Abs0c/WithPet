@@ -27,6 +27,7 @@
             android:layout_marginLeft="8dp"
             android:padding="5dp"
             android:scaleType="centerCrop"
+            android:transitionName="imgTrans"
             app:srcCompat="@drawable/img1" />
 
         <LinearLayout
@@ -48,10 +49,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
-
-
-
-
 
 
                 <TextView

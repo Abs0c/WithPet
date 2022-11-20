@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_shade_1"
     tools:context=".Diet">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,19 +14,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".User.MyPage">
+        android:layout_height="match_parent">
 
 
         <TextView
             android:id="@+id/Diet_title"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="317dp"
+            android:layout_height="65dp"
             android:layout_marginTop="44dp"
+            android:background="@drawable/style1"
             android:gravity="center"
             android:text="강아지 식단 계산기"
-            android:textSize="45dp"
+            android:textSize="30dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,9 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="84dp"
-            android:background="#FFFFFF"
+            android:background="@color/black_shade_1"
             android:gravity="center"
             android:text="0"
+
             android:textAlignment="center"
             android:textSize="50dp"
             android:textStyle="bold"
@@ -49,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="84dp"
-            android:background="#FFFFFF"
+            android:background="@color/black_shade_1"
             android:gravity="center"
             android:text="kcal"
             android:textAlignment="center"
@@ -63,13 +66,11 @@
 
         <LinearLayout
             android:id="@+id/Calculation_numbers"
-            android:layout_width="418dp"
-            android:layout_height="198dp"
-            android:layout_marginTop="72dp"
+            android:layout_width="357dp"
+            android:layout_height="139dp"
+            android:background="@drawable/style1"
             android:orientation="vertical"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calculation">
 
@@ -83,9 +84,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="강아지의 몸무게"
                     android:gravity="center"
-                    android:textSize="30dp"
+                    android:text="강아지의 몸무게"
+                    android:textSize="25dp"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <EditText
@@ -94,18 +95,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="#FFFFFF"
+                    android:background="@color/black_shade_2"
                     android:ems="5"
                     android:gravity="center"
+                    android:hint="0"
                     android:inputType="numberDecimal"
                     android:maxLength="5"
                     android:maxLines="1"
                     android:minEms="1"
                     android:singleLine="true"
-                    android:hint="0"
 
-                    android:textSize="30dp"
-                    />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,13 +125,13 @@
 
                 <TextView
                     android:id="@+id/dog_text"
-                    android:layout_width="203dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="202dp"
+                    android:layout_height="46dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:text="강아지의 상태"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <Spinner
@@ -141,9 +141,10 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
-                    android:background="#DDDBDB"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:textSize="30dp"
+
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
@@ -155,10 +156,10 @@
             android:id="@+id/sumBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
             android:background="@drawable/button_rectangle"
-            android:text="계산하기"
             android:drawableLeft="@drawable/calculator"
+            android:text="계산하기"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Calculation_numbers" />

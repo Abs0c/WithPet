@@ -1,6 +1,10 @@
 package com.example.porject
 
+import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Picture
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -12,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
-class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface{
+lateinit var Picture : Bitmap
+class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface{
     lateinit var notesRV:RecyclerView
     lateinit var addFAB: FloatingActionButton
     lateinit var viewModel: NoteViewModel
@@ -35,7 +39,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         addFAB = findViewById(R.id.idFABAddNote)
         notesRV.layoutManager = LinearLayoutManager(this)
 
-        val noteRVAdapter = NoteRVAdapter(this, this, this)
+        val noteRVAdapter = NoteRVAdapter(this, this, this, this)
         notesRV.adapter = noteRVAdapter
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(this, Observer { list -> list?.let{
@@ -47,7 +51,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
             startActivity(intent)
             this.finish()
         }
-        adapter = NoteRVAdapter(this, this, this)
+        adapter = NoteRVAdapter(this, this, this, this)
         adapter.switchLayout(1)
     }
     override fun onDeleteIconClick(note: Note) {
@@ -70,6 +74,18 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun ImageClick(note: Note) {
+        Picture = BitmapFactory.decodeByteArray(note.noteImage, 0, note.noteImage.size)
+        val intent = Intent(this, ViewActivity::class.java)
+        startActivity(intent)
+
+    }
+    fun clickEvent(view : View){
+        val intent = Intent(this, ViewActivity::class.java)
+        val opt = ActivityOptions.makeSceneTransitionAnimation(this, view, "img_trans")
+        startActivity(intent, opt.toBundle())
     }
 
 }
