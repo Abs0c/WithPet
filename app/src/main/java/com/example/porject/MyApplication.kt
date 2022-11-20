@@ -1,11 +1,9 @@
 package com.example.porject
 
-import android.provider.MediaStore
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -21,12 +19,7 @@ class MyApplication : MultiDexApplication(){
             var currentUser = auth.currentUser
             return currentUser?.let{
                 email = currentUser.email
-                if(currentUser.isEmailVerified){
-                    true
-                }
-                else{
-                    false
-                }
+                currentUser.isEmailVerified
             }
                 ?:let{
                     false
