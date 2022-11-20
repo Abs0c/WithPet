@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.walking_list.view.*
+import org.w3c.dom.Text
 
 class NoteRVAdapter(val context: Context,
                     val noteClickInterface: NoteClickInterface,
@@ -32,7 +33,7 @@ class NoteRVAdapter(val context: Context,
         }
     } // 아이템 추가
     fun onNoteClick(note: Note){
-        Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
@@ -43,6 +44,8 @@ class NoteRVAdapter(val context: Context,
         val item = items[position]
         holder.bind(item)
         holder.setLayoutType(layoutType)
+        holder.date1.setText("작성 날짜 : " + item.timestamp )
+        holder.date2.setText(item.timestamp)
         holder.detail.setOnClickListener {
             holder.setLayoutType(1)
         }
@@ -54,7 +57,7 @@ class NoteRVAdapter(val context: Context,
         }
         holder.itemView.setOnClickListener{
             noteClickInterface.onNoteClick(items.get(position))
-            Toast.makeText(context, "${items.get(position)}", Toast.LENGTH_SHORT)
+            //Toast.makeText(context, "${items.get(position)}", Toast.LENGTH_SHORT)
         }
     } // 데이터 뷰홀더에 바인딩
     fun switchLayout(position: Int){
@@ -81,6 +84,10 @@ class NoteRVAdapter(val context: Context,
         val deletIV = itemView.findViewById<ImageView>(R.id.idIVDelete)
         val detail = itemView.findViewById<ImageView>(R.id.idIVDetail)
         val detail2 = itemView.findViewById<ImageView>(R.id.idIVDetail2)
+        val date1 = itemView.findViewById<TextView>(R.id.dateText)
+        val date2 = itemView.findViewById<TextView>(R.id.dateTextView2)
+
+
         fun bind(item: Note){
             /*var mood = item.mood
             var moodIndex = Integer.parseInt(mood)
@@ -103,7 +110,7 @@ class NoteRVAdapter(val context: Context,
             /*var weather = item.weather
             var weatherIndex = Integer.parseInt(weather)
             setWeatherImage(weatherIndex) // 날씨 설정*/
-            itemView.contentsTextView.text = item.noteDescription
+            itemView.contentsTextView.text = item.noteTitle
             itemView.contentsTextView2.text = item.noteDescription
             // 텍스트 설정
 
@@ -111,7 +118,7 @@ class NoteRVAdapter(val context: Context,
 
         }
 
-        fun setMoodImage( moodIndex : Int){
+        /*fun setMoodImage( moodIndex : Int){
             when(moodIndex){
                 0 -> {
                     itemView.moodImageView.setImageResource(R.drawable.smile1_48)
@@ -138,9 +145,9 @@ class NoteRVAdapter(val context: Context,
                     itemView.moodImageView2.setImageResource(R.drawable.smile3_48)
                 }
             }
-        } // moodIndex에 따른 기분 이미지 출력
+        } // moodIndex에 따른 기분 이미지 출력*/
 
-        fun setWeatherImage(weatherIndex : Int){
+        /*fun setWeatherImage(weatherIndex : Int){
             when(weatherIndex){
                 0 -> {
                     itemView.weatherImageView.setImageResource(R.drawable.weather_icon_1)
@@ -175,7 +182,7 @@ class NoteRVAdapter(val context: Context,
                     itemView.weatherImageView2.setImageResource(R.drawable.weather_icon_1)
                 }
             }
-        }
+        }*/
         fun setLayoutType(layoutType: Int){
             if( layoutType == 0){
                 itemView.layout1.visibility = View.VISIBLE

@@ -9,30 +9,24 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbar"/>
-    <RelativeLayout
-        android:id="@+id/topLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="4dp">
+        android:id="@+id/toolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일기 작성하기"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+    </androidx.appcompat.widget.Toolbar>
 
-        <ImageView
-            android:id="@+id/weatherIcon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/weather_1" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/contentsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topLayout"
-        android:layout_above="@+id/moodLayout" >
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/moodLayout">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -44,20 +38,30 @@
             android:layout_alignParentTop="true"
             app:cardBackgroundColor="#FFFFFFFF"
             app:cardCornerRadius="10dp"
-            app:cardElevation="5dp" >
+            app:cardElevation="5dp"
+            android:id="@+id/card1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/idEdtNoteTitle"
+                    android:hint="제목을 입력하세요."
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"/>
 
                 <EditText
                     android:id="@+id/idEdtNoteDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="103dp"
-                    android:hint="내용 입력"
-                    android:maxLines="1"
-                    android:textSize="32sp" />
+                    android:layout_gravity="start|top"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:hint="내용을 입력하세요.(최대 2000자까지 가능) "
+                    android:singleLine="false"
+                    android:inputType="textMultiLine" />
 
                 <ImageView
                     android:id="@+id/imBtn2"
@@ -71,6 +75,19 @@
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/moodLayout"
+        android:layout_above="@id/bottomLayout">
+        <ImageView
+            android:id="@+id/imBtn3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/imagetoset" />
+    </LinearLayout>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/moodLayout"
         android:layout_width="match_parent"
@@ -82,7 +99,7 @@
         android:layout_above="@+id/bottomLayout"
         app:cardBackgroundColor="#FFFFFFFF"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp" >
+        app:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"

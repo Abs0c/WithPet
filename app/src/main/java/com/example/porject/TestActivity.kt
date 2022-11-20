@@ -55,7 +55,14 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         Toast.makeText(this, "${note.noteTitle} 삭제됨", Toast.LENGTH_LONG).show()
     }
     override fun onNoteClick(note: Note) {
-
+        val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
+        intent.putExtra("noteType", "Edit")
+        intent.putExtra("noteTitle", note.noteTitle)
+        intent.putExtra("noteDescription", note.noteDescription)
+        //intent.putExtra("image",note.noteImage)
+        intent.putExtra("noteID", note.id)
+        startActivity(intent)
+        this.finish()
     }
 
 }

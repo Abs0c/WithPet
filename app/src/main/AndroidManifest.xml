@@ -27,9 +27,7 @@
         <activity
             android:name=".walkingWrite"
             android:exported="true" />
-        <activity
-            android:name=".walking"
-            android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -61,10 +59,7 @@
             android:name=".AddpetActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".EditText1"
-            android:exported="true"
-            android:theme="@style/Theme.Design.NoActionBar" />
+
         <activity
             android:name=".DiaryPet"
             android:exported="true" />
