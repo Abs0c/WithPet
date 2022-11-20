@@ -1,6 +1,7 @@
 package com.example.porject
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -86,6 +87,7 @@ class NoteRVAdapter(val context: Context,
         val detail2 = itemView.findViewById<ImageView>(R.id.idIVDetail2)
         val date1 = itemView.findViewById<TextView>(R.id.dateText)
         val date2 = itemView.findViewById<TextView>(R.id.dateTextView2)
+        val imag = itemView.findViewById<ImageView>(R.id.moodImageView)
 
 
         fun bind(item: Note){
@@ -110,8 +112,12 @@ class NoteRVAdapter(val context: Context,
             /*var weather = item.weather
             var weatherIndex = Integer.parseInt(weather)
             setWeatherImage(weatherIndex) // 날씨 설정*/
+
             itemView.contentsTextView.text = item.noteTitle
             itemView.contentsTextView2.text = item.noteDescription
+            var bitmap1 = BitmapFactory.decodeByteArray(item.noteImage, 0, item.noteImage.size)
+            itemView.moodImageView.setImageBitmap(bitmap1)
+            itemView.mapImage.setImageBitmap(bitmap1)
             // 텍스트 설정
 
 

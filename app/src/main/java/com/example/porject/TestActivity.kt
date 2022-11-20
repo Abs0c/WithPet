@@ -59,10 +59,17 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         intent.putExtra("noteType", "Edit")
         intent.putExtra("noteTitle", note.noteTitle)
         intent.putExtra("noteDescription", note.noteDescription)
-        //intent.putExtra("image",note.noteImage)
+        intent.putExtra("image",note.noteImage)
         intent.putExtra("noteID", note.id)
         startActivity(intent)
         this.finish()
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

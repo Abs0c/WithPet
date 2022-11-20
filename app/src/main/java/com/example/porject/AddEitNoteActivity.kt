@@ -90,7 +90,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         if(noteType.equals("Edit")){
             val noteTitle = intent.getStringExtra("noteTitle")
             val noteDesc = intent.getStringExtra("noteDescription")
-            val noteImg= intent.getByteArrayExtra("noteImage")
+            val noteImg= intent.getByteArrayExtra("image")
             noteID = intent.getIntExtra("noteID", -1)
             addUpdateBtn.setText("기록 변경")
             noteTitleEdt.setText(noteTitle)
