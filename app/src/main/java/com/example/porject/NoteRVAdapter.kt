@@ -87,7 +87,6 @@ class NoteRVAdapter(val context: Context,
         val detail2 = itemView.findViewById<ImageView>(R.id.idIVDetail2)
         val date1 = itemView.findViewById<TextView>(R.id.dateText)
         val date2 = itemView.findViewById<TextView>(R.id.dateTextView2)
-        val imag = itemView.findViewById<ImageView>(R.id.moodImageView)
 
 
         fun bind(item: Note){

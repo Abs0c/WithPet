@@ -60,7 +60,7 @@ class AddEitNoteActivity : AppCompatActivity() {
 
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
-                val calRatio = calculateInSampleSize(it!!.data!!.data!!, 64,64)
+                val calRatio = calculateInSampleSize(it!!.data!!.data!!, 160,160)
                 val option = BitmapFactory.Options()
                 option.inSampleSize = calRatio
 
@@ -114,7 +114,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             //val byte1: ByteArray = imageToBitmap(imgbtn)
             val bytebitmap: Bitmap = getBitmapFromView(imgbtn)
             val baos = ByteArrayOutputStream()
-            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
             val bytearrayfrombitmap: ByteArray = baos.toByteArray()
 
             if(noteType.equals("Edit")){

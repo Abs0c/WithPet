@@ -61,32 +61,17 @@
                     android:layout_margin="10dp"
                     android:hint="내용을 입력하세요.(최대 2000자까지 가능) "
                     android:singleLine="false"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    />
 
-                <ImageView
-                    android:id="@+id/imBtn2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/imagetoset" />
+
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/moodLayout"
-        android:layout_above="@id/bottomLayout">
-        <ImageView
-            android:id="@+id/imBtn3"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/imagetoset" />
-    </LinearLayout>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/moodLayout"
@@ -106,55 +91,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.github.channguyen.rsv.RangeSliderView
-                android:id="@+id/sliderView"
+            <ImageView
+                android:id="@+id/imBtn2"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                app:filledColor="#FF6600"
-                app:emptyColor="#a8aeb8"
-                app:rangeCount="5"
-                app:sliderRadiusPercent="0.4"
-                app:barHeightPercent="0.1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile1_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile2_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile3_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile4_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile5_48"/>
-
-            </LinearLayout>
+                android:layout_height="250dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/imagetoset" />
 
         </LinearLayout>
 
