@@ -17,18 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.drawToBitmap
 import com.bumptech.glide.Glide
-import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.ActivityAddPetBinding
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
-import kotlinx.android.synthetic.main.activity_loading.*
 import java.io.ByteArrayOutputStream
-import java.net.URL
 
 class AddpetActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddPetBinding
@@ -42,7 +35,7 @@ class AddpetActivity : AppCompatActivity() {
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
         try{
-            var inputStream = contentResolver.openInputStream(fileUri)
+            val inputStream = contentResolver.openInputStream(fileUri)
             BitmapFactory.decodeStream(inputStream, null, options)
             inputStream!!.close()
         } catch (e: Exception){
@@ -89,8 +82,8 @@ class AddpetActivity : AppCompatActivity() {
                 val option = BitmapFactory.Options()
                 option.inSampleSize = calRatio
 
-                var inputStream = contentResolver.openInputStream(it!!.data!!.data!!)
-                var bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+                val inputStream = contentResolver.openInputStream(it.data!!.data!!)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
                 inputStream!!.close()
                 //bitmap에 이미지 저장완료
                 bitmap?. let{
@@ -137,7 +130,7 @@ class AddpetActivity : AppCompatActivity() {
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
-        var data = myPetType(petname, pettype, useruid.toString())
+        val data = myPetType(petname, pettype, useruid.toString())
         uploadImage(petname, imagedata)
         val colRef = db.collection("pets")
         if (docuname == null || getpetname == null){
@@ -151,17 +144,17 @@ class AddpetActivity : AppCompatActivity() {
                 }
         }
         else{
-            storage.reference.child("images/"+useruid+"/"+ getpetname+".jpg").delete()
+            storageRef.child("images/"+useruid+"/"+ getpetname+".jpg").delete()
             db.document(docuname).update("petName", data.petName, "petType", data.petType, "userUID", useruid).addOnSuccessListener {
-                Toast.makeText(this,"정보 갱신 완료", Toast.LENGTH_SHORT)
+                Toast.makeText(this,"정보 갱신 완료", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun uploadImage(docId: String, data: ByteArray){
         val useruid = MyApplication.auth.currentUser?.uid
-        var imgRef: StorageReference = storageRef.child("images/"+useruid+"/"+docId+".jpg")
-        var uploadTask = imgRef.putBytes(data)
+        val imgRef: StorageReference = storageRef.child("images/"+useruid+"/"+docId+".jpg")
+        val uploadTask = imgRef.putBytes(data)
         uploadTask.addOnFailureListener{
             Log.d("error", "upload fail")
             Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show()
@@ -173,8 +166,8 @@ class AddpetActivity : AppCompatActivity() {
     }
 
     private fun getBitmapFromView(view: View): Bitmap{
-        var bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        var canvas = Canvas(bitmap)
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
         view.draw(canvas)
         return bitmap
     }

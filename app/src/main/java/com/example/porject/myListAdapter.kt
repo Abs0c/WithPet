@@ -2,20 +2,14 @@ package com.example.porject
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.porject.MyApplication.Companion.db
 import com.example.porject.MyApplication.Companion.storage
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.pet_card_view.view.*
-import javax.xml.transform.URIResolver
 
 class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>) :
     RecyclerView.Adapter<myListAdapter.MyViewHolder>() {
@@ -61,7 +55,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
 
         holder.petdelbtn.setOnClickListener{
             db.collection("pets").get().addOnSuccessListener {result ->
-                for((i, document) in result.withIndex()){
+                for(document in result){
                     if ((document["petName"] as String) != getpetName) {
                         continue
                     }

@@ -1,26 +1,17 @@
 package com.example.porject
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.porject.MyApplication.Companion.db
-import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import kotlinx.android.synthetic.main.pet_card_view.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,12 +29,11 @@ class myPet : Fragment() {
     private var param2: String? = null
     lateinit var binding: FragmentMyPetBinding
     lateinit var db: FirebaseFirestore
-    var data = mutableListOf<myPetType>()
     var items = mutableListOf<myPetType>()
     var adapter: myListAdapter? = null
 
     fun refresh(fragment: Fragment, fragmentManager: FragmentManager){
-        var ft: FragmentTransaction = fragmentManager.beginTransaction()
+        val ft: FragmentTransaction = fragmentManager.beginTransaction()
         ft.detach(fragment).attach(fragment).commitAllowingStateLoss()
     }
 
@@ -59,7 +49,7 @@ class myPet : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         super.onStart()
         binding = FragmentMyPetBinding.inflate(inflater, container, false)
