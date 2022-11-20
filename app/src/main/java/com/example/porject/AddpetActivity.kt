@@ -33,7 +33,6 @@ import java.net.URL
 class AddpetActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddPetBinding
     var imagepicked = false
-    var gotextra = false
     val useruid = MyApplication.auth.currentUser?.uid
     val db = FirebaseFirestore.getInstance()
     var storage = MyApplication.storage
@@ -74,7 +73,7 @@ class AddpetActivity : AppCompatActivity() {
         val getextrapetname= intent.getStringExtra("petname")
         val getextrapettype= intent.getStringExtra("pettype")
         val getdocuname= intent.getStringExtra("docuname")
-        if (getextrapetname != "" && getextrapettype != ""){
+        if (getextrapetname != null && getextrapettype != null){
             binding.addPetNameEdittext.setText(getextrapetname)
             binding.addPetTypeEdittext.setText(getextrapettype)
             storageRef.child("images/" + useruid + "/" + getextrapetname+ ".jpg").downloadUrl.addOnSuccessListener{
@@ -82,7 +81,6 @@ class AddpetActivity : AppCompatActivity() {
                 Glide.with(this).load(Uriresult).into(binding.addPetImageView)
                 imagepicked = true
             }
-            gotextra = true
         }
 
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -127,9 +125,7 @@ class AddpetActivity : AppCompatActivity() {
                 val petimage = getBitmapFromView(binding.addPetImageView)
                 val petname = binding.addPetNameEdittext.text.toString()
                 val pettype = binding.addPetTypeEdittext.text.toString()
-                if (getdocuname != null && getextrapetname != null) {
-                    saveStore(petimage, petname, pettype, getextrapetname, getdocuname)
-                }
+                saveStore(petimage, petname, pettype, getextrapetname, getdocuname)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 this.finish()
@@ -137,14 +133,15 @@ class AddpetActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, getpetname:String, docuname: String){
+    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, getpetname:String?, docuname: String?){
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
-        uploadImage(petname, imagedata)
         var data = myPetType(petname, pettype, useruid.toString())
+        uploadImage(petname, imagedata)
         val colRef = db.collection("pets")
-        if (gotextra == false){
+        if (docuname == null || getpetname == null){
+
             colRef.add(data)
                 .addOnSuccessListener{
                     Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT).show()
@@ -155,8 +152,7 @@ class AddpetActivity : AppCompatActivity() {
         }
         else{
             storage.reference.child("images/"+useruid+"/"+ getpetname+".jpg").delete()
-            db.document(docuname).update("petName", data.petName, "petType", data.petType, "userUID", useruid).
-            addOnSuccessListener {
+            db.document(docuname).update("petName", data.petName, "petType", data.petType, "userUID", useruid).addOnSuccessListener {
                 Toast.makeText(this,"정보 갱신 완료", Toast.LENGTH_SHORT)
             }
         }
