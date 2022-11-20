@@ -49,12 +49,10 @@ class myPage : Fragment(), View.OnClickListener {
         if(!MyApplication.checkAuth()){
             binding.needLogin.setText("로그인이 필요합니다.")
             binding.add.visibility = View.VISIBLE
-            binding.btnDiet.visibility = View.INVISIBLE
         }
         else{
             binding.needLogin.setText("${MyApplication.email}로 로그인하셨습니다.")
             binding.add.visibility = View.INVISIBLE
-            binding.btnDiet.visibility = View.VISIBLE
         }
     }
 
