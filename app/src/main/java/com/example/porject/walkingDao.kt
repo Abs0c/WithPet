@@ -3,7 +3,7 @@ package com.example.porject
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-@Dao
+/*@Dao
 interface walkingDao {
 
     @Query("Select * from walkingTable")
@@ -14,4 +14,4 @@ interface walkingDao {
     fun delete(walkingData: walkingData)
     @Update
     fun update(walkingData: walkingData)
-}
+}*/
