@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_walking.view.*
 
 class walking : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: walkingAdapter
+    //lateinit var adapter: walkingAdapter
     lateinit var binding: ActivityWalkingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

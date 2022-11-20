@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_walking_write.view.*
 import kotlinx.android.synthetic.main.walking_list.view.*
 
 
-class walkingAdapter(val db: walkingDatabase, var items: List<walkingData>?):RecyclerView.Adapter<walkingAdapter.ViewHolder>(){
+/*class walkingAdapter(val db: walkingDatabase, var items: List<walkingData>?):RecyclerView.Adapter<walkingAdapter.ViewHolder>(){
     lateinit var mContext: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): walkingAdapter.ViewHolder {
@@ -45,5 +45,4 @@ class walkingAdapter(val db: walkingDatabase, var items: List<walkingData>?):Rec
             Toast.makeText(mContext, "OK", Toast.LENGTH_SHORT).show()
         }
     }
-
-}
+}*/
