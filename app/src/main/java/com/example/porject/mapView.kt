@@ -396,8 +396,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                     //binding.camera.setImageBitmap(cam)
                     photoUri?.let { uri->
                         val bit = loadBitmap(photoUri!!)
+                        Toast.makeText(context, "사진을 저장했습니다.", Toast.LENGTH_SHORT).show()
                     }
-
                 }
             }
         }
