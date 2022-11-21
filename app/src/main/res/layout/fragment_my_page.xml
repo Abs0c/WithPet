@@ -70,27 +70,20 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             app:layout_constraintBottom_toTopOf="@id/infobar">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:drawablePadding="@dimen/fab_margin"
-                android:drawableLeft="@drawable/dolist"
-                android:background="@drawable/button_rectangle"
-                android:gravity="left|center_vertical"
-                android:visibility="invisible"
-                android:text="공지사항" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_Diet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/ansungtangmyun_bold"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_rectangle"
-                android:textAlignment="center"
+                android:drawablePadding="@dimen/fab_margin"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/bmi"
+                android:paddingLeft="10dp"
                 android:text="식단 관리"/>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -99,8 +92,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/ansungtangmyun_bold"
                 android:background="@drawable/button_rectangle"
-                android:textAlignment="center"
+                android:drawablePadding="@dimen/fab_margin"
+                android:gravity="left|center_vertical"
+                android:drawableLeft="@drawable/contact"
+                android:paddingLeft="10dp"
                 android:text="문의하기" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -110,8 +107,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_rectangle"
+                android:fontFamily="@font/ansungtangmyun_bold"
                 android:text="앱 설정"
-                android:textAlignment="center"/>
+                android:drawablePadding="@dimen/fab_margin"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/settings"/>
 
         </LinearLayout>
 

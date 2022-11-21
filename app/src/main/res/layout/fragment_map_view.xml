@@ -74,16 +74,6 @@
             app:lottie_rawRes="@raw/locationloading"></com.airbnb.lottie.LottieAnimationView>
 
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/extendedFloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="칼로리 계산기"
-
-            android:drawableLeft="@drawable/bmi"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtTime"
