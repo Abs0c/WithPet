@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Picture
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.io.InputStream
 
 lateinit var Picture : Bitmap
 class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface
@@ -33,6 +31,8 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     lateinit var adapter: NoteRVAdapter
 
     private var itemList: MutableList<Note> = mutableListOf()
+    private var titleList: ArrayList<String> = ArrayList()
+    private var descriptList: ArrayList<String> = ArrayList()
     private var mAdapter: SearchAdapter? = null
     private var searchView: SearchView? = null
 
@@ -62,7 +62,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
         notesRV.itemAnimator = DefaultItemAnimator()
         notesRV.adapter = mAdapter
-        //fillItem() //여기서 itemList에다가 Note테이블에 있는 noteTitle Elements를 불러와야함
+
 
 
         val noteRVAdapter = NoteRVAdapter(this, this, this, this)
@@ -70,8 +70,15 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(this, Observer { list -> list?.let{
                 noteRVAdapter.updateList(it)
+                titleList = ArrayList()
+                descriptList = ArrayList()
+                for (temp in it){
+                    titleList.add(temp.noteTitle)
+                    descriptList.add(temp.noteDescription)
+                }
             }
         })
+        //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
         addFAB.setOnClickListener{
             val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
             startActivity(intent)
@@ -82,11 +89,11 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
 
     }
-    /*
-    private fun fillItem(): MutableList<Note>{
 
-       return itemList << itemList에 노트 요소("제목") 옮기고 리턴해줌
-    }*/
+    private fun fillItem(){//: MutableList<Note>{
+        //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
+       //return itemList << itemList에 노트 요소("제목") 옮기고 리턴해줌
+    }
 
 
     override fun onItemClicked(item: Note) {
