@@ -166,7 +166,10 @@ class AddEitNoteActivity : AppCompatActivity() {
     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
-            startActivity(Intent(applicationContext, TestActivity::class.java))
+
+            val intent = Intent(applicationContext, TestActivity::class.java)
+            intent.putExtra("selectedDate", "")
+            startActivity(intent)
             this.finish()
         }
         return super.onOptionsItemSelected(item)

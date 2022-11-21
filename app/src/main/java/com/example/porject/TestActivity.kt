@@ -153,6 +153,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val opt = ActivityOptions.makeSceneTransitionAnimation(this, view, "img_trans")
         startActivity(intent, opt.toBundle())
     }
+    /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         val item = menu?.findItem(R.id.search_bar)
@@ -173,7 +174,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         })
         return true
     }
-
+    */
     /*
 
      */
