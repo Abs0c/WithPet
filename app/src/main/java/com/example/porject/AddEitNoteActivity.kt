@@ -77,11 +77,9 @@ class AddEitNoteActivity : AppCompatActivity() {
         }
         var bitmapcheck = false
         bitmapcheck = intent.getBooleanExtra("check", false)
-        var titleCome : String
-        titleCome = intent.getStringExtra("et").toString()
         if(bitmapcheck){
             imgbtn.setImageBitmap(bitmap)
-            noteTitleEdt.setText(titleCome)
+            noteTitleEdt.setText(intent.getStringExtra("et"))
             noteDescriptionEdt.setText(intent.getStringExtra("info"))
         }
         imgbtn.setOnClickListener {

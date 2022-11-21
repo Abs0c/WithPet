@@ -1,6 +1,8 @@
 package com.example.porject
 
 import android.app.ActivityOptions
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,16 +17,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.InputStream
+
 lateinit var Picture : Bitmap
-class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface{
+class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface
+    ,SearchAdapter.ItemClickListener{
     lateinit var notesRV:RecyclerView
     lateinit var addFAB: FloatingActionButton
     lateinit var viewModel: NoteViewModel
     lateinit var dateText: String
     lateinit var adapter: NoteRVAdapter
+
+    private var itemList: MutableList<Note> = mutableListOf()
+    private var mAdapter: SearchAdapter? = null
+    private var searchView: SearchView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +51,19 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
         notesRV = findViewById(R.id.idRVNotes)
         addFAB = findViewById(R.id.idFABAddNote)
+
+        itemList = ArrayList()
+        mAdapter = SearchAdapter(this, itemList as ArrayList<Note>, this)
+
+
+
+        //원조코드
         notesRV.layoutManager = LinearLayoutManager(this)
+
+        notesRV.itemAnimator = DefaultItemAnimator()
+        notesRV.adapter = mAdapter
+        //fillItem() //여기서 itemList에다가 Note테이블에 있는 noteTitle Elements를 불러와야함
+
 
         val noteRVAdapter = NoteRVAdapter(this, this, this, this)
         notesRV.adapter = noteRVAdapter
@@ -56,7 +79,22 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         }
         adapter = NoteRVAdapter(this, this, this, this)
         adapter.switchLayout(1)
+
+
     }
+    /*
+    private fun fillItem(): MutableList<Note>{
+
+       return itemList << itemList에 노트 요소("제목") 옮기고 리턴해줌
+    }*/
+
+
+    override fun onItemClicked(item: Note) {
+
+
+    }
+
+
     override fun onDeleteIconClick(note: Note) {
         viewModel.deleteNote(note)
         Toast.makeText(this, "${note.noteTitle} 삭제됨", Toast.LENGTH_LONG).show()
@@ -93,18 +131,32 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         val item = menu?.findItem(R.id.search_bar)
+        var searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = item?.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                TODO("Not yet implemented")
+        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView!!.maxWidth = Integer.MAX_VALUE
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                mAdapter!!.filter.filter(query)
+                return false
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                TODO("Not yet implemented")
+            override fun onQueryTextChange(query: String?): Boolean {
+                mAdapter!!.filter.filter(query)
+                return false
             }
         })
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
+    override fun onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView!!.isIconified) {
+            searchView!!.isIconified = true
+            return
+        }
+        super.onBackPressed()
+    }
+
 
 
 }
