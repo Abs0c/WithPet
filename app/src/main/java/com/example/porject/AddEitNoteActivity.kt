@@ -48,7 +48,9 @@ class AddEitNoteActivity : AppCompatActivity() {
         cancleButton = findViewById(R.id.closeButton)
         //Img = findViewById(R.id.imBtn2)
         cancleButton.setOnClickListener {
-            startActivity(Intent(applicationContext, TestActivity::class.java))
+            val intent = Intent(applicationContext, TestActivity::class.java)
+            intent.putExtra("selectedDate", "")
+            startActivity(intent)
             this.finish()
         }
 
@@ -116,7 +118,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             val baos = ByteArrayOutputStream()
             bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
             val bytearrayfrombitmap: ByteArray = baos.toByteArray()
-            val sdf = SimpleDateFormat("yyyy MMM, dd  - HH:mm")
+            val sdf = SimpleDateFormat("yyyy MMM dd")
             val currentDate:String = sdf.format(Date())
 
             if(noteType.equals("Edit")){
@@ -134,12 +136,10 @@ class AddEitNoteActivity : AppCompatActivity() {
                     Toast.makeText(this, "기록 추가중..", Toast.LENGTH_LONG).show()
                 }
             }
-            val arr = currentDate.split(" ")
-            val parsedyear = arr.get(2)
-            val parsedmonth = arr.get(1).split(",").get(0)
-            val parsedday = arr.get(0)
-            Toast.makeText(this, parsedyear + " " + parsedmonth + " " + parsedday, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(applicationContext, TestActivity::class.java))
+            Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, TestActivity::class.java)
+            intent.putExtra("selectedDate", currentDate)
+            startActivity(intent)
             this.finish()
         }
 

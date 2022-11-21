@@ -13,6 +13,7 @@ import com.example.porject.databinding.FragmentDiaryBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -42,7 +43,7 @@ class Diary : Fragment() {
     lateinit var binding: FragmentDiaryBinding
     //lateinit var allNotes: LiveData<List<Note>>
 
-    private lateinit var selectedDate: String // 달력에서 선택한 날짜
+    private var selectedDate: String = ""// 달력에서 선택한 날짜
 
     lateinit var calendar: MaterialCalendarView
 
@@ -96,10 +97,16 @@ class Diary : Fragment() {
                 binding.readBtn.setOnClickListener() {
 
                     val year = calendar.selectedDate!!.year
-                    val month = calendar.selectedDate!!.month+1
+                    val month = calendar.selectedDate!!.month
                     val day = calendar.selectedDate!!.day
-                    selectedDate = "$year-$month-$day"
-                    Toast.makeText(activity,"$year"+"년"+"$month"+"월"+"$day"+"일", Toast.LENGTH_SHORT).show()
+                    selectedDate = "$year $month" + "월 $day"
+                    val sdf = SimpleDateFormat("yyyy MMM dd")
+                    selectedDate = sdf.format(Date(year-1900, month, day))
+                    Toast.makeText(activity, selectedDate, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(activity,"$year"+"년"+"$month"+"월"+"$day"+"일", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, TestActivity::class.java)
+                    intent.putExtra("selectedDate", selectedDate)
+                    startActivity(intent)
 //                    val pet_list = Intent(activity,TestActivity::class.java)
 //                    pet_list.putExtra("date", diaryTextView.text)
 //                    startActivity(pet_list)
@@ -107,7 +114,11 @@ class Diary : Fragment() {
             }
         })
         binding.readBtn.setOnClickListener(){
-            Toast.makeText(activity, "날짜를 선택해 주세요", Toast.LENGTH_SHORT).show()
+            if (selectedDate == ""){
+                val intent = Intent(context, TestActivity::class.java)
+                intent.putExtra("selectedDate", "")
+                startActivity(intent)
+            }
         }
         binding.btnDial.setOnClickListener {
             val intent = Intent(activity, AddEitNoteActivity::class.java)

@@ -40,7 +40,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         super.onCreate(savedInstanceState)
 
         val intent = intent
-        dateText = intent.getStringExtra("date").toString()
+        dateText = intent.getStringExtra("selectedDate").toString()
         //Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
         setContentView(R.layout.activity_test)
         setTitle("기록 확인")
@@ -72,13 +72,17 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(this, Observer { list -> list?.let{
-                noteRVAdapter.updateList(it)
-                titleList = ArrayList()
-                descriptList = ArrayList()
-                for (temp in it){
-                    titleList.add(temp.noteTitle)
-                    descriptList.add(temp.noteDescription)
+                if (dateText != ""){
+                    var notelistbydate: List<Note> = it.filter { it.timestamp == dateText }
+                    noteRVAdapter.updateList(notelistbydate)
                 }
+                else {
+                    noteRVAdapter.updateList(it)
+                }
+                //titleList = ArrayList()
+                //descriptList = ArrayList()
+                    //titleList.add(temp.noteTitle)
+                    //descriptList.add(temp.noteDescription)
             }
         })
         //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
