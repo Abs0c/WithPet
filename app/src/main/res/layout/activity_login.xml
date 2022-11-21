@@ -28,7 +28,7 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/goSignInBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,20 +36,27 @@
             android:backgroundTint="@color/black_shade_1"
             android:fontFamily="@font/ansungtangmyun_bold"
             android:text="회원가입"
+            android:paddingLeft="10dp"
+            android:drawablePadding="@dimen/fab_margin"
+            android:background="@drawable/button_background"
+            android:drawableLeft="@drawable/registered"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:visibility="gone" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/googleLoginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/black_shade_1"
+            android:drawablePadding="@dimen/fab_margin"
+            android:paddingLeft="10dp"
+            android:background="@drawable/button_background"
+            android:drawableLeft="@drawable/google"
             android:text="구글인증"
+
             android:fontFamily="@font/ansungtangmyun_bold"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAlignment="center"
             android:visibility="gone" />
 
         <EditText
@@ -58,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="이메일"
+            android:fontFamily="@font/ansungtangmyun_bold"
             android:inputType="textEmailAddress"
             android:visibility="gone" />
 
@@ -66,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/ansungtangmyun_bold"
             android:hint="비밀번호 - 6자 이상"
             android:inputType="textPassword"
             android:visibility="gone" />
