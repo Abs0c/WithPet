@@ -88,6 +88,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             requestGalleryLauncher.launch(intent)
         }
 
+
         val noteType = intent.getStringExtra("noteType")
         if(noteType.equals("Edit")){
             val noteTitle = intent.getStringExtra("noteTitle")

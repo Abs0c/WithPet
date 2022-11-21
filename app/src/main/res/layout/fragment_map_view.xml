@@ -17,7 +17,9 @@
             android:id="@+id/viewMap"
             android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_Start"
@@ -126,6 +128,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="45dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_camara"
+
+            app:layout_constraintBottom_toTopOf="@+id/onGoing"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

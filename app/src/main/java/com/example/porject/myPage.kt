@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.porject.databinding.FragmentMyPageBinding
 
+
 class myPage : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentMyPageBinding
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){

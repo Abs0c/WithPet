@@ -125,6 +125,7 @@ class LoginActivity : AppCompatActivity() {
                 loginBtn.visibility= View.GONE
             }
 
+
         }else if(mode === "logout"){
             binding.run {
                 authMainTextView.text = "로그인 하거나 회원가입 해주세요."

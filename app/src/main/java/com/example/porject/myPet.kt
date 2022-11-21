@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_my_pet.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,8 +38,6 @@ class myPet : Fragment() {
         val ft: FragmentTransaction = fragmentManager.beginTransaction()
         ft.detach(fragment).attach(fragment).commitAllowingStateLoss()
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,7 +45,10 @@ class myPet : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    var check = false
+    fun notifyob(){
+        adapter?.notifyDataSetChanged()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,15 +56,24 @@ class myPet : Fragment() {
         // Inflate the layout for this fragment
         super.onStart()
         binding = FragmentMyPetBinding.inflate(inflater, container, false)
-        if(!MyApplication.checkAuth()){
+        binding.listView.adapter = adapter
+        binding.listView.layoutManager = LinearLayoutManager(context)
+        /*binding.addPetButton.setOnClickListener{
+            activity?.let {
+                val intent = Intent(activity, AddpetActivity::class.java)
+                startActivity(intent)
+            }
+        }*/
+        /*if(!MyApplication.checkAuth()){
             Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
-        }
-        else{
+        }*/
+        if(MyApplication.checkAuth()){
+            check = true
             binding = FragmentMyPetBinding.inflate(inflater, container, false)
             db = MyApplication.db
             adapter = context?.let { myListAdapter(it, items) }
             val useruid = MyApplication.auth.currentUser?.uid
-
+            user = MyApplication.auth.currentUser?.uid.toString()
             db.collection("pets")
                 .get()
                 .addOnSuccessListener { result ->
@@ -71,18 +83,69 @@ class myPet : Fragment() {
                             items.add(item)
                         }
                     }
+                    //binding.listView.adapter = adapter
+                    //binding.listView.layoutManager = LinearLayoutManager(context)
+                }
+        }
+        else Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
+        return binding.root
+    }
+    var user = "test"
+    override fun onResume() {
+
+        super.onResume()
+        binding.addPetButton.setOnClickListener{
+            activity?.let {
+                val intent = Intent(activity, AddpetActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        if(!MyApplication.checkAuth()){
+            binding.listView.visibility = View.INVISIBLE
+            add_pet_button.visibility = View.INVISIBLE
+            //check = false
+        }
+        else{
+            db = MyApplication.db
+            if(check && (user != MyApplication.auth.currentUser?.uid)){
+                items.clear()
+                db.collection("pets")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        for (document in result){
+                            if (document["userUID"] as String? == MyApplication.auth.currentUser?.uid){
+                                val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                                items.add(item)
+                            }
+                        }
+                    }
+            }
+            add_pet_button.visibility = View.VISIBLE
+            binding.listView.visibility = View.VISIBLE
+            //db = MyApplication.db
+            adapter = context?.let { myListAdapter(it, items) }
+            val useruid = MyApplication.auth.currentUser?.uid
+            if (useruid != null) {
+                user = useruid
+            }
+            db.collection("pets")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result){
+                        if (document["userUID"] as String? == useruid){
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            if(!check) {
+                                items.add(item)
+                            }
+                        }
+                    }
+                    check = true
                     binding.listView.adapter = adapter
                     binding.listView.layoutManager = LinearLayoutManager(context)
                 }
-            binding.addPetButton.setOnClickListener{
-                activity?.let {
-                    val intent = Intent(activity, AddpetActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-
         }
-        return binding.root
+
+
     }
     companion object {
         /**

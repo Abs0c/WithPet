@@ -6,24 +6,33 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface.BUTTON3
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.ImageDecoder
+import android.hardware.camera2.CameraManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.media.Image
+import android.net.Uri
+
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.PermissionRequest
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
@@ -41,6 +50,15 @@ import kotlin.collections.ArrayList
 import kotlin.math.pow
 
 val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+val PERMISSIONS_REQUEST = 100
+val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA)
+val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+val FLAG_PREM_CAMERA = 98
+val FLAG_PREM_STORAGE = 99
+val FLAG_REQ_CAMERA = 101
+private val BUTTON1 = 100
+
+////////////////////////////////////
 val PERMISSIONS_REQUEST_CODE = 100
 lateinit var bitmap : Bitmap
 private const val R = 6372.8 * 1000
@@ -49,6 +67,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     lateinit var mView: MapView
     lateinit var mContext: Context
     lateinit var gMap : GoogleMap
+    private var photoUri: Uri? = null
     var initTime = 0L
     var pauseTime = 0L
     var mLocationManager: LocationManager? = null
@@ -91,6 +110,20 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             } else {
                 Log.d(ContentValues.TAG, "onRequestPermissionsResult() _ 권한 허용 거부")
                 Toast.makeText(activity, "권한이 없어 해당 기능을 실행할 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        when(requestCode){
+            FLAG_PREM_CAMERA -> {
+                var checked= true
+                for(grant in grantResults){
+                    if(grant != PackageManager.PERMISSION_GRANTED){
+                        checked=false
+                        break
+                    }
+                }
+                if(checked){
+                    openCamera()
+                }
             }
         }
     }
@@ -204,9 +237,19 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
         
     }
+
     override fun onStart() {
         super.onStart()
         mView.onStart()
+        binding.camera.setOnClickListener {
+            if(isPermitted(CAMERA_PERMISSION)){
+                openCamera()
+
+            }
+            else{
+                ActivityCompat.requestPermissions(requireActivity(), CAMERA_PERMISSION, FLAG_PREM_CAMERA)
+            }
+        }
         binding.btnStart.setOnClickListener{
             if (checkPermissionForLocation(requireActivity())){
                 polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
@@ -265,9 +308,12 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                         }
                     }
                 }
+
                 builder.setNegativeButton(
                     "아니오"
-                ) { dialog, which -> dialog.cancel() }
+                ) { dialog, which ->
+
+                    dialog.cancel() }
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
                 pauseTime = 0L
@@ -295,6 +341,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             }*/
         }
     }
+
     override fun onStop() {
         super.onStop()
         mView.onStop()
@@ -321,6 +368,64 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
         val c = 2 * asin(sqrt(a))
         return (R * c).toInt()
+    }
+    fun isPermitted(permissions : Array<String>) : Boolean{
+        for(permission in permissions){
+            val result = ContextCompat.checkSelfPermission(requireActivity(), permission)
+            if(result != PackageManager.PERMISSION_GRANTED){
+                return false
+            }
+        }
+        return true
+    }
+    fun openCamera(){
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        createImageUri(newFilename(), "image/jpg")?.let { uri ->
+            photoUri = uri
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+
+        }
+        startActivityForResult(intent, FLAG_REQ_CAMERA)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                FLAG_REQ_CAMERA -> {
+                    //var cam = data?.extras?.get("data") as Bitmap
+                    //binding.camera.setImageBitmap(cam)
+                    photoUri?.let { uri->
+                        val bit = loadBitmap(photoUri!!)
+                    }
+
+                }
+            }
+        }
+    }
+    fun createImageUri(filename : String, mimeType:String):Uri?{
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+        return activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    }
+    fun newFilename() : String{
+        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
+        val filename = sdf.format(System.currentTimeMillis())
+        return "${filename}.jpg"
+    }
+    fun loadBitmap(photoUri:Uri) : Bitmap?{
+
+        try{
+            return if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1){
+                var source = ImageDecoder.createSource(requireActivity().contentResolver, photoUri)
+                ImageDecoder.decodeBitmap(source)
+            }else{
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, photoUri)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return null
     }
 }
 

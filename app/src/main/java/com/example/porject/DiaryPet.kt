@@ -27,15 +27,12 @@ class DiaryPet: AppCompatActivity() {
         binding = ActivityDiaryPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val toolbar = findViewById<Toolbar>(R.id.pet_list_tool)
-
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-
 // 펫리스트 구현부분
 // 레이아웃에 activity_diary_pet에 list_pet이라는 리스트뷰 아이디 설정
         //list_pet에 펫 이름만이라도 데이터베이스에서 가져오려고함
-        if(!MyApplication.checkAuth()){
+        /*if(!MyApplication.checkAuth()){
             Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
         }
         else {
@@ -43,6 +40,30 @@ class DiaryPet: AppCompatActivity() {
             adapter = myListAdapter(this, items)
             val useruid = MyApplication.auth.currentUser?.uid
 
+            db.collection("pets")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        if (document["userUID"] as String? == useruid) {
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            items.add(item)
+                        }
+                    }
+                    binding.listPet.adapter = adapter
+                    binding.listPet.layoutManager = LinearLayoutManager(this)
+                }
+        }*/
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(!MyApplication.checkAuth()){
+            Toast.makeText(this, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
+        }
+        else {
+            db = MyApplication.db
+            adapter = myListAdapter(this, items)
+            val useruid = MyApplication.auth.currentUser?.uid
             db.collection("pets")
                 .get()
                 .addOnSuccessListener { result ->
