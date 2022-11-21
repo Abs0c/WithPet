@@ -80,6 +80,7 @@
                 android:drawableLeft="@drawable/dolist"
                 android:background="@drawable/button_rectangle"
                 android:gravity="left|center_vertical"
+                android:visibility="invisible"
                 android:text="공지사항" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -100,7 +101,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_rectangle"
                 android:textAlignment="center"
-                android:text="문의 및 도움말" />
+                android:text="문의하기" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_setting_frag"
