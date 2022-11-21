@@ -81,7 +81,7 @@
             android:layout_marginTop="20dp"
             android:text="칼로리 계산기"
 
-            app:icon="@android:drawable/ic_input_get"
+            android:drawableLeft="@drawable/file"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
