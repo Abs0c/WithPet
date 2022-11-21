@@ -136,7 +136,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
-            startActivity(Intent(applicationContext, MainActivity::class.java))
+
             finish()
         }
         return super.onOptionsItemSelected(item)
