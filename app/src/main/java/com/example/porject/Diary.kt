@@ -42,6 +42,7 @@ class Diary : Fragment() {
     lateinit var binding: FragmentDiaryBinding
     //lateinit var allNotes: LiveData<List<Note>>
 
+    private lateinit var selectedDate: String // 달력에서 선택한 날짜
 
     lateinit var calendar: MaterialCalendarView
 
@@ -90,30 +91,23 @@ class Diary : Fragment() {
            Decorator(),
         )
 
-//        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
-//            diaryTextView.visibility = View.VISIBLE
-//            readBtn.visibility = View.VISIBLE
-//
-//            diaryContent.visibility = View.INVISIBLE
-//            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
-////
-//        }
+        calendar.setOnDateChangedListener(object: OnDateSelectedListener {
+            override fun onDateSelected(widget: MaterialCalendarView, date: CalendarDay, selected: Boolean) {
+                binding.readBtn.setOnClickListener() {
 
-
-
-        binding.readBtn.setOnClickListener() {
-
-            if (diaryTextView.text != ""){
-                val pet_list = Intent(activity,TestActivity::class.java)
-                pet_list.putExtra("date", diaryTextView.text)
-                startActivity(pet_list)
+                    val year = calendar.selectedDate!!.year
+                    val month = calendar.selectedDate!!.month+1
+                    val day = calendar.selectedDate!!.day
+                    selectedDate = "$year-$month-$day"
+                    Toast.makeText(activity,"$year"+"년"+"$month"+"월"+"$day"+"일", Toast.LENGTH_SHORT).show()
+//                    val pet_list = Intent(activity,TestActivity::class.java)
+//                    pet_list.putExtra("date", diaryTextView.text)
+//                    startActivity(pet_list)
+                }
             }
-            else{
-                Toast.makeText(activity, "날짜를 선택해주세요", Toast.LENGTH_SHORT).show()
-            }
-            //다이어리부분으로 넘어가는 창구현
-
-
+        })
+        binding.readBtn.setOnClickListener(){
+            Toast.makeText(activity, "날짜를 선택해 주세요", Toast.LENGTH_SHORT).show()
         }
         binding.btnDial.setOnClickListener {
             val intent = Intent(activity, AddEitNoteActivity::class.java)
