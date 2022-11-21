@@ -3,5 +3,9 @@
     <font
         android:fontStyle = "normal"
         android:fontWeight = "400"
-        android:font = "@font/ansungtangmyun_bold"/>
+        android:font = "@font/ansungtangmyun_bold" />
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/ansungtangmyun_esg" />
 </font-family>
