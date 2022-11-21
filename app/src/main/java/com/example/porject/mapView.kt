@@ -285,8 +285,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         binding.extendedFloatingActionButton.setOnClickListener {
             /*val intent = Intent (this@mapView.context, Diet::class.java)
             startActivity(intent)*/
-            //val intent = Intent(context, walking::class.java)
-            //startActivity(intent)
+            val intent = Intent(context, Diet::class.java)
+            startActivity(intent)
             /*activity?.let {
                 val intent = Intent(it, walking::class.java)
                 it.startActivity(intent)

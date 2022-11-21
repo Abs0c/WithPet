@@ -37,6 +37,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         setSupportActionBar(toolbar2)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+
         notesRV = findViewById(R.id.idRVNotes)
         addFAB = findViewById(R.id.idFABAddNote)
         notesRV.layoutManager = LinearLayoutManager(this)
@@ -104,5 +105,6 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         })
         return super.onCreateOptionsMenu(menu)
     }
+
 
 }

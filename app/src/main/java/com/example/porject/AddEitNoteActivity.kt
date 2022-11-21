@@ -49,6 +49,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         //Img = findViewById(R.id.imBtn2)
         cancleButton.setOnClickListener {
             startActivity(Intent(applicationContext, TestActivity::class.java))
+            this.finish()
         }
 
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
@@ -167,6 +168,7 @@ class AddEitNoteActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
             startActivity(Intent(applicationContext, TestActivity::class.java))
+            this.finish()
         }
         return super.onOptionsItemSelected(item)
     }
