@@ -330,7 +330,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
 
 
         }
-        binding.extendedFloatingActionButton.setOnClickListener {
+        /*binding.extendedFloatingActionButton.setOnClickListener {
             /*val intent = Intent (this@mapView.context, Diet::class.java)
             startActivity(intent)*/
             val intent = Intent(context, Diet::class.java)
@@ -339,7 +339,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 val intent = Intent(it, walking::class.java)
                 it.startActivity(intent)
             }*/
-        }
+        }*/
     }
 
     override fun onStop() {
