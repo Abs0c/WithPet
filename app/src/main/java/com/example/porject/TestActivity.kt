@@ -41,7 +41,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
         val intent = intent
         dateText = intent.getStringExtra("date").toString()
-        Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
         setContentView(R.layout.activity_test)
         setTitle("기록 확인")
         val toolbar2 = findViewById<Toolbar>(R.id.toolbar2)
@@ -53,7 +53,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         addFAB = findViewById(R.id.idFABAddNote)
 
         itemList = ArrayList()
-        mAdapter = SearchAdapter(this, itemList as ArrayList<Note>, this)
+
 
 
 
@@ -61,12 +61,15 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         notesRV.layoutManager = LinearLayoutManager(this)
 
         notesRV.itemAnimator = DefaultItemAnimator()
-        notesRV.adapter = mAdapter
+        //mAdapter = SearchAdapter(this, titleList as ArrayList<Note>, this)
+        //notesRV.adapter = mAdapter
 
 
 
         val noteRVAdapter = NoteRVAdapter(this, this, this, this)
         notesRV.adapter = noteRVAdapter
+
+
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(this, Observer { list -> list?.let{
                 noteRVAdapter.updateList(it)
@@ -84,20 +87,31 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
             startActivity(intent)
             this.finish()
         }
+
+
+
         adapter = NoteRVAdapter(this, this, this, this)
         adapter.switchLayout(1)
 
 
+
     }
 
-    private fun fillItem(){//: MutableList<Note>{
+    /*private fun fillItem(){//: MutableList<Note>{
         //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
        //return itemList << itemList에 노트 요소("제목") 옮기고 리턴해줌
-    }
+    }*/
 
 
     override fun onItemClicked(item: Note) {
-
+        val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
+        intent.putExtra("noteType", "Edit")
+        intent.putExtra("noteTitle", item.noteTitle)
+        intent.putExtra("noteDescription", item.noteDescription)
+        intent.putExtra("image",item.noteImage)
+        intent.putExtra("noteID", item.id)
+        startActivity(intent)
+        this.finish()
 
     }
 
@@ -157,14 +171,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     }
 
     /*
-    override fun onBackPressed() {
-        // close search view on back button pressed
-        if (!searchView!!.isIconified) {
-            searchView!!.isIconified = true
-            return
-        }
-        super.onBackPressed()
-    }
+
      */
 
 

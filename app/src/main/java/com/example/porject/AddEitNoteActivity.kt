@@ -116,7 +116,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             val baos = ByteArrayOutputStream()
             bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
             val bytearrayfrombitmap: ByteArray = baos.toByteArray()
-            val sdf = SimpleDateFormat("dd MMM, yyyy - HH:mm")
+            val sdf = SimpleDateFormat("yyyy MMM, dd  - HH:mm")
             val currentDate:String = sdf.format(Date())
 
             if(noteType.equals("Edit")){

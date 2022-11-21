@@ -9,8 +9,9 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.walking_list.view.*
 
-class SearchAdapter(private val context: Context, private val noteList: MutableList<Note>, private val listener: ItemClickListener) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>(),
+class SearchAdapter(private val context: Context, private val noteList: ArrayList<Note>, private val listener: ItemClickListener) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>(),
     Filterable {
 
     private var SearchList: List<Note>? = null
@@ -48,7 +49,7 @@ class SearchAdapter(private val context: Context, private val noteList: MutableL
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int){
         val note = SearchList!![position]
         holder.info.text = "#"+note.noteTitle //+ "  #"+note.noteDescription+"("+excel.cate2+")" + "  #"+excel.source
-        //holder.content.text = note.noteDescription.replace(".(?!$)".toRegex(), "$0\u200b")
+        //holder.info.text = note.noteTitle.replace(".(?!$)".toRegex(), "$0\u200b")
     }
 
 
@@ -65,7 +66,7 @@ class SearchAdapter(private val context: Context, private val noteList: MutableL
                     val filteredList = ArrayList<Note>()
 
                     for (row in noteList) {
-                        if (row.noteTitle.toLowerCase().contains(charString.toLowerCase()) || row.noteDescription.toLowerCase().contains(charString.toLowerCase()))
+                        if (row.noteTitle.toLowerCase().contains(charString.toLowerCase())) //|| row.noteDescription.toLowerCase().contains(charString.toLowerCase()))
                             //|| row.cate2.toLowerCase().contains(charString.toLowerCase()) || row.source.toLowerCase().contains(charString.toLowerCase()))
                         {
                             filteredList.add(row)
