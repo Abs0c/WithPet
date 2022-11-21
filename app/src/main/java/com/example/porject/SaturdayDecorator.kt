@@ -15,7 +15,6 @@ class SaturdayDecorator : DayViewDecorator {
         val weekDay: Int = calendar.get(Calendar.DAY_OF_WEEK)
         return weekDay == Calendar.SATURDAY
     }
-
     override fun decorate(view: DayViewFacade) {
         view.addSpan(ForegroundColorSpan(Color.BLUE))
     }

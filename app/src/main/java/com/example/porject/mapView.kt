@@ -242,7 +242,8 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder.setTitle("오늘 하루를 작성하세요!!!")
                 builder.setMessage("내용")
-                builder.setMessage("산책 시간: " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초 \n이동거리 : $discance m")
+                var string : String = "산책 시간 : " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초 \n이동 거리 : $discance m"
+                builder.setMessage(string)
                 builder.setView(et) //AlertDialog에 적용하기
                 et.hint="제목을 입력하세요. "
                 builder.setPositiveButton(
@@ -257,6 +258,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                         it?.let {
                             var intent = Intent(context, AddEitNoteActivity::class.java)
                             bitmap = it
+                            intent.putExtra("info", string)
                             intent.putExtra("check", true)
                             intent.putExtra("et",et.text.toString())
                             startActivity(intent)

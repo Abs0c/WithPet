@@ -82,6 +82,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         if(bitmapcheck){
             imgbtn.setImageBitmap(bitmap)
             noteTitleEdt.setText(titleCome)
+            noteDescriptionEdt.setText(intent.getStringExtra("info"))
         }
         imgbtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
