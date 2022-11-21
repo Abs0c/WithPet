@@ -31,6 +31,7 @@
             android:layout_marginTop="90dp"
             android:layout_marginRight="10dp"
             android:background="#FFFFFF"
+            android:fontFamily="@font/ansungtangmyun_bold"
             android:text="로그인이 필요합니다"
             android:textSize="20dp"
             android:textStyle="bold"

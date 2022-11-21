@@ -63,6 +63,18 @@
             app:lottie_autoPlay="true"
             app:lottie_rawRes="@raw/onstop">
         </com.airbnb.lottie.LottieAnimationView>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="사진 촬영하기"
+            android:textSize="17dp"
+            android:fontFamily="@font/ansungtangmyun_bold"
+            android:backgroundTint="@color/black_shade_1"
+            android:drawableLeft="@drawable/camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/locationLoading"
@@ -119,15 +131,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/camera"
-            android:layout_width="45dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_camara"
 
-            app:layout_constraintBottom_toTopOf="@+id/onGoing"
-            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
