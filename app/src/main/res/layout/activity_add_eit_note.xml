@@ -61,7 +61,7 @@
                     android:layout_gravity="start|top"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:hint="내용을 입력하세요.(최대 2000자까지 가능) "
+                    android:hint="내용을 입력하세요.(최대 500자까지 가능) "
                     android:singleLine="false"
                     android:inputType="textMultiLine"
                     />

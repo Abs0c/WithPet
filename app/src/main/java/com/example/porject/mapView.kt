@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.example.porject.databinding.FragmentMapViewBinding
@@ -243,19 +244,21 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 builder.setMessage("내용")
                 builder.setMessage("산책 시간: " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초 \n이동거리 : $discance m")
                 builder.setView(et) //AlertDialog에 적용하기
+                et.hint="제목을 입력하세요. "
                 builder.setPositiveButton(
                     "예"
                 ) { dialog, which ->
-                    Toast.makeText(
+                    /*Toast.makeText(
                         context,
                         "" + et.getText().toString(),
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
                     gMap.snapshot {
                         it?.let {
                             var intent = Intent(context, AddEitNoteActivity::class.java)
                             bitmap = it
                             intent.putExtra("check", true)
+                            intent.putExtra("et",et.text.toString())
                             startActivity(intent)
                         }
                     }

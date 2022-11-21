@@ -6,8 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Picture
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -86,6 +88,21 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val intent = Intent(this, ViewActivity::class.java)
         val opt = ActivityOptions.makeSceneTransitionAnimation(this, view, "img_trans")
         startActivity(intent, opt.toBundle())
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        val item = menu?.findItem(R.id.search_bar)
+        val searchView = item?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
 }
