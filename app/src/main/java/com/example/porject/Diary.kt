@@ -13,6 +13,8 @@ import com.example.porject.databinding.FragmentDiaryBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,6 +77,9 @@ class Diary : Fragment() {
         diaryContent = binding.diaryContent
         title = binding.title
 
+        //월 일 한글 패치
+        calendar.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_months)))
+        calendar.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
 
         // 날짜 선택시 그 숫자 아래에 점을 추가한다
         calendar.setOnDateChangedListener(object: OnDateSelectedListener {
@@ -100,7 +105,7 @@ class Diary : Fragment() {
                     val month = calendar.selectedDate!!.month
                     val day = calendar.selectedDate!!.day
                     selectedDate = "$year $month" + "월 $day"
-                    val sdf = SimpleDateFormat("yyyy MMM dd")
+                    val sdf = SimpleDateFormat("yyyy MMM dd", Locale.KOREA)
                     selectedDate = sdf.format(Date(year-1900, month, day))
                     Toast.makeText(activity, selectedDate, Toast.LENGTH_SHORT).show()
                     //Toast.makeText(activity,"$year"+"년"+"$month"+"월"+"$day"+"일", Toast.LENGTH_SHORT).show()
