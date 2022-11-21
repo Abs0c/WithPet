@@ -155,6 +155,8 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         })
         return true
     }
+
+    /*
     override fun onBackPressed() {
         // close search view on back button pressed
         if (!searchView!!.isIconified) {
@@ -163,6 +165,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         }
         super.onBackPressed()
     }
+     */
 
 
 
