@@ -83,7 +83,7 @@ class CommunityDetail : AppCompatActivity() {
         }
     }
 
-    override fun onRestart() {
+    /*override fun onRestart() {
         super.onRestart()
         var noteNo = intent.getStringExtra("noteNo")
         if (noteNo != null) {
@@ -100,6 +100,6 @@ class CommunityDetail : AppCompatActivity() {
                 binding.commentlist.adapter = adapter
             }
         }
-    }
+    }*/
 
 }
