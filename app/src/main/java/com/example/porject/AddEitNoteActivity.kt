@@ -42,10 +42,10 @@ class AddEitNoteActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setTitle("")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        noteTitleEdt = findViewById<EditText>(R.id.idEdtNoteTitle)
-        noteDescriptionEdt = findViewById<EditText>(R.id.idEdtNoteDescription)
-        addUpdateBtn = findViewById(R.id.idBtnAddupdate)
-        cancleButton = findViewById(R.id.closeButton)
+        noteTitleEdt = findViewById<EditText>(R.id.communitywrite_title)
+        noteDescriptionEdt = findViewById<EditText>(R.id.communitywrite_contents)
+        addUpdateBtn = findViewById(R.id.communitywrite_save)
+        cancleButton = findViewById(R.id.communitywrite_cancel)
         //Img = findViewById(R.id.imBtn2)
         cancleButton.setOnClickListener {
             val intent = Intent(applicationContext, TestActivity::class.java)
@@ -56,14 +56,13 @@ class AddEitNoteActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
             .get(NoteViewModel::class.java)
-        val imgbtn = findViewById<ImageView>(R.id.imBtn2)
+        val imgbtn = findViewById<ImageView>(R.id.communitywrite_image)
 
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
                 val calRatio = calculateInSampleSize(it!!.data!!.data!!, 160,160)
                 val option = BitmapFactory.Options()
                 option.inSampleSize = calRatio
-
                 var inputStream = contentResolver.openInputStream(it!!.data!!.data!!)
                 var bitmap = BitmapFactory.decodeStream(inputStream, null, option)
                 inputStream!!.close()
@@ -167,7 +166,6 @@ class AddEitNoteActivity : AppCompatActivity() {
     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
-
             val intent = Intent(applicationContext, TestActivity::class.java)
             intent.putExtra("selectedDate", "")
             startActivity(intent)
@@ -179,7 +177,7 @@ class AddEitNoteActivity : AppCompatActivity() {
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val imBtn: ImageView = findViewById(R.id.imBtn2)
+        val imBtn: ImageView = findViewById(R.id.communitywrite_image)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GALLERY) {
                 var ImnageData: Uri? = data?.data

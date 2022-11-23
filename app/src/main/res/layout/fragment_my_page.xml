@@ -116,6 +116,20 @@
                 android:paddingLeft="10dp"
                 android:drawableLeft="@drawable/settings"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_community"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_rectangle"
+
+                android:drawablePadding="@dimen/fab_margin"
+                android:fontFamily="@font/ansungtangmyun_esg"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="자유게시판" />
+
         </LinearLayout>
 
         <LinearLayout

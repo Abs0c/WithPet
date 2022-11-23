@@ -10,6 +10,7 @@ import android.content.DialogInterface.BUTTON3
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.hardware.camera2.CameraManager
@@ -30,11 +31,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.EdgeEffectCompat.getDistance
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
 import com.example.porject.databinding.FragmentMapViewBinding
 import com.google.android.gms.location.*
@@ -43,6 +46,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import java.io.ByteArrayOutputStream
 import java.lang.Math.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,6 +65,8 @@ private val BUTTON1 = 100
 ////////////////////////////////////
 val PERMISSIONS_REQUEST_CODE = 100
 lateinit var bitmap : Bitmap
+lateinit var cam : Bitmap
+lateinit var camto : ByteArray
 private const val R = 6372.8 * 1000
 class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationListener {
     lateinit var binding: FragmentMapViewBinding
@@ -200,7 +206,6 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -241,6 +246,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
     override fun onStart() {
         super.onStart()
         mView.onStart()
+
         binding.camera.setOnClickListener {
             if(isPermitted(CAMERA_PERMISSION)){
                 openCamera()
@@ -387,6 +393,7 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         }
         startActivityForResult(intent, FLAG_REQ_CAMERA)
     }
+    lateinit var viewModel : NoteViewModel
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
@@ -426,6 +433,11 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
             e.printStackTrace()
         }
         return null
+    }
+    fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        var outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+        return outputStream.toByteArray()
     }
 }
 

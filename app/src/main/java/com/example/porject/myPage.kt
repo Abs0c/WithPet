@@ -64,6 +64,17 @@ class myPage : Fragment(), View.OnClickListener {
         binding.btnHelp.setOnClickListener{
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://open.kakao.com/o/gLN28fPe"))
             startActivity(intent)
+
+        }
+        binding.btnCommunity.setOnClickListener {
+            if(MyApplication.checkAuth()){
+                var intent = Intent(activity, CommunityActivity::class.java)
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         return binding.root

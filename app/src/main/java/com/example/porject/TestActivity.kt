@@ -179,6 +179,4 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
 
      */
 
-
-
 }

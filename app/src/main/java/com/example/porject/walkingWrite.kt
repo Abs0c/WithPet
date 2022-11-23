@@ -15,11 +15,11 @@ class walkingWrite : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walking_write)
-        contents = findViewById(R.id.idEdtNoteDescription)
+        contents = findViewById(R.id.communitywrite_contents)
 
-        var saveButton = findViewById<Button>(R.id.idBtnAddupdate)
+        var saveButton = findViewById<Button>(R.id.communitywrite_save)
         var deleteButton = findViewById<Button>(R.id.deleteButton)
-        var cancleButton = findViewById<Button>(R.id.closeButton)
+        var cancleButton = findViewById<Button>(R.id.communitywrite_cancel)
         var sliderView = findViewById<RangeSliderView>(R.id.sliderView)
         saveButton.setOnClickListener {
             val content = contents.text.toString()

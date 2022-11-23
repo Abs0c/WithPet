@@ -57,7 +57,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/idEdtNoteDescription"
+                    android:id="@+id/communitywrite_contents"
                     android:layout_width="match_parent"
                     android:layout_height="103dp"
                     android:hint="내용 입력"
@@ -65,7 +65,7 @@
                     android:textSize="32sp" />
 
                 <ImageView
-                    android:id="@+id/imBtn2"
+                    android:id="@+id/communitywrite_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
@@ -159,7 +159,7 @@
         android:paddingBottom="10dp">
 
         <Button
-            android:id="@+id/idBtnAddupdate"
+            android:id="@+id/communitywrite_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -178,7 +178,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/closeButton"
+            android:id="@+id/communitywrite_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
