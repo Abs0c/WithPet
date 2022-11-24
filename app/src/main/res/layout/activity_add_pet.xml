@@ -63,6 +63,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="종: 포메라니안"/>
+                <EditText
+                    android:id="@+id/add_pet_weight_edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="몸무게: 1"/>
             </LinearLayout>
         </LinearLayout>
         <Button

@@ -9,7 +9,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.porject.databinding.ActivityDietBinding
-
+import kotlinx.android.synthetic.main.activity_diet.*
+import java.lang.reflect.Array
 
 
 class   Diet : AppCompatActivity() {
@@ -151,8 +152,26 @@ class   Diet : AppCompatActivity() {
 
             }
         }
-
-
+        val items = ArrayList<String>()
+        val weightitems = ArrayList<String>()
+        MyApplication.db.collection("pets").get().addOnSuccessListener { result ->
+            for (document in result){
+                if (MyApplication.auth.currentUser?.uid == document["userUID"]){
+                    items.add(document["petName"].toString())
+                    weightitems.add(document["petWeight"].toString())
+                }
+            }
+            val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, items)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.dietPetSelectSpinner.adapter = adapter
+        }
+        binding.dietPetSelectSpinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                weight_write.text = weightitems[p2]
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){

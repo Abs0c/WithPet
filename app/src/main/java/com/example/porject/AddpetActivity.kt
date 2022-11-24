@@ -65,6 +65,7 @@ class AddpetActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val getextrapetname= intent.getStringExtra("petname")
         val getextrapettype= intent.getStringExtra("pettype")
+        val getextrapetweight= intent.getIntExtra("petweight", 0)
         val getdocuname= intent.getStringExtra("docuname")
         if (getextrapetname != null && getextrapettype != null){
             binding.addPetNameEdittext.setText(getextrapetname)
@@ -114,11 +115,15 @@ class AddpetActivity : AppCompatActivity() {
             else if (binding.addPetTypeEdittext.text.toString() == ""){
                 Toast.makeText(this,"동물의 품종을 적어주세요.",Toast.LENGTH_SHORT).show()
             }
+            else if (binding.addPetWeightEdittext.text.toString() == ""){
+                Toast.makeText(this,"동물의 몸무게를 적어주세요.",Toast.LENGTH_SHORT).show()
+            }
             else {
                 val petimage = getBitmapFromView(binding.addPetImageView)
                 val petname = binding.addPetNameEdittext.text.toString()
                 val pettype = binding.addPetTypeEdittext.text.toString()
-                saveStore(petimage, petname, pettype, getextrapetname, getdocuname)
+                val petweight = binding.addPetWeightEdittext.text.toString().toLong()
+                saveStore(petimage, petname, pettype, petweight, getextrapetname, getextrapetweight, getdocuname)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 this.finish()
@@ -126,11 +131,11 @@ class AddpetActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, getpetname:String?, docuname: String?){
+    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, petweight: Long, getpetname:String?, getpetweight: Int?, docuname: String?){
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
-        val data = myPetType(petname, pettype, useruid.toString())
+        val data = myPetType(petname, pettype, petweight, useruid.toString())
         uploadImage(petname, imagedata)
         val colRef = db.collection("pets")
         if (docuname == null || getpetname == null){
@@ -145,7 +150,7 @@ class AddpetActivity : AppCompatActivity() {
         }
         else{
             storageRef.child("images/"+useruid+"/"+ getpetname+".jpg").delete()
-            db.document(docuname).update("petName", data.petName, "petType", data.petType, "userUID", useruid).addOnSuccessListener {
+            db.document(docuname).update("petName", data.petName, "petType", data.petType, "petWeight", data.petWeight, "userUID", useruid).addOnSuccessListener {
                 Toast.makeText(this,"정보 갱신 완료", Toast.LENGTH_SHORT).show()
             }
         }

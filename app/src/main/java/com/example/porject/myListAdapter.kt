@@ -26,6 +26,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
         val item = myPetList[position]
         val getpetName = item.petName
         val getpetType = item.petType
+        val getpetWeight = item.petWeight
         val getuserUid = item.userUID
         var docu = ""
 
@@ -38,6 +39,9 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petType"] as String) != getpetType) {
                         continue
                     }
+                    if ((document["petWeight"] as Long) != getpetWeight){
+                        continue
+                    }
                     if ((document["userUID"] as String?) != getuserUid) {
                         continue
                     }
@@ -45,6 +49,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     val intent = Intent(context, AddpetActivity::class.java)
                     intent.putExtra("petname", getpetName)
                     intent.putExtra("pettype", getpetType)
+                    intent.putExtra("petweight", getpetWeight)
                     intent.putExtra("docuname", docu)
                     context.startActivity(intent)
                     notifyDataSetChanged()
@@ -62,13 +67,16 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petType"] as String) != getpetType) {
                         continue
                     }
+                    if ((document["petWeight"] as Long) != getpetWeight){
+                        continue
+                    }
                     if ((document["userUID"] as String?) != getuserUid) {
                         continue
                     }
                     docu = document.reference.path
                     db.document(docu).delete()
                     storage.reference.child("images/" + getuserUid + "/" + getpetName + ".jpg").delete()
-                    myPetList.removeAt(myPetList.indexOf(myPetType(getpetName, getpetType, getuserUid)))
+                    myPetList.removeAt(myPetList.indexOf(myPetType(getpetName, getpetType, getpetWeight, getuserUid)))
                     notifyDataSetChanged()
                     break
                 }

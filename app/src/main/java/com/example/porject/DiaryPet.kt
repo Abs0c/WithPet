@@ -1,18 +1,12 @@
 package com.example.porject
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.ActivityDiaryPetBinding
-import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DiaryPet: AppCompatActivity() {
@@ -69,7 +63,7 @@ class DiaryPet: AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document["userUID"] as String? == useruid) {
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
                             items.add(item)
                         }
                     }

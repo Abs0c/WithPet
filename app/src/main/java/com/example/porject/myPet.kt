@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.FragmentMyPetBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_my_pet.*
@@ -79,7 +78,7 @@ class myPet : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result){
                         if (document["userUID"] as String? == useruid){
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
                             items.add(item)
                         }
                     }
@@ -114,7 +113,7 @@ class myPet : Fragment() {
                     .addOnSuccessListener { result ->
                         for (document in result){
                             if (document["userUID"] as String? == MyApplication.auth.currentUser?.uid){
-                                val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                                val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
                                 items.add(item)
                             }
                         }
@@ -133,7 +132,7 @@ class myPet : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result){
                         if (document["userUID"] as String? == useruid){
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["userUID"] as String?)
+                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
                             if(!check) {
                                 items.add(item)
                             }
