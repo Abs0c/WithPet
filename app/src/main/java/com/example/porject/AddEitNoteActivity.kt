@@ -1,6 +1,7 @@
 package com.example.porject
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -35,6 +36,7 @@ class AddEitNoteActivity : AppCompatActivity() {
     lateinit var btmap : Bitmap
     var noteID = -1
 
+    @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_eit_note)
@@ -53,10 +55,25 @@ class AddEitNoteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
-
+        val imgbtn = findViewById<ImageView>(R.id.communitywrite_image)
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
             .get(NoteViewModel::class.java)
-        val imgbtn = findViewById<ImageView>(R.id.communitywrite_image)
+
+        var PictureCheck = false
+        PictureCheck = intent.getBooleanExtra("PictureCheck", false)
+        if(PictureCheck){
+            val bytebitmap: Bitmap = bitmap
+            imgbtn.setImageBitmap(bitmap)
+            val baos = ByteArrayOutputStream()
+            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
+            val bytearrayfrombitmap: ByteArray = baos.toByteArray()
+            val sdf = SimpleDateFormat("yyyy MMM dd", Locale.KOREA)
+            val currentDate:String = sdf.format(Date())
+            val updateNote = Note("산책중", "Picture", currentDate, bytearrayfrombitmap)//, byte1)
+            viewModel.addNote(updateNote)
+            Toast.makeText(this, "기록 업데이트중..", Toast.LENGTH_LONG).show()
+            finish()
+        }
 
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{

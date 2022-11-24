@@ -389,11 +389,9 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
         createImageUri(newFilename(), "image/jpg")?.let { uri ->
             photoUri = uri
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-
         }
         startActivityForResult(intent, FLAG_REQ_CAMERA)
     }
-    lateinit var viewModel : NoteViewModel
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
@@ -403,6 +401,12 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                     //binding.camera.setImageBitmap(cam)
                     photoUri?.let { uri->
                         val bit = loadBitmap(photoUri!!)
+                        var intent = Intent(context, AddEitNoteActivity::class.java)
+                        intent.putExtra("PictureCheck", true)
+                        if (bit != null) {
+                            bitmap = bit
+                        }
+                        startActivity(intent)
                         Toast.makeText(context, "사진을 저장했습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
