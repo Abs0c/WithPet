@@ -12,7 +12,7 @@ import com.example.porject.databinding.ActivityDietBinding
 import kotlinx.android.synthetic.main.activity_diet.*
 import java.lang.reflect.Array
 
-
+// 고양이랑 강아지의 필요 요구량만 다르고 계산식은 같습니다.
 class   Diet : AppCompatActivity() {
     lateinit var binding: ActivityDietBinding
     private var shame:Double=0.0
@@ -44,12 +44,12 @@ class   Diet : AppCompatActivity() {
         setSupportActionBar(toolbar2)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val spinner = findViewById<Spinner>(R.id.dog_situation)
+        val spinner = findViewById<Spinner>(R.id.pet_situation)
 
-
+        //강아지 상태 리스너를 가져옴
         ArrayAdapter.createFromResource(
             this,
-            R.array.my_array,
+            R.array.dog_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
@@ -58,6 +58,7 @@ class   Diet : AppCompatActivity() {
             spinner.adapter = adapter
         }
 
+        //강아지 상태 리스너 각선택의 계산값들 지정
         spinner.onItemSelectedListener= object :AdapterView.OnItemSelectedListener{
 
             override fun onNothingSelected(parent: AdapterView<*>?){
@@ -130,9 +131,88 @@ class   Diet : AppCompatActivity() {
                 }
             }
         }
+//        //고양이 상태리스트 호출
+//        ArrayAdapter.createFromResource(
+//            this,
+//            R.array.cat_array,
+//            android.R.layout.simple_spinner_item
+//        ).also { adapter ->
+//            // Specify the layout to use when the list of choices appears
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//            // Apply the adapter to the spinner
+//            spinner.adapter = adapter
+//        }
+//
+//          //고양이 상태 각 값
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//
+//            //고양이 상태별 상황
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                when (position) {
+//                    //선택하지 않은경우
+//                    0 -> {
+//                        shame = 0.0
+//                    }
+//                    //성장기(4개월 미만)
+//                    1 -> {
+//                        shame = 3.0
+//                    }
+//                    //성장기(4~6개월)
+//                    2 -> {
+//                        shame = 2.5
+//                    }
+//                    //성장기 (7~12개월)
+//                    3 -> {
+//                        shame = 2.0
+//                    }
+//                    //중성화 묘
+//                    4 -> {
+//                        //수치1.6
+//                        shame = 1.2
+//                    }
+//                    //중성화 안한 묘
+//                    5 -> {
+//                        //수치1.4
+//                        shame = 1.4
+//                    }
+//                    //노인묘
+//                    6 -> {
+//                        //수치 1
+//                        shame = 0.7
+//                    }
+//                    //임신묘
+//                    7 -> {
+//                        shame = 3.0
+//                    }
+//                    //수유묘 (이 경우는 낳은아기묘 마다 다르긴함 2~6이라는데 이부분은 빼도 될것 같습니다. )
+//                    8 -> {
+//                        //3
+//                        shame = 3.0
+//                    }
+//                    //다이어트묘
+//                    9 -> {
+//                        //0.8
+//                        shame = 0.8
+//                    }
+//                    //일치하는게 없는 경우
+//                    else -> {
+//                    }
+//                }
+//            }
+//        }
+
+
+
 
         val sumBtn : Button= findViewById(R.id.sumBtn)
-
+        // 해당 계산 부분은 강아지 고양이 계산 방법은 같습니다.
         sumBtn.setOnClickListener {
             var pet_kcal:Double = 0.0
 
