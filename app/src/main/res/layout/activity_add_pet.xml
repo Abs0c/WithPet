@@ -66,7 +66,8 @@
                     android:id="@+id/add_pet_weight_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="몸무게: 1"/>
+                    android:hint="몸무게: 1"
+                    android:inputType="number"/>
             </LinearLayout>
         </LinearLayout>
         <Button
