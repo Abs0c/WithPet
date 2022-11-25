@@ -63,7 +63,7 @@ class DiaryPet: AppCompatActivity() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document["userUID"] as String? == useruid) {
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
+                            val item = myPetType(document["petName"] as String, document["petType"] as Long, document["petWeight"] as Long, document["userUID"] as String?)
                             items.add(item)
                         }
                     }

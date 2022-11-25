@@ -58,11 +58,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="이름 : 겨울이"/>
-                <EditText
-                    android:id="@+id/add_pet_type_edittext"
+                <Spinner
+                    android:id="@+id/add_pet_type_spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="종: 포메라니안"/>
+                    android:layout_height="wrap_content"/>
                 <EditText
                     android:id="@+id/add_pet_weight_edittext"
                     android:layout_width="wrap_content"

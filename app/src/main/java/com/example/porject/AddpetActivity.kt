@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -30,6 +31,7 @@ class AddpetActivity : AppCompatActivity() {
     val db = FirebaseFirestore.getInstance()
     var storage = MyApplication.storage
     var storageRef: StorageReference = storage.reference
+    val petList = arrayOf("", "강아지", "고양이")
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int{
         val options = BitmapFactory.Options()
@@ -63,13 +65,28 @@ class AddpetActivity : AppCompatActivity() {
         val toolbar3 = findViewById<Toolbar>(R.id.toolbar3)
         setSupportActionBar(toolbar3)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        //강아지, 고양이 선택하는 스피너 값 설정
+        val spinner = binding.addPetTypeSpinner
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.pet,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
         val getextrapetname= intent.getStringExtra("petname")
-        val getextrapettype= intent.getStringExtra("pettype")
-        val getextrapetweight= intent.getIntExtra("petweight", 0)
+        val getextrapettype= intent.getLongExtra("pettype", 1)
+        val getextrapetweight= intent.getLongExtra("petweight", 0)
         val getdocuname= intent.getStringExtra("docuname")
         if (getextrapetname != null && getextrapettype != null){
             binding.addPetNameEdittext.setText(getextrapetname)
-            binding.addPetTypeEdittext.setText(getextrapettype)
+            binding.addPetTypeSpinner.setSelection(getextrapettype.toInt())
+            binding.addPetWeightEdittext.setText(getextrapetweight.toString())
             storageRef.child("images/" + useruid + "/" + getextrapetname+ ".jpg").downloadUrl.addOnSuccessListener{
                     Uriresult ->
                 Glide.with(this).load(Uriresult).into(binding.addPetImageView)
@@ -112,8 +129,8 @@ class AddpetActivity : AppCompatActivity() {
             else if (binding.addPetNameEdittext.text.toString() == ""){
                 Toast.makeText(this,"동물의 이름을 적어주세요.",Toast.LENGTH_SHORT).show()
             }
-            else if (binding.addPetTypeEdittext.text.toString() == ""){
-                Toast.makeText(this,"동물의 품종을 적어주세요.",Toast.LENGTH_SHORT).show()
+            else if (binding.addPetTypeSpinner.selectedItem == "종을 선택하세요"){
+                Toast.makeText(this,"동물의 종류를 골라주세요.",Toast.LENGTH_SHORT).show()
             }
             else if (binding.addPetWeightEdittext.text.toString() == ""){
                 Toast.makeText(this,"동물의 몸무게를 적어주세요.",Toast.LENGTH_SHORT).show()
@@ -121,7 +138,14 @@ class AddpetActivity : AppCompatActivity() {
             else {
                 val petimage = getBitmapFromView(binding.addPetImageView)
                 val petname = binding.addPetNameEdittext.text.toString()
-                val pettype = binding.addPetTypeEdittext.text.toString()
+                val selectedpettype = binding.addPetTypeSpinner.selectedItem.toString()
+                var pettype = "0".toLong()
+                if (selectedpettype == "강아지"){
+                    pettype = "1".toLong()
+                }
+                else{
+                    pettype = "2".toLong()
+                }
                 val petweight = binding.addPetWeightEdittext.text.toString().toLong()
                 saveStore(petimage, petname, pettype, petweight, getextrapetname, getextrapetweight, getdocuname)
                 val intent = Intent(this, MainActivity::class.java)
@@ -131,7 +155,7 @@ class AddpetActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveStore(petimage: Bitmap, petname: String, pettype: String, petweight: Long, getpetname:String?, getpetweight: Int?, docuname: String?){
+    private fun saveStore(petimage: Bitmap, petname: String, pettype: Long, petweight: Long, getpetname:String?, getpetweight: Long?, docuname: String?){
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()
@@ -139,7 +163,6 @@ class AddpetActivity : AppCompatActivity() {
         uploadImage(petname, imagedata)
         val colRef = db.collection("pets")
         if (docuname == null || getpetname == null){
-
             colRef.add(data)
                 .addOnSuccessListener{
                     Toast.makeText(this,"저장완료", Toast.LENGTH_SHORT).show()

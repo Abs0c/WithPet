@@ -36,7 +36,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petName"] as String) != getpetName) {
                         continue
                     }
-                    if ((document["petType"] as String) != getpetType) {
+                    if ((document["petType"] as Long) != getpetType) {
                         continue
                     }
                     if ((document["petWeight"] as Long) != getpetWeight){
@@ -64,7 +64,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petName"] as String) != getpetName) {
                         continue
                     }
-                    if ((document["petType"] as String) != getpetType) {
+                    if ((document["petType"] as Long) != getpetType) {
                         continue
                     }
                     if ((document["petWeight"] as Long) != getpetWeight){
@@ -94,10 +94,11 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
         val imageView: ImageView = view.findViewById(R.id.pet_Image_View)
         val petdelbtn: Button = view.findViewById(R.id.pet_delete_btn)
         val storageReference = storage.reference
+        val petList = arrayOf("", "강아지", "고양이")
 
         fun bind(position: Int){
             nametxtView.text = myPetList[position].petName
-            typetxtView.text = myPetList[position].petType
+            typetxtView.text = petList[myPetList[position].petType.toInt()]
             storageReference.child("images/" + myPetList[position].userUID + "/" + myPetList[position].petName + ".jpg").downloadUrl.addOnSuccessListener{
                 Uriresult ->
                 Glide.with(context).load(Uriresult).into(imageView)

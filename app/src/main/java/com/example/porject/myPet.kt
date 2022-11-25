@@ -54,39 +54,27 @@ class myPet : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         super.onStart()
-        binding = FragmentMyPetBinding.inflate(inflater, container, false)
-        binding.listView.adapter = adapter
-        binding.listView.layoutManager = LinearLayoutManager(context)
-        /*binding.addPetButton.setOnClickListener{
-            activity?.let {
-                val intent = Intent(activity, AddpetActivity::class.java)
-                startActivity(intent)
-            }
-        }*/
-        /*if(!MyApplication.checkAuth()){
-            Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
-        }*/
-        if(MyApplication.checkAuth()){
-            check = true
-            binding = FragmentMyPetBinding.inflate(inflater, container, false)
-            db = MyApplication.db
-            adapter = context?.let { myListAdapter(it, items) }
-            val useruid = MyApplication.auth.currentUser?.uid
-            user = MyApplication.auth.currentUser?.uid.toString()
-            db.collection("pets")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result){
-                        if (document["userUID"] as String? == useruid){
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
-                            items.add(item)
-                        }
-                    }
-                    //binding.listView.adapter = adapter
-                    //binding.listView.layoutManager = LinearLayoutManager(context)
-                }
+        binding = FragmentMyPetBinding.inflate(layoutInflater)
+        if(!MyApplication.checkAuth()) {
+//            db = MyApplication.db
+//            user = MyApplication.auth.currentUser?.uid.toString()
+//            db.collection("pets")
+//                .get()
+//                .addOnSuccessListener { result ->
+//                    for (document in result){
+//                        if (document["userUID"] as String? == user){
+//                            val item = myPetType(document["petName"] as String, document["petType"] as Long, document["petWeight"] as Long, document["userUID"] as String?)
+//                            items.add(item)
+//                        }
+//                    }
+//                    adapter = context?.let { myListAdapter(it, items) }
+//                    binding.listView.adapter = adapter
+//                    binding.listView.layoutManager = LinearLayoutManager(context)
+//                }
+//        }
+//        else{
+            Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
-        else Toast.makeText(activity, "로그인이 필요합니다.", Toast.LENGTH_LONG).show()
         return binding.root
     }
     var user = "test"
@@ -102,49 +90,26 @@ class myPet : Fragment() {
         if(!MyApplication.checkAuth()){
             binding.listView.visibility = View.INVISIBLE
             add_pet_button.visibility = View.INVISIBLE
-            //check = false
         }
         else{
-            db = MyApplication.db
-            if(check && (user != MyApplication.auth.currentUser?.uid)){
-                items.clear()
-                db.collection("pets")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        for (document in result){
-                            if (document["userUID"] as String? == MyApplication.auth.currentUser?.uid){
-                                val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
-                                items.add(item)
-                            }
-                        }
-                    }
-            }
             add_pet_button.visibility = View.VISIBLE
             binding.listView.visibility = View.VISIBLE
-            //db = MyApplication.db
-            adapter = context?.let { myListAdapter(it, items) }
-            val useruid = MyApplication.auth.currentUser?.uid
-            if (useruid != null) {
-                user = useruid
-            }
+            db = MyApplication.db
+            items.clear()
             db.collection("pets")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result){
-                        if (document["userUID"] as String? == useruid){
-                            val item = myPetType(document["petName"] as String, document["petType"] as String, document["petWeight"] as Long, document["userUID"] as String?)
-                            if(!check) {
-                                items.add(item)
-                            }
+                        if (document["userUID"] as String? == MyApplication.auth.currentUser?.uid){
+                            val item = myPetType(document["petName"] as String, document["petType"] as Long, document["petWeight"] as Long, document["userUID"] as String?)
+                            items.add(item)
                         }
                     }
-                    check = true
+                    adapter = context?.let { myListAdapter(it, items) }
                     binding.listView.adapter = adapter
                     binding.listView.layoutManager = LinearLayoutManager(context)
                 }
         }
-
-
     }
     companion object {
         /**
