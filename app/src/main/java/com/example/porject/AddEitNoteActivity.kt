@@ -71,7 +71,6 @@ class AddEitNoteActivity : AppCompatActivity() {
             val currentDate:String = sdf.format(Date())
             val updateNote = Note("산책중", "Picture", currentDate, bytearrayfrombitmap)//, byte1)
             viewModel.addNote(updateNote)
-            Toast.makeText(this, "기록 업데이트중..", Toast.LENGTH_LONG).show()
             finish()
         }
 
