@@ -8,4 +8,8 @@
         android:fontStyle = "normal"
         android:fontWeight = "400"
         android:font = "@font/ansungtangmyun_esg" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/kotra_hope2"/>
 </font-family>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_shade_1"
-    tools:context=".Diet">
+    tools:context=".Diet"
+    android:backgroundTint="#F8FBF8">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -22,10 +23,10 @@
             android:layout_width="317dp"
             android:layout_height="65dp"
             android:layout_marginTop="44dp"
-            android:background="@drawable/style1"
             android:gravity="center"
+            android:fontFamily="@font/ansungtangmyun_bold"
             android:text="강아지 식단 계산기"
-            android:textSize="30dp"
+            android:textSize="35dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="84dp"
-            android:background="@color/black_shade_1"
+
             android:gravity="center"
             android:text="0"
 
@@ -52,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="84dp"
-            android:background="@color/black_shade_1"
+
             android:gravity="center"
             android:text="kcal"
             android:textAlignment="center"
@@ -68,7 +69,6 @@
             android:id="@+id/Calculation_numbers"
             android:layout_width="357dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/style1"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +83,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
+                    android:fontFamily="@font/kotra_hope2"
                     android:text="강아지의 이름"
                     android:textSize="25dp"
                     app:layout_constraintRight_toRightOf="parent" />
@@ -106,6 +107,7 @@
 
                 <TextView
                     android:id="@+id/dog_weight"
+                    android:fontFamily="@font/kotra_hope2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -117,11 +119,12 @@
 
                 <TextView
                     android:id="@+id/weight_write"
+                    android:fontFamily="@font/kotra_hope2"
                     android:layout_width="122dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/black_shade_2"
+
                     android:ems="5"
                     android:gravity="center"
                     android:hint="0"
@@ -137,6 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/kotra_hope2"
                     android:text="kg"
                     android:textSize="30dp"
                     app:layout_constraintLeft_toRightOf="@+id/weight_writ"
@@ -156,6 +160,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
+                    android:fontFamily="@font/kotra_hope2"
                     android:text="강아지의 상태"
                     android:textSize="25dp"
                     app:layout_constraintRight_toRightOf="parent" />
@@ -177,6 +182,7 @@
 
 
         </LinearLayout>
+
 
         <Button
             android:id="@+id/sumBtn"

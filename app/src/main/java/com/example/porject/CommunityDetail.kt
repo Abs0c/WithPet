@@ -3,11 +3,14 @@ package com.example.porject
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.porject.databinding.ActivityCommunityDetailBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_community_detail.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -27,6 +30,13 @@ class CommunityDetail : AppCompatActivity() {
         var userID = intent.getStringExtra("userID")
         var good = intent.getStringExtra("good")
         var noteNo = intent.getStringExtra("noteNo")
+
+
+        val toolbar5 = findViewById<Toolbar>(R.id.toolbar5)
+        setSupportActionBar(toolbar5)
+        setTitle("")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         binding.detailtitle.text = title
         binding.contents.text = contents
         binding.date.text = time
@@ -101,5 +111,12 @@ class CommunityDetail : AppCompatActivity() {
             }
         }
     }*/
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

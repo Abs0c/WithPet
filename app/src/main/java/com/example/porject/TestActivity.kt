@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import io.grpc.internal.DnsNameResolver
+import kotlinx.android.synthetic.main.activity_community_detail.*
 
 lateinit var Picture : Bitmap
 class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface
@@ -29,6 +32,8 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     lateinit var viewModel: NoteViewModel
     lateinit var dateText: String
     lateinit var adapter: NoteRVAdapter
+    lateinit var name : String
+    lateinit var nameList : ArrayList<String>
 
     private var itemList: MutableList<Note> = mutableListOf()
     private var titleList: ArrayList<String> = ArrayList()
@@ -42,6 +47,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val intent = intent
         dateText = intent.getStringExtra("selectedDate").toString()
         //Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
+        name = intent.getStringExtra("name").toString()
         setContentView(R.layout.activity_test)
         setTitle("기록 확인")
         val toolbar2 = findViewById<Toolbar>(R.id.toolbar2)

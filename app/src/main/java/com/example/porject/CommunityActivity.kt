@@ -3,9 +3,11 @@ package com.example.porject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.porject.databinding.ActivityCommunityBinding
@@ -24,6 +26,10 @@ class CommunityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCommunityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val toolbar4 = findViewById<Toolbar>(R.id.toolbar4)
+        setSupportActionBar(toolbar4)
+        setTitle("")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         var recyclerView = findViewById<RecyclerView>(R.id.communitylist)
         binding.write.setOnClickListener {
             intent = Intent(this, CommunityWriteActivity::class.java)
@@ -74,5 +80,12 @@ class CommunityActivity : AppCompatActivity() {
                 }
 
             }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
