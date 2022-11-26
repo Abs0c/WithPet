@@ -266,4 +266,12 @@ class AddEitNoteActivity : AppCompatActivity() {
         view.draw(canvas)
         return bitmap
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(applicationContext, TestActivity::class.java)
+        intent.putExtra("selectedDate", "")
+        startActivity(intent)
+        this.finish()
+    }
 }

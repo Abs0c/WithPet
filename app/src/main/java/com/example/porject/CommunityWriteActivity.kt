@@ -19,28 +19,35 @@ class CommunityWriteActivity : AppCompatActivity() {
         binding = ActivityCommunityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")
+        val formatter = DateTimeFormatter.ofPattern("MM월 dd일 HH시 mm분")
         val formatted = current.format(formatter)
+        var mode = intent.getStringExtra("mode")
         binding.communitywriteSave.setOnClickListener {
             if(binding.communitywriteTitle.equals("")) Toast.makeText(this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
             else{
                 var Title = binding.communitywriteTitle.text.toString()
                 var Contents = binding.communitywriteContents.text.toString()
                 var Time = formatted
-                var Userid = MyApplication.email.toString()
+                var Userid = "비회원"
+                if(MyApplication.checkAuth()){
+                    Userid = MyApplication.email.toString()
+                    Userid = Userid.substring(0, Userid.indexOf("@"))
+                }
                 var Good = "0"
                 var noteNo = (10000000000000 - System.currentTimeMillis()).toString()
-                writeCommunity(Title, Contents, Time, Userid, Good, noteNo)
+                if (mode != null) {
+                    writeCommunity(Title, Contents, Time, Userid, Good, noteNo, mode)
+                }
             }
         }
         binding.communitywriteCancel.setOnClickListener {
             finish()
         }
     }
-    fun writeCommunity(title : String, contents : String, time : String, userid : String, good : String, noteNo : String){
+    fun writeCommunity(title : String, contents : String, time : String, userid : String, good : String, noteNo : String, mode : String){
         val data = CommunityData(title, contents, time, userid, good, noteNo)
         val colRef = db.collection("Community")
-        db.collection("Community").document(noteNo).set(data)
+        db.collection("$mode").document(noteNo).set(data)
         //db.collection("Community").document(noteNo).collection("Comment").document(noteNo).set(data)
         finish()
         /*colRef.add(data).addOnSuccessListener {

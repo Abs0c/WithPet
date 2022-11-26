@@ -22,10 +22,11 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val list = listOf(mapView(), myPet(), Diary(), myPage())
+        //val list = listOf(mapView(), myPet(), Diary(), myPage())
+        val list = listOf(mapView(), Diary(), CommunityView(),myPage())
         val pagerAdapter = FragmentPagerAdapter(list, this)
         binding.viewPager.adapter = pagerAdapter
-        val titles = listOf("산책", "마이 펫", "일기", "마이페이지")
+        val titles = listOf("산책", "일기", "게시판", "마이페이지")
         TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position -> tab.text = titles.get(position)}.attach()
         binding.viewPager.isUserInputEnabled = false
     }

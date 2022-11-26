@@ -25,7 +25,6 @@ class myPage : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
         binding = FragmentMyPageBinding.inflate(inflater, container, false)
         binding.btnDiet.setOnClickListener {

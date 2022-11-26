@@ -6,11 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_add_eit_note.view.*
-import kotlinx.android.synthetic.main.fragment_diary.view.*
-import kotlinx.android.synthetic.main.walking_list.view.*
 
 class CommunityAdapter(private val context : Context, val CommunityList: MutableList<CommunityData>) : RecyclerView.Adapter<CommunityAdapter.ViewHolder>()  {
     var datas = mutableListOf<CommunityData>()
@@ -44,8 +40,8 @@ class CommunityAdapter(private val context : Context, val CommunityList: Mutable
         }
     }
     inner class ViewHolder(view : View) :RecyclerView.ViewHolder(view){
-        val Title : TextView = itemView.findViewById(R.id.community_title)
-        val Contents : TextView = itemView.findViewById(R.id.community_contents)
+        val Title : TextView = itemView.findViewById(R.id.community_title_brief)
+        val Contents : TextView = itemView.findViewById(R.id.community_contents_brief)
         val Time : TextView = itemView.findViewById(R.id.community_time)
         val ID : TextView = itemView.findViewById(R.id.community_id)
         fun bind(item : CommunityData){
