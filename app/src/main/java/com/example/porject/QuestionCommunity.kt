@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.porject.databinding.ActivityCommunityBinding
 import com.example.porject.databinding.ActivityQuestionCommunityBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -18,11 +17,12 @@ class QuestionCommunity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionCommunityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var recyclerView = findViewById<RecyclerView>(R.id.communitylist)
+        var recyclerView = findViewById<RecyclerView>(R.id.questionlist)
         binding.write.setOnClickListener {
             intent = Intent(this, CommunityWriteActivity::class.java)
             intent.putExtra("mode", "Question")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
         if(MyApplication.checkAuth()) {}
         db = MyApplication.db
@@ -48,6 +48,10 @@ class QuestionCommunity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.communitylist.layoutManager = layoutManager
         binding.communitylist.adapter = adapter*/
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
     }
     override fun onRestart() {
         super.onRestart()

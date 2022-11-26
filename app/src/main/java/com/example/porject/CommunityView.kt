@@ -1,6 +1,7 @@
 package com.example.porject
 
 import android.content.Intent
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.FragmentCommunityViewBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,10 +43,13 @@ class CommunityView : Fragment() {
         binding.go1.setOnClickListener {
             var intent = Intent(context, CommunityActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
+
         }
         binding.go2.setOnClickListener {
             var intent = Intent(context, QuestionCommunity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
 
 
@@ -56,7 +62,7 @@ class CommunityView : Fragment() {
         var j = 0
         datas.clear()
         datas2.clear()
-        db = MyApplication.db
+        db = Firebase.firestore
         //adapter = context?.let { myListAdapter(it, items) }
         adapterOne = context?.let{CommunityBriefAdapter(it, datas)}!!
         adapterTwo = context?.let{CommunityBriefAdapter(it, datas2)}!!

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.porject.MyApplication.Companion.db
 
@@ -44,6 +45,7 @@ class CommunityDetailAdapter(private val context : Context) : RecyclerView.Adapt
             delete.setOnClickListener {
                 db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
                 db.collection("Question").document("$noteNo").collection("Comments").document("$commentNo").delete()
+
             }
         }
     }

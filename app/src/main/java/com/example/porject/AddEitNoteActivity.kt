@@ -185,6 +185,7 @@ class AddEitNoteActivity : AppCompatActivity() {
                 intent.putExtra("selectedDate", currentDate)
                 intent.putExtra("name", noteTitle)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 this.finish()
             }
         }
@@ -215,6 +216,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             intent.putExtra("selectedDate", "")
             startActivity(intent)
             this.finish()
+            overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -272,5 +274,6 @@ class AddEitNoteActivity : AppCompatActivity() {
         intent.putExtra("selectedDate", "")
         startActivity(intent)
         this.finish()
+        overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
     }
 }

@@ -149,4 +149,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
+    }
 }

@@ -44,6 +44,11 @@ class CommunityWriteActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
+    }
     fun writeCommunity(title : String, contents : String, time : String, userid : String, good : String, noteNo : String, mode : String){
         val data = CommunityData(title, contents, time, userid, good, noteNo)
         val colRef = db.collection("Community")

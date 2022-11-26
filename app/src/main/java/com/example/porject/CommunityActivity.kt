@@ -4,18 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.porject.databinding.ActivityCommunityBinding
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_community.*
 
 class CommunityActivity : AppCompatActivity() {
     lateinit var binding: ActivityCommunityBinding
@@ -30,11 +23,12 @@ class CommunityActivity : AppCompatActivity() {
         setSupportActionBar(toolbar4)
         setTitle("")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        var recyclerView = findViewById<RecyclerView>(R.id.communitylist)
+        var recyclerView = findViewById<RecyclerView>(R.id.questionlist)
         binding.write.setOnClickListener {
             intent = Intent(this, CommunityWriteActivity::class.java)
             intent.putExtra("mode", "Community")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
         if(MyApplication.checkAuth()) {}
         db = MyApplication.db
@@ -53,12 +47,18 @@ class CommunityActivity : AppCompatActivity() {
                 val layoutManager = LinearLayoutManager(this)
                 binding.communitylist.layoutManager = layoutManager
                 binding.communitylist.adapter = adapter
+
         }
         /*adapter.datas = datas
         adapter.notifyDataSetChanged()
         val layoutManager = LinearLayoutManager(this)
         binding.communitylist.layoutManager = layoutManager
         binding.communitylist.adapter = adapter*/
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
     }
     override fun onRestart() {
         super.onRestart()
@@ -83,8 +83,9 @@ class CommunityActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
-
             finish()
+            overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
+
         }
         return super.onOptionsItemSelected(item)
     }

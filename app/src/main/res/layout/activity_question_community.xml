@@ -5,29 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".CommunityActivity">
+    tools:context=".QuestionCommunity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar4"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="펫과함께"
+            android:fontFamily="@font/ansungtangmyun_bold"
+            android:textSize="30dp"
+            android:layout_marginLeft="25dp"/>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:text="펫과함께"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/ansungtangmyun_esg"
+        android:paddingLeft="30dp"
         android:text="질문게시판"
-        android:textSize="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/write"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/write"
@@ -42,8 +46,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questionlist"
         android:layout_width="match_parent"
-        android:layout_height="619dp"
-        android:layout_marginTop="72dp"
+        android:layout_height="613dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintTop_toBottomOf="@+id/write"
         tools:layout_editor_absoluteX="-2dp"
         tools:listitem="@layout/community_list" />

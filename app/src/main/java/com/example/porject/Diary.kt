@@ -112,6 +112,7 @@ class Diary : Fragment() {
                     val intent = Intent(context, TestActivity::class.java)
                     intent.putExtra("selectedDate", selectedDate)
                     startActivity(intent)
+                    activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
 //                    val pet_list = Intent(activity,TestActivity::class.java)
 //                    pet_list.putExtra("date", diaryTextView.text)
 //                    startActivity(pet_list)
@@ -123,11 +124,13 @@ class Diary : Fragment() {
                 val intent = Intent(context, TestActivity::class.java)
                 intent.putExtra("selectedDate", "")
                 startActivity(intent)
+                activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
             }
         }
         binding.btnDial.setOnClickListener {
             val intent = Intent(activity, AddEitNoteActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
 
         return binding.root

@@ -86,7 +86,6 @@ class CommunityDetail : AppCompatActivity() {
         }
 
     }
-
     fun writeComments(title : String, contents : String, time : String, userid : String, good : String, noteNo : String, commentsNo : String){
         val data = CommunityData(title, contents, time, userid, good, commentsNo)
         datas.clear()

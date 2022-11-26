@@ -34,10 +34,12 @@ class myPage : Fragment(), View.OnClickListener {
         binding.add.setOnClickListener{
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
         binding.needLogin.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
         binding.btnSettingFrag.setOnClickListener{
             var permissioncheck: Boolean = true
@@ -67,8 +69,10 @@ class myPage : Fragment(), View.OnClickListener {
         }
         binding.btnCommunity.setOnClickListener {
             if(MyApplication.checkAuth()){
-                var intent = Intent(activity, CommunityActivity::class.java)
+                //var intent = Intent(activity, CommunityActivity::class.java)
+                var intent = Intent(activity, activity_mypet()::class.java)
                 startActivity(intent)
+                activity?.overridePendingTransition(R.anim.fadein, R.anim.fadeout)
             }
             else{
                 Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
@@ -83,10 +87,12 @@ class myPage : Fragment(), View.OnClickListener {
         if(!MyApplication.checkAuth()){
             binding.needLogin.setText("로그인이 필요합니다.")
             binding.add.visibility = View.VISIBLE
+            binding.btnCommunity.visibility = View.INVISIBLE
         }
         else{
             binding.needLogin.setText("${MyApplication.email}로 로그인하셨습니다.")
             binding.add.visibility = View.INVISIBLE
+            binding.btnCommunity.visibility = View.VISIBLE
         }
     }
 

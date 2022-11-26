@@ -52,10 +52,10 @@ class NoteRVAdapter(val context: Context,
             holder.setLayoutType(1)
         }
         holder.imag.setOnClickListener {
-            ImageClickInterface.ImageClick(items.get(position))
+            ImageClickInterface.ImageClick(items.get(position), holder.imag)
         }
         holder.imag2.setOnClickListener {
-            ImageClickInterface.ImageClick(items.get(position))
+            ImageClickInterface.ImageClick(items.get(position), holder.imag2)
         }
         holder.detail2.setOnClickListener {
             holder.setLayoutType(0)
@@ -219,5 +219,5 @@ interface NoteClickInterface{
     fun onNoteClick(note: Note)
 }
 interface ImageClickInterface{
-    fun ImageClick(note: Note)
+    fun ImageClick(note: Note, view : View)
 }

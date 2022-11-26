@@ -23,6 +23,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_community"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
+
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button_rectangle"
+            android:drawablePadding="@dimen/fab_margin"
+            android:fontFamily="@font/ansungtangmyun_esg"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="펫 관리"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/need_login"
+            tools:layout_editor_absoluteX="10dp" />
+
         <TextView
             android:id="@+id/need_login"
             android:layout_width="wrap_content"
@@ -53,13 +72,13 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:background="#A9A9A9"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/mytool"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/need_login"
-            app:layout_constraintBottom_toTopOf="@id/mytool"/>
+            app:layout_constraintTop_toBottomOf="@+id/need_login" />
 
         <LinearLayout
             android:id="@+id/mytool"
@@ -116,20 +135,6 @@
                 android:paddingLeft="10dp"
                 android:drawableLeft="@drawable/settings"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_community"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/button_rectangle"
-
-                android:drawablePadding="@dimen/fab_margin"
-                android:fontFamily="@font/ansungtangmyun_esg"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dp"
-                android:text="자유게시판" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -155,6 +160,7 @@
                 android:layout_marginTop="5dp"
                 android:text="조원 : 김동욱  박세한  박주엽  최은섭\n\n수원대학교 정보보호학과" />
         </LinearLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

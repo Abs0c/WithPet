@@ -40,4 +40,8 @@ class ViewActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportFinishAfterTransition()
+    }
 }

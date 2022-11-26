@@ -132,6 +132,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
             val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
             startActivity(intent)
             this.finish()
+            overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
 
 
@@ -157,7 +158,9 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         intent.putExtra("image",item.noteImage)
         intent.putExtra("noteID", item.id)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         this.finish()
+
 
     }
 
@@ -175,21 +178,28 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         intent.putExtra("image",note.noteImage)
         intent.putExtra("noteID", note.id)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         this.finish()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
-
             finish()
+            overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun ImageClick(note: Note) {
+    override fun ImageClick(note: Note, view : View) {
         Picture = BitmapFactory.decodeByteArray(note.noteImage, 0, note.noteImage.size)
+        val options = ActivityOptions.makeSceneTransitionAnimation(this, view, "imgTrans")
         val intent = Intent(this, ViewActivity::class.java)
-        startActivity(intent)
+        startActivity(intent, options.toBundle())
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //supportFinishAfterTransition()
+        overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
     }
     fun clickEvent(view : View){
         val intent = Intent(this, ViewActivity::class.java)
