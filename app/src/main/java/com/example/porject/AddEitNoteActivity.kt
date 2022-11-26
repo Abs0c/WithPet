@@ -109,6 +109,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         }
 
         val items = ArrayList<String>()
+        items.add("!선택하세요")
         MyApplication.db.collection("pets").get().addOnSuccessListener { result ->
             for (document in result){
                 if (MyApplication.auth.currentUser?.uid == document["userUID"]){
@@ -158,7 +159,7 @@ class AddEitNoteActivity : AppCompatActivity() {
         addUpdateBtn.setOnClickListener {
             val noteTitle = noteTitleEdt.text.toString()
             val noteDescription = noteDescriptionEdt.text.toString()
-            val petName = add_eit_note_select_pet_spinner.selectedItem.toString()
+            val petName = noteselectpetspinner.selectedItem.toString()
             //val byte1: ByteArray = imageToBitmap(imgbtn)
             val bytebitmap: Bitmap = getBitmapFromView(imgbtn)
             val baos = ByteArrayOutputStream()
@@ -167,27 +168,25 @@ class AddEitNoteActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("yyyy MMM dd", Locale.KOREA)
             val currentDate:String = sdf.format(Date())
 
-            if(noteType.equals("Edit")){
-                if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty()){
 
+            if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty() && petName != "!선택하세요"){
+                if(noteType.equals("Edit")){
                     val updateNote = Note(noteTitle, petName, noteDescription, currentDate, bytearrayfrombitmap)//, byte1)
                     updateNote.id = noteID
                     viewModel.updateNote(updateNote)
                     Toast.makeText(this, "기록 업데이트중..", Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                if(noteTitle.isNotEmpty() && noteDescription.isNotEmpty())
-                {
+                else{
                     viewModel.addNote(Note(noteTitle,petName, noteDescription, currentDate, bytearrayfrombitmap))//, byte1))
                     Toast.makeText(this, "기록 추가중..", Toast.LENGTH_SHORT).show()
                 }
+                Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, TestActivity::class.java)
+                intent.putExtra("selectedDate", currentDate)
+                intent.putExtra("name", noteTitle)
+                startActivity(intent)
+                this.finish()
             }
-            Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show()
-            val intent = Intent(applicationContext, TestActivity::class.java)
-            intent.putExtra("selectedDate", currentDate)
-            intent.putExtra("name", noteTitle)
-            startActivity(intent)
-            this.finish()
         }
     }
     /*fun absolutelyPath(path: Uri): String {
