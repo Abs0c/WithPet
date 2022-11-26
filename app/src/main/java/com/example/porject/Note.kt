@@ -10,6 +10,7 @@ import java.sql.Timestamp
 @Entity(tableName = "notesTable")
 class Note (
     @ColumnInfo(name = "title")val noteTitle:String,
+    @ColumnInfo(name = "petname")val petName:String,
     @ColumnInfo(name= "description")val noteDescription: String,
     @ColumnInfo(name = "timestamp")val timestamp: String,
     @ColumnInfo(name = "image")val noteImage: ByteArray

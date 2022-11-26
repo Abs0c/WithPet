@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.*
 import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -32,6 +34,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     lateinit var viewModel: NoteViewModel
     lateinit var dateText: String
     lateinit var adapter: NoteRVAdapter
+    lateinit var testselectpetspinner: Spinner
     lateinit var name : String
     lateinit var nameList : ArrayList<String>
 
@@ -75,16 +78,49 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val noteRVAdapter = NoteRVAdapter(this, this, this, this)
         notesRV.adapter = noteRVAdapter
 
+        testselectpetspinner = findViewById(R.id.test_select_pet_spinner)
+        val items = java.util.ArrayList<String>()
+        //선택하세요!
+        items.add("!선택하세요")
+        MyApplication.db.collection("pets").get().addOnSuccessListener { result ->
+            for (document in result){
+                if (MyApplication.auth.currentUser?.uid == document["userUID"]){
+                    items.add(document["petName"].toString())
+                }
+            }
+            val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, items)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            testselectpetspinner.adapter = adapter
+        }
 
+        var filterList: List<Note>
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(this, Observer { list -> list?.let{
+            filterList = it
+            testselectpetspinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 != 0){
+                        filterList = it.filter { it.petName ==  testselectpetspinner.selectedItem.toString()}
+                        if (dateText != "") {
+                            filterList = filterList.filter { it.timestamp == dateText }
+                        }
+                    }
+                    else{
+                        filterList = it
+                        if (dateText != "") {
+                            filterList = it.filter { it.timestamp == dateText }
+                        }
+                    }
+                    noteRVAdapter.updateList(filterList)
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
                 if (dateText != ""){
-                    var notelistbydate: List<Note> = it.filter { it.timestamp == dateText }
-                    noteRVAdapter.updateList(notelistbydate)
+                    filterList = it.filter { it.timestamp == dateText }
                 }
-                else {
-                    noteRVAdapter.updateList(it)
-                }
+                noteRVAdapter.updateList(it)
                 //titleList = ArrayList()
                 //descriptList = ArrayList()
                     //titleList.add(temp.noteTitle)
@@ -134,6 +170,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
         intent.putExtra("noteType", "Edit")
         intent.putExtra("noteTitle", note.noteTitle)
+        intent.putExtra("petname",note.petName)
         intent.putExtra("noteDescription", note.noteDescription)
         intent.putExtra("image",note.noteImage)
         intent.putExtra("noteID", note.id)

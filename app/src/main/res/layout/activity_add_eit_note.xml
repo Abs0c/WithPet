@@ -47,13 +47,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <EditText
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/communitywrite_title"
-                    android:hint="제목을 입력하세요."
-                    android:textColor="@color/black"
-                    android:layout_margin="10dp"/>
+                    android:orientation="horizontal">
+                    <EditText
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/communitywrite_title"
+                        android:hint="제목을 입력하세요."
+                        android:textColor="@color/black"
+                        android:layout_margin="10dp"/>
+                    <Spinner
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/add_eit_note_select_pet_spinner"
+                        android:layout_margin="10dp">
+
+                    </Spinner>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <EditText
                     android:id="@+id/communitywrite_contents"

@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/black_shade_1"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar2"/>
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/test_select_pet_spinner"
+            android:layout_gravity="center|right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/toolbar2"
         android:layout_width="match_parent"
