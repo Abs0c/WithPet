@@ -16,7 +16,7 @@
 
 <!--   고양이  -->
     <string-array name="cat_array">
-        <item>!선택하세요</item>
+        <item>선택하세요</item>
         <item>성장기(4개월미만)</item>
         <item>성장기(4~6개월)</item>
         <item>성장기(7~12개월)</item>
@@ -34,6 +34,7 @@
         <item>강아지</item>
         <item>고양이</item>
     </string-array>
+
     <string-array name="custom_weekdays">
         <item>일</item>
         <item>월</item>

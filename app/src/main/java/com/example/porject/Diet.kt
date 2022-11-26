@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.porject.databinding.ActivityDietBinding
 import kotlinx.android.synthetic.main.activity_diet.*
 import java.lang.reflect.Array
+import kotlin.math.*
 
 // 고양이랑 강아지의 필요 요구량만 다르고 계산식은 같습니다.
 class   Diet : AppCompatActivity() {
@@ -55,12 +56,14 @@ class   Diet : AppCompatActivity() {
             editdata=ses.toDouble()
             //강아지 몸무게가 2kg이상일시
             if (editdata>=2.0) {
-                pet_kcal = (30*editdata+70) * shame
+                pet_kcal = ((30*editdata+70) * shame)
+                pet_kcal = round(pet_kcal)
                 binding.calculation.text=pet_kcal.toString()
             }
             //강아지 몸무게가 2kg미만일시
             else if(editdata<2.0){
-                pet_kcal = (70 * editdata * (0.75)) * shame
+                pet_kcal = ((70 * editdata * (0.75)) * shame)
+                pet_kcal = round(pet_kcal)
                 binding.calculation.text=pet_kcal.toString()
             }
             else{
@@ -259,7 +262,6 @@ class   Diet : AppCompatActivity() {
                     }
                     //노인묘
                     6 -> {
-                        //수치 1
                         shame = 0.7
                     }
                     //임신묘

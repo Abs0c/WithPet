@@ -39,7 +39,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petType"] as Long) != getpetType) {
                         continue
                     }
-                    if ((document["petWeight"] as Long) != getpetWeight){
+                    if ((document["petWeight"] as Double) != getpetWeight){
                         continue
                     }
                     if ((document["userUID"] as String?) != getuserUid) {
@@ -67,7 +67,7 @@ class myListAdapter (val context: Context, val myPetList: MutableList<myPetType>
                     if ((document["petType"] as Long) != getpetType) {
                         continue
                     }
-                    if ((document["petWeight"] as Long) != getpetWeight){
+                    if ((document["petWeight"] as Double) != getpetWeight){
                         continue
                     }
                     if ((document["userUID"] as String?) != getuserUid) {

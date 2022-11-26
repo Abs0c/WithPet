@@ -81,7 +81,9 @@ class AddpetActivity : AppCompatActivity() {
 
         val getextrapetname= intent.getStringExtra("petname")
         val getextrapettype= intent.getLongExtra("pettype", 1)
-        val getextrapetweight= intent.getLongExtra("petweight", 0)
+
+        val getextrapetweight= intent.getDoubleExtra("petweight", 0.0)// 바꿔보는 부분
+
         val getdocuname= intent.getStringExtra("docuname")
         if (getextrapetname != null && getextrapettype != null){
             binding.addPetNameEdittext.setText(getextrapetname)
@@ -146,7 +148,7 @@ class AddpetActivity : AppCompatActivity() {
                 else{
                     pettype = "2".toLong()
                 }
-                val petweight = binding.addPetWeightEdittext.text.toString().toLong()
+                val petweight = binding.addPetWeightEdittext.text.toString().toDouble()
                 saveStore(petimage, petname, pettype, petweight, getextrapetname, getextrapetweight, getdocuname)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -154,8 +156,8 @@ class AddpetActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun saveStore(petimage: Bitmap, petname: String, pettype: Long, petweight: Long, getpetname:String?, getpetweight: Long?, docuname: String?){
+    // 바꿔보는 부분
+    private fun saveStore(petimage: Bitmap, petname: String, pettype: Long, petweight: Double, getpetname:String?, getpetweight: Double?, docuname: String?){
         val baos = ByteArrayOutputStream()
         petimage.compress(Bitmap.CompressFormat.JPEG, 70, baos)
         val imagedata = baos.toByteArray()

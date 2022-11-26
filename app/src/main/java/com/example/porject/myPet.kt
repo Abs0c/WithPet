@@ -2,11 +2,11 @@ package com.example.porject
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +44,6 @@ class myPet : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-    var check = false
     fun notifyob(){
         adapter?.notifyDataSetChanged()
     }
@@ -77,7 +76,6 @@ class myPet : Fragment() {
         }
         return binding.root
     }
-    var user = "test"
     override fun onResume() {
 
         super.onResume()
@@ -101,7 +99,7 @@ class myPet : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result){
                         if (document["userUID"] as String? == MyApplication.auth.currentUser?.uid){
-                            val item = myPetType(document["petName"] as String, document["petType"] as Long, document["petWeight"] as Long, document["userUID"] as String?)
+                            val item = myPetType(document["petName"] as String, document["petType"] as Long, document["petWeight"].toString().toDouble(), document["userUID"] as String?)
                             items.add(item)
                         }
                     }
@@ -110,6 +108,7 @@ class myPet : Fragment() {
                     binding.listView.layoutManager = LinearLayoutManager(context)
                 }
         }
+
     }
     companion object {
         /**
