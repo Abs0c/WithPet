@@ -156,7 +156,6 @@ class AddEitNoteActivity : AppCompatActivity() {
         }else{
             addUpdateBtn.setText("기록 저장")
         }
-
         addUpdateBtn.setOnClickListener {
             val noteTitle = noteTitleEdt.text.toString()
             val noteDescription = noteDescriptionEdt.text.toString()

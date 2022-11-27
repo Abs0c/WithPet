@@ -1,6 +1,7 @@
 package com.example.porject
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.porject.databinding.FragmentDiaryBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -16,6 +20,9 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import java.text.SimpleDateFormat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.get
+import kotlinx.android.synthetic.main.activity_community_detail.*
 import java.util.*
 
 
@@ -39,6 +46,8 @@ class Diary : Fragment() {
     lateinit var diaryContent: TextView
     lateinit var title: TextView
     lateinit var binding: FragmentDiaryBinding
+
+    lateinit var viewModel: NoteViewModel
 
     private var selectedDate: String = ""// 달력에서 선택한 날짜
 
@@ -76,6 +85,23 @@ class Diary : Fragment() {
                 calendar.addDecorator(EventDecorator(Collections.singleton(date)))
             }
         })
+        /*var datalist : List<Note>
+        viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(NoteViewModel::class.java)
+        viewModel.allNotes.observe(requireActivity(), Observer { list->
+            list?.let {
+                datalist = it
+                for(i in it.iterator()){
+                    var year = i.timestamp.substring(0, 4).toInt()
+                    var month = i.timestamp.substring(5, 7).toInt() - 1
+                    var day = i.timestamp.substring(9, 11).toInt()
+                    calendar.addDecorator(EventDecorator(Collections.singleton(CalendarDay.from(year, month ,day))))
+                }
+                //Toast.makeText(context, "${it.size}", Toast.LENGTH_SHORT).show()
+            }
+        })*/
+
+
+
        calendar.addDecorators(
            //일요일에 색칠하기
            SundayDecorator(),
@@ -120,6 +146,25 @@ class Diary : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        calendar = binding.calendarView
+        calendar.removeDecorators()
+        var datalist : List<Note>
+        viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(NoteViewModel::class.java)
+        viewModel.allNotes.observe(requireActivity(), Observer { list->
+            list?.let {
+                datalist = it
+                for(i in it.iterator()){
+                    var year = i.timestamp.substring(0, 4).toInt()
+                    var month = i.timestamp.substring(5, 7).toInt() - 1
+                    var day = i.timestamp.substring(9, 11).toInt()
+                    calendar.addDecorator(EventDecorator(Collections.singleton(CalendarDay.from(year, month ,day))))
+                }
+                //Toast.makeText(context, "${it.size}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
 
     companion object {

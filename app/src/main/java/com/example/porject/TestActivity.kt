@@ -107,6 +107,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(NoteViewModel::class.java)
+
         viewModel.allNotes.observe(this, Observer { list ->
             list?.let {
                 filterList = it
