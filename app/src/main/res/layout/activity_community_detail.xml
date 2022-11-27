@@ -50,6 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/flower"
                     android:text="이름"
                     app:layout_constraintStart_toEndOf="@+id/avata"
                     app:layout_constraintTop_toTopOf="@+id/avata" />
@@ -59,6 +61,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="@font/flower"
+                    android:textSize="16dp"
                     android:text="11월 26일 22시 50분"
                     app:layout_constraintStart_toEndOf="@+id/avata"
                     app:layout_constraintTop_toBottomOf="@+id/name" />
