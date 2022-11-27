@@ -79,12 +79,7 @@ class Diary : Fragment() {
         calendar.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_months)))
         calendar.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
 
-        // 날짜 선택시 그 숫자 아래에 점을 추가한다
-        calendar.setOnDateChangedListener(object: OnDateSelectedListener {
-            override fun onDateSelected(widget: MaterialCalendarView, date: CalendarDay, selected: Boolean) {
-                calendar.addDecorator(EventDecorator(Collections.singleton(date)))
-            }
-        })
+
         /*var datalist : List<Note>
         viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(requireActivity(), Observer { list->

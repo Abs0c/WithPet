@@ -26,10 +26,12 @@
 
         <TextView
             android:id="@+id/commentID"
+            android:fontFamily="@font/flower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:text="commentID"
             app:layout_constraintStart_toEndOf="@+id/commentavata"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +40,11 @@
             android:id="@+id/commentcontents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:text="내용"
             android:textColor="#494747"
-            android:textSize="20dp"
+            android:layout_marginStart="9dp"
+            android:textSize="17dp"
+            android:layout_marginBottom="3dp"
             app:layout_constraintStart_toStartOf="@+id/commentID"
             app:layout_constraintTop_toBottomOf="@+id/commentID" />
 
@@ -51,7 +54,10 @@
             android:layout_height="wrap_content"
             android:text="날짜"
             android:textSize="12dp"
+            android:fontFamily="@font/flower"
+            android:layout_marginBottom="5dp"
             android:textColor="#494747"
+            android:layout_marginStart="7dp"
             app:layout_constraintStart_toEndOf="@+id/commentavata"
             app:layout_constraintTop_toBottomOf="@+id/commentcontents" />
 
