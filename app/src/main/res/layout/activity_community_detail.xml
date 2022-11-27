@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CommunityDetail"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#EEF6E4">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar5"
@@ -17,7 +18,7 @@
             android:id="@+id/detailtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:fontFamily="@font/ansungtangmyun_bold"
             android:text="펫과함께"
             android:textSize="30dp" />
