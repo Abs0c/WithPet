@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="내용"
+            android:textColor="#494747"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@+id/commentID"
             app:layout_constraintTop_toBottomOf="@+id/commentID" />
@@ -49,7 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="날짜"
-
+            android:textSize="12dp"
+            android:textColor="#494747"
             app:layout_constraintStart_toEndOf="@+id/commentavata"
             app:layout_constraintTop_toBottomOf="@+id/commentcontents" />
 

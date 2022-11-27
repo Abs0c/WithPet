@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/ansungtangmyun_bold"
+            android:textColor="#494747"
             android:text="펫과함께"
             android:textSize="30dp" />
     </androidx.appcompat.widget.Toolbar>
@@ -91,6 +92,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_weight="1.5"
+            android:textColor="#494747"
             android:text="이렇고 이런일이 있었는데 저 정말 슬퍼요 님들은 어떻게 생각하시나요"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@+id/avata"
@@ -130,7 +132,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.1"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="@drawable/stroke">
 
         <ImageView
             android:id="@+id/avata2"
