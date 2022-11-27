@@ -10,12 +10,14 @@
     app:cardElevation="4dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_circle">
         <TextView
             android:id="@+id/community_title_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
+            android:paddingLeft="10dp"
             android:textSize="18sp"/>
 
         <ImageView
