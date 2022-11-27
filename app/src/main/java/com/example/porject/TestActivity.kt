@@ -89,7 +89,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         testselectpetspinner = findViewById(R.id.test_select_pet_spinner)
         val items = java.util.ArrayList<String>()
         //선택하세요!
-        items.add("!선택하세요")
+        items.add("선택하세요")
         MyApplication.db.collection("pets").get().addOnSuccessListener { result ->
             for (document in result) {
                 if (MyApplication.auth.currentUser?.uid == document["userUID"]) {

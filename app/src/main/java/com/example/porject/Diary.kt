@@ -34,16 +34,11 @@ class Diary : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
 
-    var userID: String = "userID"
-    lateinit var fname: String
-    lateinit var str: String
-    //    lateinit var calendarView: CalendarView
     lateinit var readBtn: Button
     lateinit var diaryTextView: TextView
     lateinit var diaryContent: TextView
     lateinit var title: TextView
     lateinit var binding: FragmentDiaryBinding
-    //lateinit var allNotes: LiveData<List<Note>>
 
     private var selectedDate: String = ""// 달력에서 선택한 날짜
 
@@ -63,12 +58,6 @@ class Diary : Fragment() {
 
     ): View? {
 
-        //allNotes = NoteRepository(Room.databaseBuilder(TestActivity().applicationContext, NoteDatabase::class.java, "note_database").build().getNotesDao()).allNotes
-        //val dao = NoteDatabase.getDatabase(TestActivity().apply { startActivity(Intent(this, TestActivity::class.java)) }.application).getNotesDao()
-        //allNotes = dao?.let { NoteRepository(it).allNotes }!!
-        //Toast.makeText(context, allNotes.value.toString(), Toast.LENGTH_SHORT).show()
-
-
         // Inflate the layout for this fragment
         binding = FragmentDiaryBinding.inflate(layoutInflater)
         calendar = binding.calendarView
@@ -87,7 +76,6 @@ class Diary : Fragment() {
                 calendar.addDecorator(EventDecorator(Collections.singleton(date)))
             }
         })
-
        calendar.addDecorators(
            //일요일에 색칠하기
            SundayDecorator(),
@@ -113,9 +101,6 @@ class Diary : Fragment() {
                     intent.putExtra("selectedDate", selectedDate)
                     startActivity(intent)
                     activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
-//                    val pet_list = Intent(activity,TestActivity::class.java)
-//                    pet_list.putExtra("date", diaryTextView.text)
-//                    startActivity(pet_list)
                 }
             }
         })
@@ -134,7 +119,6 @@ class Diary : Fragment() {
         }
 
         return binding.root
-//        return inflater.inflate(R.layout.fragment_diary, container, false)
     }
 
 
