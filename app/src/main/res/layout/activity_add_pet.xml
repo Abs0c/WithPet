@@ -48,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/dogup2"
+        android:padding="5dp"
         android:layout_gravity="center"
         android:text="  반려 동물의 사진및 정보는 수정 가능합니다 "
         android:fontFamily="@font/ansungtangmyun_esg"
