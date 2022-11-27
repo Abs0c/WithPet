@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import com.example.porject.databinding.ActivityCommunityWriteBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
@@ -33,6 +35,10 @@ class CommunityWriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCommunityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val toolbar4 = findViewById<Toolbar>(R.id.toolbar9)
+        setSupportActionBar(toolbar4)
+        setTitle("")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("MM월 dd일 HH시 mm분")
         val formatted = current.format(formatter)
@@ -149,5 +155,11 @@ class CommunityWriteActivity : AppCompatActivity() {
         val canvas = Canvas(bitmap)
         view.draw(canvas)
         return bitmap
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

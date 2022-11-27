@@ -36,6 +36,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="더보기"
+                android:layout_marginRight="5dp"
                 android:textColor="#D21515"
                 android:gravity="center"/>
         </LinearLayout>
@@ -70,6 +71,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="더보기"
+                android:layout_marginRight="5dp"
                 android:textColor="#D21515"
                 android:gravity="center"/>
         </LinearLayout>
