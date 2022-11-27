@@ -53,6 +53,7 @@ class CommunityDetailAdapter(private val context : Context) : RecyclerView.Adapt
                             db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
                             db.collection("Question").document("$noteNo").collection("Comments").document("$commentNo").delete()
                             Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            datas.remove(item)
                         }).setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->  })
                 builder.show()
                 /*db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
