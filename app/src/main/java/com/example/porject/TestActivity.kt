@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_community_detail.view.*
 
 lateinit var Picture : Bitmap
 class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface
-    ,SearchView.OnQueryTextListener {
+     {
     lateinit var notesRV: RecyclerView
     lateinit var addFAB: FloatingActionButton
     lateinit var viewModel: NoteViewModel
@@ -218,45 +218,7 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         startActivity(intent, opt.toBundle())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        val item = menu?.findItem(R.id.search_bar)
-        //var searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = item?.actionView as? SearchView
-        searchView?.isSubmitButtonEnabled = true
-        searchView?.setOnQueryTextListener(this)
 
-        return true
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-
-
-        return true
-    }
-
-    override fun onQueryTextChange(query: String?): Boolean {
-
-        if (query != null) {
-            searchDatabase(query)
-        }
-        return true
-    }
-
-    private fun searchDatabase(query: String) {
-        val searchQuery = "%$query%"
-
-        viewModel.searchDatabase(searchQuery).observe(this, { list ->
-            list.let {
-                //Toast.makeText(this, it.get(2).toString(), Toast.LENGTH_LONG).show()
-                adapter.updateList(it)
-
-            }
-            //adapter = NoteRVAdapter(this, this, this, this)
-            //adapter.switchLayout(1)
-        })
-
-    }
 
 
 
