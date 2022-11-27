@@ -18,7 +18,5 @@ class NoteRepository(private  val notesDao: NotesDao) {
         notesDao.update(note)
     }
 
-    fun searchDatabase(searchQuery: String): kotlinx.coroutines.flow.Flow<List<Note>>{
-        return notesDao.searchDatabase(searchQuery)
-    }
+
 }

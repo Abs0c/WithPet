@@ -20,6 +20,5 @@ interface NotesDao {
     @Query("Select * from notesTable order by id ASC")
     fun getAllNotes() : LiveData<List<Note>>
 
-    @Query("SELECT * FROM notesTable WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
-    fun searchDatabase(searchQuery: String): kotlinx.coroutines.flow.Flow<List<Note>>
+
 }
