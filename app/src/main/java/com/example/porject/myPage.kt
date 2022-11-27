@@ -42,20 +42,13 @@ class myPage : Fragment(), View.OnClickListener {
             activity?.overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
         binding.btnSettingFrag.setOnClickListener{
-            var permissioncheck: Boolean = true
-            for (permission in REQUIRED_PERMISSIONS){
-                if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_DENIED){
-                    permissioncheck = false
-                    break
-                }
+            val permissionsupporter = PermissionSupport(requireActivity(), requireContext())
+            if (permissionsupporter.checkPermission()){
+                Toast.makeText(context, "권한 설정이 이미 완료되어 있습니다", Toast.LENGTH_SHORT).show()
             }
-            when (permissioncheck) {
-                false -> {
-                    requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
-                }
-                true -> {
-                    Toast.makeText(activity, "권한 설정이 이미 완료되어 있습니다", Toast.LENGTH_SHORT).show()
-                }
+            else{
+                Toast.makeText(context, "권한 설정중입니다.", Toast.LENGTH_SHORT).show()
+                permissionsupporter.requestPermission()
             }
         }
         //binding.btnInfo.setOnClickListener{
