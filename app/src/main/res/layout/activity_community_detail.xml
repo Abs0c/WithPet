@@ -133,7 +133,8 @@
         android:layout_height="0dp"
         android:layout_weight="1.1"
         android:padding="10dp"
-        android:background="@drawable/stroke">
+        android:background="@drawable/stroke"
+        >
 
         <ImageView
             android:id="@+id/avata2"
