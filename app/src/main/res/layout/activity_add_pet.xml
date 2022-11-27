@@ -21,19 +21,49 @@
             android:fontFamily="@font/kotra_hope"
             android:textStyle="bold"
             android:textSize="35dp"
+            android:drawableLeft="@drawable/pet_care"
+            android:drawablePadding="10dp"
             android:layout_gravity="center"
             android:textColor="#494747"/>
     </androidx.appcompat.widget.Toolbar>
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3" />
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:fontFamily="@font/ansungtangmyun_esg"
+        android:layout_gravity="center"
+        android:textColor="#494747"
+        android:drawableLeft="@drawable/dogup"
+        android:text="  당신의 반려 동물 정보를 추가하세요 "
+        android:textSize="20dp"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/dogup2"
+        android:text="  반려 동물의 사진및 정보는 수정 가능합니다  "
+        android:fontFamily="@font/ansungtangmyun_esg"
+        android:textStyle="bold"
+        android:textSize="20dp"
+
+        android:textColor="#494747"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
