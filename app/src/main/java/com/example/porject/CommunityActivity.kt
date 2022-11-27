@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +18,9 @@ class CommunityActivity : AppCompatActivity() {
     lateinit var db: FirebaseFirestore
     val datas = mutableListOf<CommunityData>()
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         binding = ActivityCommunityBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
         val toolbar4 = findViewById<Toolbar>(R.id.toolbar4)
         setSupportActionBar(toolbar4)
@@ -31,7 +33,7 @@ class CommunityActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
-        if(MyApplication.checkAuth()) {}
+        if(!MyApplication.checkAuth()) {binding.write.visibility = View.INVISIBLE}
         db = MyApplication.db
         adapter = CommunityAdapter(this, arrayListOf<CommunityData>())
         db.collection("Community")
@@ -86,7 +88,6 @@ class CommunityActivity : AppCompatActivity() {
         if(item.itemId == android.R.id.home){
             finish()
             overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
-
         }
         return super.onOptionsItemSelected(item)
     }

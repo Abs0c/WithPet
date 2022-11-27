@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +31,7 @@ class QuestionCommunity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setTitle("")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        if(MyApplication.checkAuth()) {}
+        if(!MyApplication.checkAuth()) {binding.write.visibility = View.INVISIBLE}
         db = MyApplication.db
         adapter = CommunityAdapter(this, arrayListOf<CommunityData>())
         db.collection("Question")

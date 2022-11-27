@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.FragmentCommunityViewBinding
@@ -58,6 +59,19 @@ class CommunityView : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if(!MyApplication.checkAuth()) {
+            datas.clear()
+            adapterOne = context?.let{CommunityBriefAdapter(it, datas)}!!
+            adapterTwo = context?.let{CommunityBriefAdapter(it, datas2)}!!
+            adapterOne.datas = datas
+            adapterOne.notifyDataSetChanged()
+            adapterTwo.datas = datas
+            adapterTwo.notifyDataSetChanged()
+            binding.freelistBrief.adapter = adapterOne
+            binding.questionBrief.adapter = adapterTwo
+
+            Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+        }
         var i = 0
         var j = 0
         datas.clear()

@@ -83,6 +83,7 @@ class CommunityWriteActivity : AppCompatActivity() {
 
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         try{
             val calRatio = calculateInSampleSize(it!!.data!!.data!!, 200,200)

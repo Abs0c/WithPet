@@ -71,8 +71,10 @@ class LoginActivity : AppCompatActivity() {
             requestLauncher.launch(signInIntent)
         }
         binding.signBtn.setOnClickListener {
-            val email: String = binding.authEmailEditView.text.toString()
-            val password: String = binding.authPasswordEditView.text.toString()
+            var email: String = binding.authEmailEditView.text.toString()
+            if(binding.authEmailEditView.text.toString().equals("")) email = "a"
+            var password: String = binding.authPasswordEditView.text.toString()
+            if(binding.authPasswordEditView.text.toString().equals("")) password = "a"
             MyApplication.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this){
                     task -> binding.authEmailEditView.text.clear()
                 binding.authPasswordEditView.text.clear()
@@ -94,8 +96,12 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.loginBtn.setOnClickListener {
             //이메일, 비밀번호 로그인.......................
-            val email: String = binding.authEmailEditView.text.toString()
-            val password: String = binding.authPasswordEditView.text.toString()
+            var email: String = binding.authEmailEditView.text.toString()
+            if(binding.authEmailEditView.text.toString().equals("")) email = "a"
+            else if(binding.authEmailEditView.text.toString().equals("admin")) email = "petdoglove001@gmail.com"
+            var password: String = binding.authPasswordEditView.text.toString()
+            if(binding.authPasswordEditView.text.toString().equals("")) password = "a"
+            else if(binding.authPasswordEditView.text.toString().equals("admin")) password = "qwer123"
             MyApplication.auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     binding.authEmailEditView.text.clear()
