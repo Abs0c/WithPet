@@ -69,11 +69,11 @@ class AddEitNoteActivity : AppCompatActivity() {
             val bytebitmap: Bitmap = bitmap
             imgbtn.setImageBitmap(bitmap)
             val baos = ByteArrayOutputStream()
-            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
+            bytebitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos)
             val bytearrayfrombitmap: ByteArray = baos.toByteArray()
             val sdf = SimpleDateFormat("yyyy MMM dd", Locale.KOREA)
             val currentDate:String = sdf.format(Date())
-            val updateNote = Note("산책중", "아직 설정되지 않음", "Picture", currentDate, bytearrayfrombitmap)//, byte1)
+            val updateNote = Note("산책중", "!선택하세요", "Picture", currentDate, bytearrayfrombitmap)//, byte1)
             viewModel.addNote(updateNote)
             finish()
         }
