@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".QuestionCommunity">
-
-    <androidx.appcompat.widget.Toolbar
+    tools:context=".QuestionCommunity"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar4"
-        tools:ignore="MissingConstraints">
-        <TextView
-            android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="match_parent"
+            android:id="@+id/toolbar4">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="펫과함께"
+                android:fontFamily="@font/ansungtangmyun_bold"
+                android:textSize="30dp"
+                android:layout_marginLeft="25dp"/>
+        </androidx.appcompat.widget.Toolbar>
+        <ImageView
+            android:id="@+id/write"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="펫과함께"
-            android:fontFamily="@font/ansungtangmyun_bold"
-            android:textSize="30dp"
-            android:layout_marginLeft="25dp"/>
-    </androidx.appcompat.widget.Toolbar>
-
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            app:srcCompat="@drawable/file"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fontFamily="@font/ansungtangmyun_esg"
-        android:paddingLeft="30dp"
         android:text="질문게시판"
         android:textSize="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/write"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/write"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/file" />
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questionlist"
         android:layout_width="match_parent"
-        android:layout_height="613dp"
-        android:layout_marginTop="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/write"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:listitem="@layout/community_list" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        tools:listitem="@layout/community_list"/>
+</LinearLayout>
