@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -25,13 +26,16 @@ class CommunityBriefAdapter (private val context : Context, val CommunityList: M
         var userID = item.userUID
         var good = item.Good
         var noteNo = item.noteNo
+        var imagecheck = item.Image
     }
     inner class ViewHolder(view : View) :RecyclerView.ViewHolder(view){
         val Title : TextView = itemView.findViewById(R.id.community_title_brief)
         val Contents : TextView = itemView.findViewById(R.id.community_contents_brief)
+        var image : ImageView = itemView.findViewById(R.id.imagecheck_biref)
         fun bind(item : CommunityData){
             Title.text = item.Title
             Contents.text = item.Contents
+            if(item.Image.equals("1")) image.visibility = View.VISIBLE
         }
     }
 }

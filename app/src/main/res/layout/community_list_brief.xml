@@ -12,10 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <ImageView
+            android:id="@+id/imagecheck_biref"
+            android:layout_width="37dp"
+            android:layout_height="26dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="139dp"
+            android:layout_marginBottom="5dp"
+            android:padding="4dp"
+            android:visibility="invisible"
+            android:src="@drawable/img1" />
+
         <TextView
             android:id="@+id/community_title_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imagecheck_biref"
             android:text="Title"
             android:textSize="18sp" />
 

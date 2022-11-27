@@ -1,5 +1,13 @@
 package com.example.porject
 
+import android.app.ActivityOptions
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Picture
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,17 +17,24 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.porject.MyApplication.Companion.storage
 import com.example.porject.databinding.ActivityCommunityDetailBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_community_detail.*
+import kotlinx.android.synthetic.main.activity_loading.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 class CommunityDetail : AppCompatActivity() {
     lateinit var binding : ActivityCommunityDetailBinding
     lateinit var db: FirebaseFirestore
     lateinit var adapter: CommunityDetailAdapter
+    var storage = MyApplication.storage
+    var storageRef: StorageReference = storage.reference
     val datas = mutableListOf<CommunityData>()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +47,7 @@ class CommunityDetail : AppCompatActivity() {
         var userID = intent.getStringExtra("userID")
         var good = intent.getStringExtra("good")
         var noteNo = intent.getStringExtra("noteNo")
+        var imageCheck = intent.getStringExtra("image")
         var id = MyApplication.email.toString()
         id = id.substring(0, id.indexOf("@"))
         if(userID.equals(id) || userID.equals(MyApplication.email.toString())){
@@ -46,6 +62,22 @@ class CommunityDetail : AppCompatActivity() {
         binding.date.text = time
         binding.name.text = userID
         db = MyApplication.db
+        if(imageCheck.equals("1")){
+            val storageReference = storage.reference
+            storageReference.child("community/"+noteNo+".jpg").downloadUrl.addOnSuccessListener {
+                Uriresult->
+                Glide.with(this).load(Uriresult).into(binding.communityimage)
+                binding.communityimage.visibility = View.VISIBLE
+            }
+        }
+        binding.communityimage.setOnClickListener {
+            //Picture = BitmapFactory.decodeByteArray(note.noteImage, 0, note.noteImage.size)
+            val bd : BitmapDrawable = binding.communityimage.drawable as BitmapDrawable
+            Picture = bd.bitmap
+            val options = ActivityOptions.makeSceneTransitionAnimation(this, binding.communityimage, "imgTrans")
+            val intent = Intent(this, ViewActivity::class.java)
+            startActivity(intent, options.toBundle())
+        }
         adapter = CommunityDetailAdapter(this)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("MM월 dd일 HH시 mm분")
@@ -79,9 +111,16 @@ class CommunityDetail : AppCompatActivity() {
 
         binding.communitydelete.setOnClickListener {
             if (noteNo != null) {
-                db.collection("Question").document("$noteNo").delete()
-                db.collection("Community").document("$noteNo").delete()
-                finish()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("").setMessage("정말 삭제하시겠습니까?")
+                    .setPositiveButton("네",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        db.collection("Question").document("$noteNo").delete()
+                        db.collection("Community").document("$noteNo").delete()
+                        storage.reference.child("community/"+noteNo+".jpg").delete()
+                        finish()
+                    }).setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->  })
+                builder.show()
             }
         }
 
@@ -109,6 +148,7 @@ class CommunityDetail : AppCompatActivity() {
 
     /*override fun onRestart() {
         super.onRestart()
+        datas.clear()
         var noteNo = intent.getStringExtra("noteNo")
         if (noteNo != null) {
 

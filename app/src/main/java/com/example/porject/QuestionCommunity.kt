@@ -32,7 +32,7 @@ class QuestionCommunity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     //val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"] as Int)
-                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString())
+                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString(), document["image"].toString())
                     //val item = CommunityData()
                     datas.add(item)
                 }
@@ -62,15 +62,15 @@ class QuestionCommunity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     //val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"] as Int)
-                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString())
+                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString(), document["image"].toString())
                     //val item = CommunityData()
                     datas.add(item)
-                    adapter.datas = datas
-                    adapter.notifyDataSetChanged()
-                    val layoutManager = LinearLayoutManager(this)
-                    binding.questionlist.layoutManager = layoutManager
-                    binding.questionlist.adapter = adapter
                 }
+                adapter.datas = datas
+                adapter.notifyDataSetChanged()
+                val layoutManager = LinearLayoutManager(this)
+                binding.questionlist.layoutManager = layoutManager
+                binding.questionlist.adapter = adapter
 
             }
     }

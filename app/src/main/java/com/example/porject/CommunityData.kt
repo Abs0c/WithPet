@@ -6,5 +6,6 @@ data class CommunityData (
     var Time : String = "",
     var userUID: String? = "",
     var Good : String = "0",
-    var noteNo : String = "0"
+    var noteNo : String = "0",
+    var Image : String = "0"
 )

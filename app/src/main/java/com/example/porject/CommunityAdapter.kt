@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -28,6 +29,7 @@ class CommunityAdapter(private val context : Context, val CommunityList: Mutable
         var userID = item.userUID
         var good = item.Good
         var noteNo = item.noteNo
+        var imageCheck = item.Image
         holder.itemView.setOnClickListener{
             val intent = Intent(context, CommunityDetail::class.java)
             intent.putExtra("title", title)
@@ -36,6 +38,7 @@ class CommunityAdapter(private val context : Context, val CommunityList: Mutable
             intent.putExtra("time", time)
             intent.putExtra("userID", userID)
             intent.putExtra("good", good)
+            intent.putExtra("image", imageCheck)
             context.startActivity(intent)
         }
     }
@@ -44,11 +47,13 @@ class CommunityAdapter(private val context : Context, val CommunityList: Mutable
         val Contents : TextView = itemView.findViewById(R.id.community_contents_brief)
         val Time : TextView = itemView.findViewById(R.id.community_time)
         val ID : TextView = itemView.findViewById(R.id.community_id)
+        val image : ImageView = itemView.findViewById(R.id.imagecheck)
         fun bind(item : CommunityData){
             Title.text = item.Title
             Contents.text = item.Contents
             Time.text = item.Time
             ID.text = item.userUID
+            if(item.Image.equals("1")) image.visibility = View.VISIBLE
         }
     }
 

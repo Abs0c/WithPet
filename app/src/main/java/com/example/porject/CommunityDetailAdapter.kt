@@ -1,6 +1,8 @@
 package com.example.porject
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.porject.MyApplication.Companion.db
+import com.example.porject.MyApplication.Companion.storage
 
 class CommunityDetailAdapter(private val context : Context) : RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder>(){
     var datas = mutableListOf<CommunityData>()
@@ -43,9 +46,18 @@ class CommunityDetailAdapter(private val context : Context) : RecyclerView.Adapt
                 delete.visibility = View.VISIBLE
             }
             delete.setOnClickListener {
-                db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("").setMessage("정말 삭제하시겠습니까?")
+                    .setPositiveButton("네",
+                        DialogInterface.OnClickListener { dialog, which ->
+                            db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
+                            db.collection("Question").document("$noteNo").collection("Comments").document("$commentNo").delete()
+                            Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                        }).setNegativeButton("아니오", DialogInterface.OnClickListener { dialog, which ->  })
+                builder.show()
+                /*db.collection("Community").document("$noteNo").collection("Comments").document("$commentNo").delete()
                 db.collection("Question").document("$noteNo").collection("Comments").document("$commentNo").delete()
-
+                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()*/
             }
         }
     }

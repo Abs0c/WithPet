@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +39,7 @@ class CommunityActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     //val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"] as Int)
-                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString())
+                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString(), document["image"].toString())
                     //val item = CommunityData()
                     datas.add(item)
                 }
@@ -58,7 +59,7 @@ class CommunityActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
+        overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
     }
     override fun onRestart() {
         super.onRestart()
@@ -69,15 +70,15 @@ class CommunityActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     //val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"] as Int)
-                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString())
+                    val item = CommunityData(document["title"] as String, document["contents"] as String, document["time"] as String, document["userUID"] as String, document["good"].toString(), document["noteNo"].toString(), document["image"].toString())
                     //val item = CommunityData()
                     datas.add(item)
-                    adapter.datas = datas
-                    adapter.notifyDataSetChanged()
-                    val layoutManager = LinearLayoutManager(this)
-                    binding.communitylist.layoutManager = layoutManager
-                    binding.communitylist.adapter = adapter
                 }
+                adapter.datas = datas
+                adapter.notifyDataSetChanged()
+                val layoutManager = LinearLayoutManager(this)
+                binding.communitylist.layoutManager = layoutManager
+                binding.communitylist.adapter = adapter
 
             }
     }

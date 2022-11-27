@@ -56,6 +56,7 @@ class AddEitNoteActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, TestActivity::class.java)
             intent.putExtra("selectedDate", "")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
             this.finish()
         }
         val imgbtn = findViewById<ImageView>(R.id.communitywrite_image)
