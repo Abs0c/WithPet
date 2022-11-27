@@ -289,12 +289,12 @@ class mapView : Fragment(), View.OnClickListener, OnMapReadyCallback, LocationLi
                 binding.chronometer.stop()
                 val et = EditText(context)
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder.setTitle("오늘 하루를 작성하세요!!!")
+                builder.setTitle("산책을 종료합니다")
                 builder.setMessage("내용")
                 var string : String = "산책 시간 : " + (pauseTime/1000)/60 + "분 " + (pauseTime/1000)%60 +"초 \n이동 거리 : $discance m"
                 builder.setMessage(string)
                 builder.setView(et) //AlertDialog에 적용하기
-                et.hint="제목을 입력하세요. "
+                et.hint=" 산책일지 제목을 입력하세요. "
                 builder.setPositiveButton(
                     "예"
                 ) { dialog, which ->

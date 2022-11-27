@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#ECF8DE"
     tools:context=".QuestionCommunity"
     android:orientation="vertical">
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="match_parent"
-            android:id="@+id/toolbar4">
+            android:id="@+id/toolbar7">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,11 +39,15 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/ansungtangmyun_esg"
+        android:fontFamily="@font/ef_hyunydororong"
+        android:textColor="#272626"
+        android:drawableLeft="@drawable/question"
+        android:drawablePadding="10dp"
+        android:drawableBottom="@color/material_dynamic_neutral100"
         android:text="질문게시판"
         android:textSize="20dp"
         android:paddingTop="10dp"
-        android:paddingLeft="30dp"/>
+        android:paddingLeft="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questionlist"

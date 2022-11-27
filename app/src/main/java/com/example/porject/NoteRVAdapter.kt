@@ -46,8 +46,8 @@ class NoteRVAdapter(val context: Context,
         val item = items[position]
         holder.bind(item)
         holder.setLayoutType(layoutType)
-        holder.date1.setText("작성 날짜 : " + item.timestamp )
-        holder.date2.setText(item.timestamp)
+        holder.date1.setText("작성 날짜 : " + item.timestamp + "일")
+        holder.date2.setText(item.timestamp + "일")
         holder.detail.setOnClickListener {
             holder.setLayoutType(1)
         }

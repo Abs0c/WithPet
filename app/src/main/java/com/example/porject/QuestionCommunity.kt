@@ -3,6 +3,8 @@ package com.example.porject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.porject.databinding.ActivityQuestionCommunityBinding
@@ -24,6 +26,10 @@ class QuestionCommunity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }
+        val toolbar = findViewById<Toolbar>(R.id.toolbar7)
+        setSupportActionBar(toolbar)
+        setTitle("")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         if(MyApplication.checkAuth()) {}
         db = MyApplication.db
         adapter = CommunityAdapter(this, arrayListOf<CommunityData>())
@@ -73,5 +79,11 @@ class QuestionCommunity : AppCompatActivity() {
                 binding.questionlist.adapter = adapter
 
             }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

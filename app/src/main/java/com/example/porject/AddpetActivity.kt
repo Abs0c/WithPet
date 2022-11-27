@@ -61,7 +61,7 @@ class AddpetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPetBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle("강아지 등록")
+        setTitle("")
         val toolbar3 = findViewById<Toolbar>(R.id.toolbar3)
         setSupportActionBar(toolbar3)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

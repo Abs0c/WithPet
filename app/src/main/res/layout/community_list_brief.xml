@@ -11,7 +11,9 @@
     <RelativeLayout
         android:background="@drawable/layout_circle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
 
         <ImageView
             android:id="@+id/imagecheck_biref"
@@ -25,21 +27,25 @@
             android:layout_marginBottom="5dp"
             android:padding="4dp"
             android:visibility="invisible"
-            android:src="@drawable/img1" />
+            android:src="@drawable/add_img" />
 
         <TextView
             android:id="@+id/community_title_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/imagecheck_biref"
-            android:paddingLeft="10dp"
+            android:fontFamily="@font/kotra_hope"
+            android:textColor="#494747"
             android:text="Title"
-            android:textSize="18sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/community_contents_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/kotra_hope"
+            android:textColor="#494747"
+            android:textSize="15dp"
             android:layout_below="@id/community_title_brief"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"

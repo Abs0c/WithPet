@@ -12,4 +12,12 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/kotra_hope2"/>
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/flower"/>
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/ef_hyunydororong"/>
 </font-family>

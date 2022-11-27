@@ -20,6 +20,7 @@
             android:textSize="25dp"
             android:fontFamily="@font/ansungtangmyun_bold"
             android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,11 +37,15 @@
             android:fontFamily="@font/ansungtangmyun_esg"
             android:gravity="left|center_vertical"
             android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/pet_house"
             android:text="펫 관리"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintTop_toBottomOf="@+id/need_login"
             tools:layout_editor_absoluteX="10dp" />
+
+
+
 
         <TextView
             android:id="@+id/need_login"

@@ -128,14 +128,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_weight="1.1"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/avata2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/user" />
+            app:srcCompat="@drawable/user2" />
 
         <EditText
             android:id="@+id/comment"
@@ -149,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/file" />
+            app:srcCompat="@drawable/comment" />
     </LinearLayout>
 
 </LinearLayout>

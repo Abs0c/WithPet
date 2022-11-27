@@ -16,33 +16,38 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Query
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.grpc.internal.DnsNameResolver
 import kotlinx.android.synthetic.main.activity_community_detail.*
+import kotlinx.android.synthetic.main.activity_community_detail.view.*
 
 lateinit var Picture : Bitmap
 class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInterface, ImageClickInterface
-    ,SearchAdapter.ItemClickListener{
-    lateinit var notesRV:RecyclerView
+    ,SearchView.OnQueryTextListener {
+    lateinit var notesRV: RecyclerView
     lateinit var addFAB: FloatingActionButton
     lateinit var viewModel: NoteViewModel
     lateinit var dateText: String
     lateinit var adapter: NoteRVAdapter
     lateinit var testselectpetspinner: Spinner
-    lateinit var name : String
-    lateinit var nameList : ArrayList<String>
+    lateinit var name: String
+    lateinit var desc: String
+    lateinit var img: ByteArray
+    lateinit var nameList: ArrayList<Note>
 
-    private var itemList: MutableList<Note> = mutableListOf()
-    private var titleList: ArrayList<String> = ArrayList()
-    private var descriptList: ArrayList<String> = ArrayList()
-    private var mAdapter: SearchAdapter? = null
-    private var searchView: SearchView? = null
+    //private var itemList: MutableList<Note> = mutableListOf()
+    //private var titleList: ArrayList<String> = ArrayList()
+    //private var descriptList: ArrayList<String> = ArrayList()
+    //private var mAdapter: SearchAdapter? = null
+    //private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +55,15 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         val intent = intent
         dateText = intent.getStringExtra("selectedDate").toString()
         //Toast.makeText(this, dateText, Toast.LENGTH_SHORT).show()
-        name = intent.getStringExtra("name").toString()
+        //name = intent.getStringExtra("name").toString()
+        //desc = intent.getStringExtra("desc").toString()
+        //img = intent.getByteArrayExtra("img")!!
+        //var bitmap = img?.let { BitmapFactory.decodeByteArray(img, 0, it.size) }
+        //nameList.add(name, desc, dateText, img)
+
         setContentView(R.layout.activity_test)
         setTitle("기록 확인")
+
         val toolbar2 = findViewById<Toolbar>(R.id.toolbar2)
         setSupportActionBar(toolbar2)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -61,18 +72,15 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         notesRV = findViewById(R.id.idRVNotes)
         addFAB = findViewById(R.id.idFABAddNote)
 
-        itemList = ArrayList()
-
-
+        // itemList = ArrayList()
 
 
         //원조코드
         notesRV.layoutManager = LinearLayoutManager(this)
 
-        notesRV.itemAnimator = DefaultItemAnimator()
+        //notesRV.itemAnimator = DefaultItemAnimator()
         //mAdapter = SearchAdapter(this, titleList as ArrayList<Note>, this)
         //notesRV.adapter = mAdapter
-
 
 
         val noteRVAdapter = NoteRVAdapter(this, this, this, this)
@@ -83,52 +91,64 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         //선택하세요!
         items.add("!선택하세요")
         MyApplication.db.collection("pets").get().addOnSuccessListener { result ->
-            for (document in result){
-                if (MyApplication.auth.currentUser?.uid == document["userUID"]){
+            for (document in result) {
+                if (MyApplication.auth.currentUser?.uid == document["userUID"]) {
                     items.add(document["petName"].toString())
                 }
             }
-            val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, items)
+            val adapter =
+                ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, items)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             testselectpetspinner.adapter = adapter
         }
 
         var filterList: List<Note>
-        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
-        viewModel.allNotes.observe(this, Observer { list -> list?.let{
-            filterList = it
-            testselectpetspinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    if (p2 != 0){
-                        filterList = it.filter { it.petName ==  testselectpetspinner.selectedItem.toString()}
-                        if (dateText != "") {
-                            filterList = filterList.filter { it.timestamp == dateText }
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        ).get(NoteViewModel::class.java)
+        viewModel.allNotes.observe(this, Observer { list ->
+            list?.let {
+                filterList = it
+                testselectpetspinner.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            p0: AdapterView<*>?,
+                            p1: View?,
+                            p2: Int,
+                            p3: Long
+                        ) {
+                            if (p2 != 0) {
+                                filterList =
+                                    it.filter { it.petName == testselectpetspinner.selectedItem.toString() }
+                                if (dateText != "") {
+                                    filterList = filterList.filter { it.timestamp == dateText }
+                                }
+                            } else {
+                                filterList = it
+                                if (dateText != "") {
+                                    filterList = it.filter { it.timestamp == dateText }
+                                }
+                            }
+                            noteRVAdapter.updateList(filterList)
+                        }
+
+                        override fun onNothingSelected(p0: AdapterView<*>?) {
+                            TODO("Not yet implemented")
                         }
                     }
-                    else{
-                        filterList = it
-                        if (dateText != "") {
-                            filterList = it.filter { it.timestamp == dateText }
-                        }
-                    }
-                    noteRVAdapter.updateList(filterList)
-                }
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
-            }
-                if (dateText != ""){
+                if (dateText != "") {
                     filterList = it.filter { it.timestamp == dateText }
                 }
                 noteRVAdapter.updateList(it)
                 //titleList = ArrayList()
                 //descriptList = ArrayList()
-                    //titleList.add(temp.noteTitle)
-                    //descriptList.add(temp.noteDescription)
+                //titleList.add(temp.noteTitle)
+                //descriptList.add(temp.noteDescription)
             }
         })
         //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
-        addFAB.setOnClickListener{
+        addFAB.setOnClickListener {
             val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
             startActivity(intent)
             this.finish()
@@ -141,8 +161,8 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         adapter.switchLayout(1)
 
 
-
     }
+
 
     /*private fun fillItem(){//: MutableList<Note>{
         //Toast.makeText(this, viewModel.allNotes.value.toString(), Toast.LENGTH_SHORT).show()
@@ -150,46 +170,36 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
     }*/
 
 
-    override fun onItemClicked(item: Note) {
-        val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
-        intent.putExtra("noteType", "Edit")
-        intent.putExtra("noteTitle", item.noteTitle)
-        intent.putExtra("noteDescription", item.noteDescription)
-        intent.putExtra("image",item.noteImage)
-        intent.putExtra("noteID", item.id)
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
-        this.finish()
 
-
-    }
 
 
     override fun onDeleteIconClick(note: Note) {
         viewModel.deleteNote(note)
         Toast.makeText(this, "${note.noteTitle} 삭제됨", Toast.LENGTH_LONG).show()
     }
+
     override fun onNoteClick(note: Note) {
         val intent = Intent(this@TestActivity, AddEitNoteActivity::class.java)
         intent.putExtra("noteType", "Edit")
         intent.putExtra("noteTitle", note.noteTitle)
-        intent.putExtra("petname",note.petName)
+        intent.putExtra("petname", note.petName)
         intent.putExtra("noteDescription", note.noteDescription)
-        intent.putExtra("image",note.noteImage)
+        intent.putExtra("image", note.noteImage)
         intent.putExtra("noteID", note.id)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         this.finish()
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             finish()
             overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun ImageClick(note: Note, view : View) {
+    override fun ImageClick(note: Note, view: View) {
         Picture = BitmapFactory.decodeByteArray(note.noteImage, 0, note.noteImage.size)
         val options = ActivityOptions.makeSceneTransitionAnimation(this, view, "imgTrans")
         val intent = Intent(this, ViewActivity::class.java)
@@ -201,35 +211,55 @@ class TestActivity : AppCompatActivity(), NoteClickInterface, NoteCLickDeleteInt
         //supportFinishAfterTransition()
         overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
     }
-    fun clickEvent(view : View){
+
+    fun clickEvent(view: View) {
         val intent = Intent(this, ViewActivity::class.java)
         val opt = ActivityOptions.makeSceneTransitionAnimation(this, view, "img_trans")
         startActivity(intent, opt.toBundle())
     }
-    /*
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
-        val item = menu?.findItem(R.id.search_bar)
-        var searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = item?.actionView as SearchView
-        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView!!.maxWidth = Integer.MAX_VALUE
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                mAdapter!!.filter.filter(query)
-                return false
-            }
 
-            override fun onQueryTextChange(query: String?): Boolean {
-                mAdapter!!.filter.filter(query)
-                return false
-            }
-        })
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        val item = menu?.findItem(R.id.search_bar)
+        //var searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = item?.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+
         return true
     }
-    */
-    /*
 
-     */
+    override fun onQueryTextSubmit(query: String?): Boolean {
 
-}
+
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        viewModel.searchDatabase(searchQuery).observe(this, { list ->
+            list.let {
+                //Toast.makeText(this, it.get(2).toString(), Toast.LENGTH_LONG).show()
+                adapter.updateList(it)
+
+            }
+            //adapter = NoteRVAdapter(this, this, this, this)
+            //adapter.switchLayout(1)
+        })
+
+    }
+
+
+
+    }
+
+

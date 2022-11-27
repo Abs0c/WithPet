@@ -1,11 +1,13 @@
 package com.example.porject
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -28,6 +30,10 @@ class LoginActivity : AppCompatActivity() {
         }else {
             changeVisibility("logout")
         }
+        setTitle("")
+        val toolbar6 = findViewById<Toolbar>(R.id.toolbar6)
+        setSupportActionBar(toolbar6)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val requestLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -153,5 +159,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

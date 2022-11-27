@@ -1,6 +1,8 @@
 package com.example.porject
 
 import androidx.lifecycle.LiveData
+import androidx.room.Query
+import java.util.concurrent.Flow
 
 class NoteRepository(private  val notesDao: NotesDao) {
 
@@ -14,5 +16,9 @@ class NoteRepository(private  val notesDao: NotesDao) {
     }
     suspend fun update(note: Note){
         notesDao.update(note)
+    }
+
+    fun searchDatabase(searchQuery: String): kotlinx.coroutines.flow.Flow<List<Note>>{
+        return notesDao.searchDatabase(searchQuery)
     }
 }

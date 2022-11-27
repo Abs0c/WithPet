@@ -3,7 +3,9 @@ package com.example.porject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.porject.MyApplication.Companion.db
 import com.example.porject.databinding.ActivityMypetBinding
@@ -19,6 +21,10 @@ class activity_mypet : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMypetBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val toolbar4 = findViewById<Toolbar>(R.id.toolbar8)
+        setSupportActionBar(toolbar4)
+        setTitle("")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         binding.addPetButton.setOnClickListener{
                 val intent = Intent(this, AddpetActivity::class.java)
                 startActivity(intent)
@@ -52,5 +58,11 @@ class activity_mypet : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

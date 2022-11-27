@@ -51,7 +51,7 @@ class   Diet : AppCompatActivity() {
         // 해당 계산 부분은 강아지 고양이 계산 방법은 같습니다.
         sumBtn.setOnClickListener {
             var pet_kcal:Double = 0.0
-
+            binding.calculation.visibility = View.VISIBLE
             var ses=binding.weightWrite.text.toString()
             editdata=ses.toDouble()
             //강아지 몸무게가 2kg이상일시

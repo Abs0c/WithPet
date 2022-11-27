@@ -184,7 +184,7 @@ class AddEitNoteActivity : AppCompatActivity() {
                 Toast.makeText(this, currentDate, Toast.LENGTH_SHORT).show()
                 val intent = Intent(applicationContext, TestActivity::class.java)
                 intent.putExtra("selectedDate", currentDate)
-                intent.putExtra("name", noteTitle)
+                //intent.putExtra("name", noteTitle)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 this.finish()

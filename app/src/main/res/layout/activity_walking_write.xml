@@ -112,35 +112,6 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile1_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile2_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile3_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile4_48"/>
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/smile5_48"/>
 
             </LinearLayout>
 

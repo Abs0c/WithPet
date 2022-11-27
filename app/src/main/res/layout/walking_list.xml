@@ -7,7 +7,7 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     android:layout_marginBottom="4dp"
-    app:cardBackgroundColor="@color/black_shade_2"
+    app:cardBackgroundColor="@color/black_shade_1"
 
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp">
@@ -41,9 +41,10 @@
                 android:id="@+id/contentsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/flower"
                 android:layout_marginLeft="10dp"
                 android:text="제목"
-                android:textSize="24sp" />
+                android:textSize="29sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -134,8 +135,9 @@
                 android:id="@+id/contentsTextView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/flower"
                 android:text="내용"
-                android:textSize="24sp" />
+                android:textSize="35sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -151,8 +153,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:fontFamily="@font/ansungtangmyun_bold"
                     android:text="0월 0일"
-                    android:textColor="#FF0000FF"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </RelativeLayout>

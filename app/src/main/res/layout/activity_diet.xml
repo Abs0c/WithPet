@@ -17,10 +17,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/toolbar2"/>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -49,12 +45,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
         </LinearLayout>
-
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:gravity="center">
+            android:gravity="center"
+            >
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -62,13 +62,15 @@
             <TextView
                 android:id="@+id/calculation"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:fontFamily="@font/flower"
                 android:text="0"
                 android:textAlignment="center"
                 android:textSize="50dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="invisible"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -76,6 +78,7 @@
             <TextView
                 android:id="@+id/kcal"
                 android:layout_width="0dp"
+                android:fontFamily="@font/flower"
                 android:layout_weight="2"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -88,13 +91,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
         </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
 
 
         <LinearLayout
             android:id="@+id/Calculation_numbers"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="6"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,9 +113,11 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:drawableRight="@drawable/animal"
                     android:fontFamily="@font/kotra_hope2"
                     android:text="강아지의 이름"
                     android:textSize="25dp"
+                    android:layout_marginRight="20dp"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <Spinner
@@ -122,6 +131,7 @@
 
                     tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -135,7 +145,10 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="강아지의 몸무게"
+                    android:layout_marginRight="20dp"
                     android:textSize="25dp"
+                    android:drawableRight="@drawable/scale"
+                    android:drawablePadding="10dp"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <TextView
@@ -180,8 +193,10 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:fontFamily="@font/kotra_hope2"
+                    android:layout_marginRight="20dp"
                     android:text="강아지의 상태"
                     android:textSize="25dp"
+                    android:drawableRight="@drawable/status"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <Spinner
@@ -199,17 +214,21 @@
 
 
         </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
         <Button
             android:id="@+id/sumBtn"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_rectangle"
-            android:drawableLeft="@drawable/calculator"
+            android:layout_weight="1.4"
+            android:background="@drawable/button2"
+            android:drawableLeft="@drawable/weight_c"
             android:text="계산하기"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"/>
+            android:layout_weight="3"/>
     </LinearLayout>
 </FrameLayout>

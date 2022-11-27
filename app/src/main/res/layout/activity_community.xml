@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#ECF8DE"
     tools:context=".CommunityActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,11 +40,15 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fontFamily="@font/ansungtangmyun_esg"
+        android:fontFamily="@font/ef_hyunydororong"
+        android:textColor="#272626"
+        android:drawableLeft="@drawable/board"
+        android:drawablePadding="10dp"
+        android:drawableBottom="@color/material_dynamic_neutral100"
         android:text="자유게시판"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:paddingTop="10dp"
-        android:paddingStart="30dp"/>
+        android:paddingStart="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/communitylist"

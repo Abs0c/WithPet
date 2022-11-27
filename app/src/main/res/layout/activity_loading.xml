@@ -24,9 +24,22 @@
         android:id="@+id/imageView"
         android:layout_width="253dp"
         android:layout_height="231dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/txt1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        android:text="펫과 함께"
+        android:fontFamily="@font/kotra_hope2"
+        android:textSize="50dp"
+        android:textAlignment="center"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
