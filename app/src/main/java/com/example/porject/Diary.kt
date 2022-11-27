@@ -150,15 +150,25 @@ class Diary : Fragment() {
         super.onResume()
         calendar = binding.calendarView
         calendar.removeDecorators()
+        calendar.addDecorators(
+            //일요일에 색칠하기
+            SundayDecorator(),
+            //토요일에 색칠하기
+            SaturdayDecorator(),
+            //오늘 날짜에 색칠하기
+            Decorator(),
+        )
         var datalist : List<Note>
+
         viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)).get(NoteViewModel::class.java)
         viewModel.allNotes.observe(requireActivity(), Observer { list->
             list?.let {
                 datalist = it
                 for(i in it.iterator()){
-                    var year = i.timestamp.substring(0, 4).toInt()
-                    var month = i.timestamp.substring(5, 7).toInt() - 1
-                    var day = i.timestamp.substring(9, 11).toInt()
+                    var data = i.timestamp.split(" ")
+                    var year = data[0].toInt()
+                    var month = data[1].substring(0, data[1].indexOf("월")).toInt() - 1
+                    var day = data[2].toInt()
                     calendar.addDecorator(EventDecorator(Collections.singleton(CalendarDay.from(year, month ,day))))
                 }
                 //Toast.makeText(context, "${it.size}", Toast.LENGTH_SHORT).show()
