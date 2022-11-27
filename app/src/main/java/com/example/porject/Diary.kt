@@ -95,7 +95,6 @@ class Diary : Fragment() {
                     selectedDate = "$year $month" + "월 $day"
                     val sdf = SimpleDateFormat("yyyy MMM dd", Locale.KOREA)
                     selectedDate = sdf.format(Date(year-1900, month, day))
-                    Toast.makeText(activity, selectedDate, Toast.LENGTH_SHORT).show()
                     //Toast.makeText(activity,"$year"+"년"+"$month"+"월"+"$day"+"일", Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, TestActivity::class.java)
                     intent.putExtra("selectedDate", selectedDate)
