@@ -31,7 +31,7 @@ class PermissionSupport(var activity: Activity, var context: Context) {
                 permissionList.add(tempper)
             }
         }
-        if(!permissions.isEmpty()){
+        if(!permissionList.isEmpty()){
             return false
         }
         return true
