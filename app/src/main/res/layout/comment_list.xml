@@ -1,0 +1,82 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_circle">
+
+        <ImageView
+            android:id="@+id/commentavata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/user" />
+
+        <TextView
+            android:id="@+id/commentID"
+            android:fontFamily="@font/flower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:text="commentID"
+            app:layout_constraintStart_toEndOf="@+id/commentavata"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/commentcontents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내용"
+            android:textColor="#494747"
+            android:layout_marginStart="9dp"
+            android:textSize="17dp"
+            android:layout_marginBottom="3dp"
+            app:layout_constraintStart_toStartOf="@+id/commentID"
+            app:layout_constraintTop_toBottomOf="@+id/commentID" />
+
+        <TextView
+            android:id="@+id/commenttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:textSize="12dp"
+            android:fontFamily="@font/flower"
+            android:layout_marginBottom="5dp"
+            android:textColor="#494747"
+            android:layout_marginStart="7dp"
+            app:layout_constraintStart_toEndOf="@+id/commentavata"
+            app:layout_constraintTop_toBottomOf="@+id/commentcontents" />
+
+        <ImageView
+            android:id="@+id/commentsdelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_delete_24"
+            app:layout_constraintBottom_toBottomOf="@+id/commentavata"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/commentavata"
+            app:tint="@color/black" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

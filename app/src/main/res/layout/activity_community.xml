@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECF8DE"
+    tools:context=".CommunityActivity"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="match_parent"
+            android:id="@+id/toolbar4">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="펫과 함께"
+                android:fontFamily="@font/ansungtangmyun_bold"
+                android:textSize="30sp"
+                android:layout_marginStart="25dp"/>
+        </androidx.appcompat.widget.Toolbar>
+        <ImageView
+            android:id="@+id/write"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:src="@drawable/file" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingTop="12dp"
+            android:paddingLeft="12dp"
+            android:paddingBottom="12dp"
+            android:src="@drawable/board"/>
+        <TextView
+            android:paddingLeft="5dp"
+            android:gravity="center|left"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/ef_hyunydororong"
+            android:textColor="#272626"
+            android:text="자유게시판"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+        android:drawableLeft="@drawable/board"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/ef_hyunydororong"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:text="자유게시판"
+        android:drawableBottom="@color/material_dynamic_neutral100"
+        android:textColor="#272626"
+        android:textSize="20dp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/communitylist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        tools:listitem="@layout/community_list" />
+</LinearLayout>

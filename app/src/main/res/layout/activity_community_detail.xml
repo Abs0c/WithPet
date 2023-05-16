@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommunityDetail"
+    android:orientation="vertical"
+    android:background="#EEF6E4">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7">
+
+        <TextView
+            android:id="@+id/detailtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/ansungtangmyun_bold"
+            android:textColor="#494747"
+            android:text="펫과함께"
+            android:textSize="30dp" />
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/avata"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                app:srcCompat="@drawable/user"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/flower"
+                    android:text="이름"
+                    app:layout_constraintStart_toEndOf="@+id/avata"
+                    app:layout_constraintTop_toTopOf="@+id/avata" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/flower"
+                    android:textSize="16dp"
+                    android:text="11월 26일 22시 50분"
+                    app:layout_constraintStart_toEndOf="@+id/avata"
+                    app:layout_constraintTop_toBottomOf="@+id/name" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+
+            <ImageView
+                android:id="@+id/communitydelete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:src="@drawable/ic_delete_24"
+                android:visibility="invisible"
+                app:tint="@color/black" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="0" />
+
+        <TextView
+            android:id="@+id/contents"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1.5"
+            android:textColor="#494747"
+            android:text="이렇고 이런일이 있었는데 저 정말 슬퍼요 님들은 어떻게 생각하시나요"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/avata"
+            app:layout_constraintTop_toBottomOf="@+id/avata" />
+
+
+        <ImageView
+            android:id="@+id/communityimage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/imagetoset"
+            android:transitionName="imgTrans"
+            android:visibility="gone" />
+
+        <Space
+            android:id="@+id/garo"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_weight="0"
+            android:background="#000000" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        app:layout_constraintBottom_toTopOf="@+id/comment"
+        app:layout_constraintTop_toBottomOf="@+id/contents"
+        tools:listitem="@layout/comment_list" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        android:padding="10dp"
+        android:background="@drawable/stroke"
+        >
+
+        <ImageView
+            android:id="@+id/avata2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/user2" />
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:hint="댓글을 입력해주세요." />
+
+        <ImageView
+            android:id="@+id/upload"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/comment" />
+    </LinearLayout>
+
+</LinearLayout>
